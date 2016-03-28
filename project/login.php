@@ -1,4 +1,4 @@
-<!-- login dialog -->
+<!-- login dialog test -->
 <html>
 <?php
 	include_once("config.php");
