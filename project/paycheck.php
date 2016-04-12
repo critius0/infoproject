@@ -38,7 +38,7 @@
 	<link type="text/css" href="../bootstrap-timepicker/css/bootstrap-timepicker.min.css" />
 	<script type="text/javascript" src="../bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
 	<link type="text/css" href="../bootstrap-timepicker/css/bootstrap-timepicker.css" />
-	
+	<script type="text/javascript" src="../bootstrap-timepicker/js/jquery.min.js"></script>
 	<script type="text/javascript" src="../bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
    
 
@@ -296,7 +296,7 @@
                             <a href="#"><i class="fa fa-table fa-fw"></i> Enter Work Info<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li class="active">
-                                    <a href="#"><i class="fa fa-clock-o fa-fw"></i> Enter Hours</a>
+                                    <a href="userpage.php"><i class="fa fa-clock-o fa-fw"></i> Enter Hours</a>
                                 </li>
                                 <li>
                                     <a href="paycheck.php"><i class="fa fa-dollar fa-fw"></i> Enter Paycheck</a>
@@ -330,11 +330,19 @@
 		<script type="text/javascript">
 			$(window).load( function() {
 		
-			$('#mycalendar3').monthly({
+			$('#mycalendar2').monthly({
+			mode: 'picker',
+			target: '#mytarget2',
+			setWidth: '250px',
+			startHidden: false,
+			showTrigger: '#mytarget2',
+			});
+			
+			$('#mycalendar1').monthly({
 			mode: 'picker',
 			target: '#mytarget',
 			setWidth: '250px',
-			startHidden: true,
+			startHidden: false,
 			showTrigger: '#mytarget',
 			});
 
@@ -348,13 +356,12 @@
 				}
 			});
 		</script>
-		<!-- timepicker script-->
-		
+		<!-- calendar script-->
 		
 		<!-- enter hours form -->
 		<div id="page-wrapper">
             <div class="row">
-                <div class="col-lg-12">
+                 <div class="col-lg-12">
                     <div class="page-header">
 					<h1 class="text-primary">Enter Work Info</h1>
 					</div>
@@ -362,37 +369,55 @@
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
-            <div class="row">
+            
+			<div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
+						<form role="form">
                         <div class="panel-heading">
-                            <h4>Enter Hours</h4>
+                            <h4>Enter Paycheck</h4>
                         </div>
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-lg-3">
-                               <form role="form">
+                            <div class="col-lg-6">
+                                <form role="form">
+								<div class="form-group">
                                         <label>Hours Worked</label>
                                         <input type="number" class="form-control" placeholder="Ex: 20">
-                                
-							<div class="col-lg-6">
-                                <form role="form">
-									<label>Date</label>
-									<input type="text" id="mytarget" class="form-control" placeholder="Choose a Date">
-                                    <div class="monthly" id="mycalendar3"></div>
-								
+                                </div>
+								<label>Paycheck Amount</label>
+                               <div class="form-group input-group">
+                                    <span class="input-group-addon">$</span>
+                                    <input type="number" class="form-control" placeholder="Ex: 500.00">
+                                </div>
 							</div>
-							</div>
+                               
                                 <!-- /.col-lg-6 (nested) -->
                             <!-- /.row (nested) -->
                         </div>
                         <!-- /.panel-body -->
-                    </div>
+                    
+					<div class="col-lg-4">
+                                <form role="form">
+									<label>Paycheck Period Start Date</label>
+									<input type="text" id="mytarget" class="form-control" placeholder="Choose a Date">
+                                    <div class="monthly" id="mycalendar1"></div>
+								
+							</div>
+					<div class="col-lg-4">
+                                <form role="form">
+									<label>Paycheck Period End Date</label>
+									<input type="text" id="mytarget2" class="form-control" placeholder="Choose a Date">
+                                    <div class="monthly" id="mycalendar2"></div>
+								
+							</div>
                     <!-- /.panel -->
-					<button type="submit" class="btn btn-default">Submit Button</button>
-                    <button type="reset" class="btn btn-default">Reset Button</button>
+					</div>
+					<button type="submit" class="btn btn-default">Submit</button>
+					<button type="reset" class="btn btn-default">Reset</button>
 					</form>
 					</div>
+					
                 <!-- /.col-lg-12 -->
 				</div>
             <!-- /.row -->
