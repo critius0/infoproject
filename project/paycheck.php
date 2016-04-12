@@ -396,7 +396,10 @@
                             <!-- /.row (nested) -->
                         </div>
                         <!-- /.panel-body -->
-                    
+                    <div class="form-group">
+                        <label>Submit Paystub Picture</label>
+                             <input type="file">
+                    </div>
 					<div class="col-lg-4">
                                 <form role="form">
 									<label>Paycheck Period Start Date</label>

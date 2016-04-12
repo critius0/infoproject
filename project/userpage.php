@@ -334,7 +334,7 @@
 			mode: 'picker',
 			target: '#mytarget',
 			setWidth: '250px',
-			startHidden: true,
+			startHidden: false,
 			showTrigger: '#mytarget',
 			});
 
