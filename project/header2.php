@@ -18,14 +18,15 @@
 	<!-- Header -->
 	<div class="container">
 	<div class="row">
-		<div class="col-xs-12">
-			<div class="page-header">
-	
-				<div align="left"><h1><?php echo $title; ?></h1></div>
-				<div align="right"><h1><?php echo ($_SESSION['username']); ?></h1></div>
+		<div class="page-header">
+				<div align="left"><h1><?php echo $title; ?></h1>
+		
+				<div align="right"><h1>Welcome <?php echo ($_SESSION['username']); ?>!</h1></div>
+				
 			</div>
 		</div>
 	</div>
+	
 	
 	<!-- Menu bar -->
 	<div class="row">
@@ -34,12 +35,12 @@
 				<ul class="nav nav-pills navbar-left">
 					<li <?php if($menu == 0) { echo 'class="active"'; } ?>><a href="index.php"><span class="glyphicon glyphicon-home"> Home</span></a></li>
 					<li <?php if($menu == 2) { echo 'class="active"'; } ?>><a href="about.php"><span class="glyphicon glyphicon-book"> AboutUs</span></a></li>
-					
+					<li <?php if($menu == 1) { echo 'class="active"'; } ?>><a href="usersplash.php">My Dashboard</a></li>
 				</ul>
 				<ul class="nav nav-pills navbar-right">
 					<li <?php if($menu == 3) { echo 'class="active"'; } ?>><a href="help.php"><span class="glyphicon glyphicon-question-sign"> Help</span></a></li>
-					<li <?php if($menu == 4) { echo 'class="active"'; } ?>><a href="login.php"><span class="glyphicon glyphicon-user"> Login</span></a></li>
-					<li <?php if($menu == 5) { echo 'class="active"'; } ?>><a href="register.php"><span class="glyphicon glyphicon-pencil"> Register</span></a></li>
+					<li <?php if($menu == 4) { echo 'class="active"'; } ?>><a href="logout.php"><span class="glyphicon glyphicon-user"> Logout</span></a></li>
+					
 				</ul>
 				
 			</div>

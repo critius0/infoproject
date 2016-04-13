@@ -1,6 +1,6 @@
 <?php
 	include_once("config.php");
-	$title ="Account Registration";
+	$title ="AntiWageTheft.org";
 	$menu=5;
 	include_once("header.php");
 ?>
@@ -31,7 +31,7 @@
             <!-- Header -->
             <h1>Registration Page</h1>
         </div>
-		<h2>To access the song and artist database, please create an account:</h2>
+		<h2>Please signup for an AntiWageTheft.org account:</h2>
 		<p></p>
 		<p>Already have an account? <a href="login.php">Login Here</a><p>
     </div>  
@@ -41,6 +41,10 @@
 <div class="col-xs-12">
 <form action="insertperson.php" method="post" enctype="multipart/form-data">
     <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" name="username"/>
+    </div>
+	<div class="form-group">
         <label for="firstname">First Name</label>
         <input type="text" class="form-control" name="firstname"/>
     </div>
@@ -49,7 +53,6 @@
         <label for="lastname">Last Name</label>
         <input type="text" class="form-control" name="lastname"/>
     </div>
-
     <div class="form-group">
         <label for="email">email</label>
         <input type="email" class="form-control" name="email"/>
@@ -58,6 +61,10 @@
     <div class="form-group">
         <label for="password">password</label>
         <input type="password" class="form-control" name="password" id="password"/>
+    </div>  
+	<div class="form-group">
+        <label for="confirmpassword">confirm password</label>
+        <input type="password" class="form-control" name="confirmpassword" id="password"/>
     </div>  
 
     <button type="submit" class="btn btn-default">Create Account</button>
@@ -78,8 +85,9 @@
     
     <!-- Titles for table -->
     <tr>
+        <td>Username</td>
         <td>First Name</td>
-        <td>Last Name</td>
+		<td>Last Name</td>
         <td>email</td>
         <td> </td>
         <td> </td>
@@ -93,7 +101,7 @@
     $db = connect($dbHost, $dbUser, $dbPassword, $dbName);
     
     // prepare sql statement
-    $query = "select id, firstname, lastname, email from people5 order by lastname;";
+    $query = "select userid, username, firstname, lastname, email from Users order by lastname;";
     
     // execute sql statement
     $result = $db->query($query);
@@ -105,6 +113,7 @@
         for($i=0; $i < $numberofrows; $i++) {
             $row = $result->fetch_assoc();
             echo "\n <tr>";
+			echo "\n <td>" . $row['username'] . "</td>";
             echo "\n <td>" . $row['firstname'] . "</td>";
             echo "\n <td>" . $row['lastname'] . "</td>";
             echo "\n <td>" . $row['email'] . "</td>";

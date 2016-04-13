@@ -4,5 +4,5 @@
     $dbName = "db_cmcgillin";
     $dbHost = "dbdev.cs.uiowa.edu";
     $adminEmail = "colin-mcgillin@uiowa.edu";
-    $baseURL = "http://webdev.divms.uiowa.edu/~cmcgillin/project";
+    $baseURL = "http://webdev.divms.uiowa.edu/~cmcgillin/4132016/project/";
 ?>

@@ -1,10 +1,10 @@
-<!-- login dialog test -->
+<!-- login dialog -->
 <html>
 <?php
 	include_once("config.php");
 
 	$menu=4;
-	$title ="Login";
+	$title ="AntiWageTheft.org";
 	include_once("header.php");
 ?>
 <head>

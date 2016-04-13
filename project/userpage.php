@@ -1,6 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<?php
+session_start();
+ if (!isset($_SESSION['username'])) {
+        // if this variable is not set, then kick user back to login screen
+        header("Location: " . $baseURL . "login.php");
+    }
+	
+	$menu=1;
+	$jobid = $_POST['jobid'];
+	include_once('header2.php');
+
+
+?>
 <head>
 
     <meta charset="utf-8">
@@ -305,16 +318,16 @@
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-							<a href="employeelookup.html"><i class="fa fa-user fa-fw"></i> My Jobs</a>
+							<a href="usersplash.php"><i class="fa fa-user fa-fw"></i> My Jobs</a>
                         </li>
 						<li>
-                            <a href="companylookup.html"><i class="fa fa-gear fa-fw"></i> My Settings</a>
+                            <a href="companylookup.html"><i class="fa fa-gear fa-fw"></i>My Employers</a>
                         </li>
 						<li>
-                            <a href="companyoverview.html"><i class="fa fa-bar-chart fa-fw"></i> My Stats</a>
+                            <a href="companyoverview.html"><i class="fa fa-bar-chart fa-fw"></i>Company Lookups</a>
                         </li>
 						<li>
-                            <a href="caselog.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                            <a href="caselog.html"><i class="fa fa-sign-out fa-fw"></i>My CaseLogs</a>
                         </li>
               
                     </ul>
@@ -371,15 +384,24 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-lg-3">
-                               <form role="form">
-                                        <label>Hours Worked</label>
-                                        <input type="number" class="form-control" placeholder="Ex: 20">
+                               <form action="inserthours.php" method="post" enctype="multipart/form-data">
+                                        <div class=form-group">
+											<label for"hoursworked">Hours Worked</label>
+											<input type="number" class="form-control" name="hoursworked" placeholder="Ex: 20">
+										</div>
                                 
 							<div class="col-lg-6">
-                                <form role="form">
-									<label>Date</label>
-									<input type="text" id="mytarget" class="form-control" placeholder="Choose a Date">
+                                <div class="form-group">
+									
+									<label for='datereportedfor'>Date</label>
+									<input type="text" id="mytarget" class="form-control" name='datereportedfor' placeholder="Choose a Date">
                                     <div class="monthly" id="mycalendar3"></div>
+								</div>	
+								
+								<!-- hidden value included for transfer of the jobinfo -->
+								<div class="form-group">
+									<input type='hidden' name='jobid' value= <?php echo $jobid ?> />
+								</div>
 								
 							</div>
 							</div>

@@ -1,8 +1,15 @@
 <?php
 	include_once("config.php");
-	$title ="Media";
+	$title ="MyJobs";
 	$menu=1;
-	include_once("header.php");
+	include_once("header2.php");
+    
+    session_start();
+    if (!isset($_SESSION['username'])) {
+        // if this variable is not set, then kick user back to login screen
+        header("Location: " . $baseURL . "login.php");
+    }
+	
 ?>
 
 	<div class="row">

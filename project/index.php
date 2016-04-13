@@ -2,7 +2,7 @@
 	include_once("config.php");
 
 	$menu=0;
-	$title ="AntiWageTheft";
+	$title ="AntiWageTheft.org";
 	include_once("header.php");
 ?>
 
@@ -11,7 +11,7 @@
 		<!-- Content -->
 		<div class="col-sm-9 col-xs-12">
 			<p>
-				Homework 2 for CS:3910:0001
+				AntiWageTheft
 			</p>
 			<img src="computer-joke.jpg" class="img-responsive" alt="Joke"/>
 		</div>
@@ -20,10 +20,10 @@
 		<div class="col-sm-3 col-xs-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					Colin McGillin
+					Wage Theft Stats
 				</div>
 				<div class="panel-body">
-					From Denver, Colorado. Born: 11/09/1993
+					stats
 				</div>
 			</div>
 		</div>

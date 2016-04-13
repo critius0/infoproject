@@ -3,7 +3,7 @@
 		<div class="col-xs-12">
 			<div class="panel panel-default">
 				<div class="panel-body">
-					Colin McGillin: <?php echo $contact ?>
+					Team 8: <?php echo $contact ?>
 				</div>
 			</div>
 		</div>

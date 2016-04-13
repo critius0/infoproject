@@ -6,6 +6,12 @@
     if (isset($_SESSION['username'])) {
         unset($_SESSION['username']);
     }
+	if (isset($_SESSION['userid'])) {
+        unset($_SESSION['userid']);
+    }
+	if (isset($_SESSION['usertype'])) {
+        unset($_SESSION['usertype']);
+    }
     session_destroy(); 
     
     // redirect user to login page

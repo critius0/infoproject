@@ -1,14 +1,24 @@
 <?php
 	include_once("config.php");
-	$title ="About Us";
+	$title ="AntiWageTheft.org";
 	$menu=2;
 	include_once("header.php");
+	  session_start();
+    if (!isset($_SESSION['userid'])) {
+        // if this variable is not set, then kick user back to login screen
+        header("Location: " . $baseURL . "login.php");
+    }
+	//if (isset($_SESSION['userid'])=='2')) {
+        // check for usertype: admin
+      //  header("Location: " . $baseURL . "admin.html");
+  //  }
+	
 ?>
 
             <div class="row">
                 <div class="col-xs-12">
                     <div class="page-header">
-                        <h1>Education</h1>
+                        <h1>Who and What Are We</h1>
                     </div>
                     
                     
@@ -18,23 +28,22 @@
             <div class="row">
                 <div class="col-sm-9 col-xs-12">
                     <p>
-                        The University of Iowa <br>
-                         <a href="http://www.uiowa.edu" target="_blank">Visit the Iowa Homepage</a> 
+                        AntiWageTheft.org<br>
+                         <a href="https://en.wikipedia.org/wiki/Wage_theft" target="_blank">WageTheft</a> 
                     </p>
-                    <img src="uiowa.jpg" />
+                    <img src="stopwagetheft.png" />
                 </div>
                
             </div>
             <div>
                 <p><br>
-                    I am currently a senior at the Univeristy of Iowa.
+                    Wage Theft Definition.
                 </p>
             </div>
             <div>
                 <p>
-                    Anticipated graduation:
-                    Bachelor of Arts in Informatics May 2016
-                    Bachelor of Arts in Economics May 2016
+                    Our goal:
+                    Eliminate wage theft through the collection and anylization of real world wage data.
                 </p>
             </div>
          

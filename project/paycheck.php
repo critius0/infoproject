@@ -1,7 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
+<?php
+session_start();
+ if (!isset($_SESSION['username'])) {
+        // if this variable is not set, then kick user back to login screen
+        header("Location: " . $baseURL . "login.php");
+    }
+$jobid = $_POST['jobid'];
+include_once('header2.php');
+
+
+?>
 <head>
+
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -380,7 +393,7 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-lg-6">
-                                <form role="form">
+                                <form action="insertpaycheck.php" method="post" enctype="multipart/form-data" role="form">
 								<div class="form-group">
                                         <label>Hours Worked</label>
                                         <input type="number" class="form-control" placeholder="Ex: 20">
