@@ -64,8 +64,8 @@ session_start();
 
 </head>
 
-<body>
 
+<body>
     <div id="wrapper">
 
         <!-- Navigation -->
@@ -390,7 +390,7 @@ session_start();
 											<input type="number" class="form-control" name="hoursworked" placeholder="Ex: 20">
 										</div>
                                 
-							<div class="col-lg-6">
+							<div class="col-lg-16">
                                 <div class="form-group">
 									
 									<label for='datereportedfor'>Date</label>

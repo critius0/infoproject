@@ -63,6 +63,8 @@ include_once('header2.php');
     <![endif]-->
 
 </head>
+<!-- extra head to make everything consistent -->
+<head></head> 
 
 <body>
 
@@ -318,7 +320,7 @@ include_once('header2.php');
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-							<a href="employeelookup.html"><i class="fa fa-user fa-fw"></i> My Jobs</a>
+							<a href="usersplash.php"><i class="fa fa-user fa-fw"></i> My Jobs</a>
                         </li>
 						<li>
                             <a href="companylookup.html"><i class="fa fa-gear fa-fw"></i> My Settings</a>
