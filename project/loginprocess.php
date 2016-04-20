@@ -37,16 +37,28 @@
 			$usertype =$row['usertype'];
             
             // check if the password matches the hashed version in the database
-            // for version 5.5 or later we would use
-            // if (password_verify($password, $hashedPass)) {
+            
             if ($hashedPass == crypt($password, $hashedPass)) {
                 // we have verified the password
                 session_start();
                 $_SESSION['username'] = $username;
 				$_SESSION['userid'] = $userid;
 				$_SESSION['usertype'] = $usertype;
+				//header("Location: " . $baseURL . "usersplash.php");
+			//testing from here to next comment on check usertype, direct to corresponding page	
+				if ($usertype ==0){
+					header("Location: " . $baseURL . "usersplash.php");
+					
+				}
+				else {
+					header("Location: " . $baseURL . "admindash.php");
+				}
 				
-                header("Location: " . $baseURL . "usersplash.php");
+				
+				
+				
+				
+			//above is in progress
             } else {
                 // wrong password
                 $msg = "<p>Incorrect Password.</p>";
