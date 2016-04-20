@@ -3,8 +3,10 @@
 
 
 <?php
-session_start();
 $menu =1;
+$title ="AntiWageTheft.org";
+session_start();
+
  if (!isset($_SESSION['username'])) {
         // if this variable is not set, then kick user back to login screen
         header("Location: " . $baseURL . "login.php");

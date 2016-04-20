@@ -1,13 +1,14 @@
 <?php
 	include_once("config.php");
 	include_once("util.php");
+	$title ="AntiWageTheft.org";
+	$menu=3;
 	    session_start();
     if (!isset($_SESSION['username'])) {
         // if this variable is not set, then kick user back to login screen
         header("Location: " . $baseURL . "login.php");
     }
 	
-	$menu=3;
 	include_once("header2.php");
 	    // get a handle to the database
     $db = connect($dbHost, $dbUser, $dbPassword, $dbName);
@@ -389,9 +390,9 @@
 							<?php echo $employerOptions; ?>
 							</select>
 						</div>
-						 
+						 <div>
 						 <a href="addemployer.php" class="button">Add a new employer</a>
-						 
+						 </div>
 						<div class="form-group">
 							<label for="jobTitle">Job Title</label>
 							<input type="text" class="form-control" name="jobTitle"/>

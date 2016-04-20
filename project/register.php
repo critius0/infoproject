@@ -44,34 +44,43 @@
 <div class="row">
 <div class="col-xs-12">
 <form action="insertperson.php" method="post" enctype="multipart/form-data">
-    <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" class="form-control" name="username"/>
-    </div>
+    <!-- row open for username and email-->
+		<div class="row">
+			<div class="form-group col-xs-6">
+				<label for="username">Username</label>
+				<input type="text" class="form-control" name="username"/>
+			</div>
+			<div class="form-group col-xs-6">
+				<label for="email">email</label>
+				<input type="email" class="form-control" name="email"/>
+			</div>
+		</div> <!-- row close for username and email-->
+		<!-- row open for first and last name -->
+		<div class="row">
+			<div class="form-group col-xs-6">
+				<label for="firstname">First Name</label>
+				<input type="text" class="form-control" name="firstname"/>
+			</div>
+			
+			<div class="form-group col-xs-6"> 
+				<label for="lastname">Last Name</label>
+				<input type="text" class="form-control" name="lastname"/>
+			</div>
+		</div> <!--row close for firs and last name -->
 		
-	<div class="form-group">
-        <label for="firstname">First Name</label>
-        <input type="text" class="form-control" name="firstname"/>
-	</div>
-		
-    <div class="form-group"> 
-        <label for="lastname">Last Name</label>
-        <input type="text" class="form-control" name="lastname"/>
-    </div>
-	
-    <div class="form-group">
-        <label for="email">email</label>
-        <input type="email" class="form-control" name="email"/>
-    </div>
+		<!--open row for password and confirm password -->
+		<div class="row">
     
-    <div class="form-group">
-        <label for="password">password</label>
-        <input type="password" class="form-control" name="password" id="password"/>
-    </div>  
-	<div class="form-group">
-        <label for="confirmpassword">confirm password</label>
-        <input type="password" class="form-control" name="confirmpassword" id="password"/>
-    </div>  
+			<div class="form-group col-xs-6">
+				<label for="password">password</label>
+				<input type="password" class="form-control" name="password" id="password"/>
+			</div>  
+			
+			<div class="form-group col-xs-6">
+				<label for="confirmpassword">confirm password</label>
+				<input type="password" class="form-control" name="confirmpassword" id="password"/>
+			</div> 
+		</div> <!-- close row for password and confirm password -->
 
     <button type="submit" class="btn btn-default">Create Account</button>
 </form>

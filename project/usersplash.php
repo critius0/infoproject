@@ -1,8 +1,9 @@
 <?php
 	include_once("config.php");
 	include_once("util.php");
+	$title ="AntiWageTheft.org";
 	session_start();
-	$title ="AntiWageTheft.org";	
+		
 	$menu=1;
 	include_once("header2.php");
 	

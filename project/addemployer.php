@@ -1,6 +1,7 @@
 <?php
 	include_once("config.php");
-	
+	$title ="AntiWageTheft.org";
+	session_start();
 	$menu=3;
 	include_once("header2.php");
 ?>
@@ -15,7 +16,6 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Wage Theft - My Page</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../startbootstrap-sb-admin-2-1.0.8/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
