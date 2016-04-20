@@ -409,6 +409,12 @@ session_start();
                             <h4>Enter Hours for: <?php echo $job ?></h4>
                         </div>
                     <div class="panel-body">
+					<!-- span for error message reporting -->
+					<span style="color:red; font-weight:bold">
+						<?php if(isset($_GET['msg']))
+						echo $_GET['msg'];
+						?>
+					</span>
                         <div class="row">
                             <div class="col-lg-3">
                                <form action="inserthours.php" method="post" enctype="multipart/form-data">

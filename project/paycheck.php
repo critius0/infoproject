@@ -425,6 +425,12 @@ include_once('util.php');
                             <h4>Enter Paycheck for: <?php echo $job ?></h4>
                         </div>
                     <div class="panel-body">
+					<!-- span for error message reporting -->
+					<span style="color:red; font-weight:bold">
+						<?php if(isset($_GET['msg']))
+						echo $_GET['msg'];
+						?>
+					</span>
                         <div class="row">
                             <div class="col-lg-6">
                                 <form action="insertpaycheck.php" method="post" enctype="multipart/form-data" role="form">

@@ -368,9 +368,15 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="page-header">
-					<h1 class="text-primary">Add Jobs</h1>
+					<h1 class="text-primary">Add A Job</h1>
 					</div>
 				</div>
+			<!-- Span for error messages -->	
+				<span style="color:red; font-weight:bold">
+					<?php if(isset($_GET['msg']))
+						echo $_GET['msg'];
+					?>
+			</span>
                 <!-- /.col-lg-12 -->
             </div>
 			<div class="row">

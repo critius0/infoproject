@@ -7,15 +7,18 @@
     $password = $_POST['password'];
 	
     
-    // check that we have an email
+    // check that we have an username
     if (!$username) {
-        echo "Hey, you didn't enter anything. Please <a href='login.php'>try again</a>";
-        exit;
+        $msg = "<p>Hey, you didn't enter a username.</p>";
+		header("Location:login.php?msg=$msg");
+		exit;
+        
     }
     
-        // check that we have an email
+        // check that we have an password
     if (!$password) {
-        echo "No password received. Please <a href='login.php'>try again</a>";
+        $msg = "<p>Hey, you didn't enter a password.</p>";
+		header("Location:login.php?msg=$msg");
 		exit;
     }
     
@@ -46,10 +49,13 @@
                 header("Location: " . $baseURL . "usersplash.php");
             } else {
                 // wrong password
-                reportErrorAndDie("Wrong password. <a href='login.php'>Try again</a>.<p>" . $db->error, $query);
+                $msg = "<p>Incorrect Password.</p>";
+				header("Location:login.php?msg=$msg");
+				exit;
             }
         } else {
-            reportErrorAndDie("Username not in our system. <a href='login.php'>Try again</a>.<p>" . $db->error, $query);
+            $msg = "<p>Username/Password Combination not found.</p>";
+				header("Location:login.php?msg=$msg");
         }
     } else {
         reportErrorAndDie("Could not run authorization.<p>" . $db->error, $query);

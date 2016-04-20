@@ -23,37 +23,43 @@
 	$confirmpassword = $_POST['confirmpassword'];
     
 	if (!$username) {
-        echo "Hey, you didn't add a username. Please <a href='register.php'>try again</a>";
-        exit;
+        $msg = "<p>You didn't select a username.</p>";
+				header("Location:register.php?msg=$msg");
+				exit;
     }
     // check that we have a first name
     if (!$firstname) {
-        echo "Hey, you didn't add a first name. Please <a href='register.php'>try again</a>";
-        exit;
+        $msg = "<p>You didn't enter your first name.</p>";
+				header("Location:register.php?msg=$msg");
+				exit;
     }
     
     // check that we have a last name
     if (!$lastname) {
-        echo "Hey, you didn't add a last name. Please <a href='register.php'>try again</a>";
-        exit;
+        $msg = "<p>You didn't enter your last name.</p>";
+				header("Location:register.php?msg=$msg");
+				exit;
     }
 
     // check that we have an email
     if (!$email) {
-        echo "Hey, you didn't add an email. Please <a href='register.php'>try again</a>";
-        exit;
+        $msg = "<p>You didn't enter your an email address.</p>";
+				header("Location:register.php?msg=$msg");
+				exit;
     }
     
         // check that we have an password
     if (!$password) {
-        echo "No password received. Please <a href='register.php'>try again</a>";
-		exit;
+        $msg = "<p>You didn't enter password.</p>";
+				header("Location:register.php?msg=$msg");
+				exit;
 	}
 		
 		//check that password matches confrimed password
 	if ($password != $confirmpassword) {
-		echo "Passwords do not match. Please <a href='register.php'>try again</a>";
-		exit;
+		$msg = "<p>Passwords did not match.</p>";
+				header("Location:register.php?msg=$msg");
+				exit;
 		
 	}
     
@@ -67,8 +73,9 @@
     if ($result) {
         $numberofrows = $result->num_rows;
         if ($numberofrows > 0) {
-            reportErrorAndDie("The  username " . $username . " is already taken." .
-                              "<p>Please <a href='register.php'>try again</a>");
+            $msg = "<p>The  username " . $username . " is already taken.</p>";
+				header("Location:register.php?msg=$msg");
+				exit;
         }
     } else {
         reportErrorAndDie("Could not check if username was already in table.<p>" . $db->error, $usernameCheckQuery);
@@ -95,7 +102,7 @@
         
         // inform new user that an account has been created for them
         $subject = "You have successfully created an account for the my antiwagetheft.org";
-        $mailcontent = "You should visit http://webdev.divms.uiowa.edu/~cmcgillin";
+        $mailcontent = "Please login at http://webdev.divms.uiowa.edu/~cmcgillin/infoproject/project/login.php";
         mail($email, $subject, $mailcontent, "From: " . $adminEmail);
     } else {
         echo "Something went horribly wrong when adding " . $firstname . " " . $lastname . ".";

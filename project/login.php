@@ -26,17 +26,15 @@
     
 <div class="container" style="width: 1024px">
 
-<div class="row">
-    <div class="col-xs-12">
-        <div class="page-header">
-            <!-- Header -->
-            <h1>Login screen</h1>
-        </div>
-    </div>  
-</div>
+
 <div class="row">
     <div class="col-xs-12">
         <div>
+		<span style="color:red; font-weight:bold">
+		<?php if(isset($_GET['msg']))
+			echo $_GET['msg'];
+		?>
+		</span>
             <!-- Header -->
 			<p><h2>Please Login</h2></p>
 			<p></p>
@@ -51,11 +49,13 @@
     <div class="form-group">
         <label for="email">username:</label>
         <input type="text" class="form-control" name="username"/>
+		
     </div>
     
     <div class="form-group">
         <label for="password">password:</label>
         <input type="password" class="form-control" name="password" id="password"/>
+		
     </div>  
 
     <button type="submit" class="btn btn-default">Login</button>
