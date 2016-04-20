@@ -2,7 +2,7 @@
 	include_once("config.php");
 	include_once("util.php");
 	session_start();
-		
+	$title ="AntiWageTheft.org";	
 	$menu=1;
 	include_once("header2.php");
 	
@@ -10,6 +10,10 @@
         // if this variable is not set, then kick user back to login screen
         header("Location: " . $baseURL . "login.php");
     }
+	if (isset($_SESSION['jobid'])) {
+        unset($_SESSION['jobid']);
+    }
+	
 
 ?>
 <html>
@@ -331,9 +335,9 @@
                     <table class="table table-striped">
 						<!-- Titles for table -->
 						<tr>
-							<td>jobid</td>
-							<td>jobTitle</td>
-							<td>userid</td>
+							<!-- <td>jobid</td> -->
+							<td>Job Title:</td>
+							<!-- <td>userid</td> -->
 							<td> </td>
 							<td> </td>
 						</tr>
@@ -358,12 +362,17 @@
 								for($i=0; $i < $numberofrows; $i++) {
 									$row = $result->fetch_assoc();
 									echo "\n <tr>";
-									echo "\n <td>" . $row['jobid'] . "</td>";
 									echo "\n <td>" . $row['jobTitle'] . "</td>";
-									echo "\n <td>" . $row['username'] . "</td>";
+									//echo "\n <td>" . $row['username'] . "</td>";
 									$jobid = $row['jobid'];
 									echo " <td><form action='userpage.php'  method='post'><input type='hidden' name='jobid' value={$jobid} />
-															<input type= 'submit' value= 'Enter Info'/> </form></td>\n";
+															<input type= 'submit' value= 'Enter Hours'/> </form></td>\n";
+												
+				
+
+									//need to change where this goes once a usersplash for job info page exists
+									echo " <td><form action='paycheck.php'  method='post'><input type='hidden' name='jobid' value={$jobid} />
+															<input type= 'submit' value= 'Other Info'/> </form></td>\n";
 									echo "\n </tr>";
 								}
 								

@@ -3,7 +3,15 @@
 
 	$menu=0;
 	$title ="AntiWageTheft.org";
-	include_once("header.php");
+	session_start();
+	
+    if (!isset($_SESSION['username'])) {
+        // if logged in show logout and user header
+			include("header.php");
+	}
+	else{
+		include("header2.php");
+	}
 ?>
 
 

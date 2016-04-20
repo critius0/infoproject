@@ -4,12 +4,48 @@
 
 <?php
 session_start();
+$menu =1;
  if (!isset($_SESSION['username'])) {
         // if this variable is not set, then kick user back to login screen
         header("Location: " . $baseURL . "login.php");
     }
+
 $jobid = $_POST['jobid'];
+	if (!isset($_SESSION['jobid'])) {
+        // if this variable is not set, then set it
+        $_SESSION['jobid'] = $jobid;
+    }
+
+
+
+
 include_once('header2.php');
+include_once('config.php');
+include_once('util.php');
+
+	
+	//prepare query for selected job specific information
+	// get a handle to the database
+	$db = connect($dbHost, $dbUser, $dbPassword, $dbName);
+							
+	// prepare sql statement
+	$query = "SELECT jobTitle FROM Jobinfo WHERE jobid={$_SESSION['jobid']};";    
+							// execute sql statement
+							$result = $db->query($query);
+	if ($result) {
+		$numberofrows = $result->num_rows;
+								
+			for($i=0; $i < $numberofrows; $i++) {
+				$row = $result->fetch_assoc();
+				$job = $row['jobTitle'];
+	}
+	}
+	 else {
+								reportErrorAndDie("Something went wrong when retrieving jobs from the database.<p>" .
+												  "This was the error: " . $db->error . "<p>", $query);
+							}
+							
+	$db->close();
 
 
 ?>
@@ -376,11 +412,7 @@ include_once('header2.php');
 		<!-- enter hours form -->
 		<div id="page-wrapper">
             <div class="row">
-                 <div class="col-lg-12">
-                    <div class="page-header">
-					<h1 class="text-primary">Enter Work Info</h1>
-					</div>
-				</div>
+                 
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
@@ -390,7 +422,7 @@ include_once('header2.php');
                     <div class="panel panel-default">
 						<form role="form">
                         <div class="panel-heading">
-                            <h4>Enter Paycheck</h4>
+                            <h4>Enter Paycheck for: <?php echo $job ?></h4>
                         </div>
                     <div class="panel-body">
                         <div class="row">
@@ -411,10 +443,10 @@ include_once('header2.php');
                             <!-- /.row (nested) -->
                         </div>
                         <!-- /.panel-body -->
-                    <div class="form-group">
+                    <!--<div class="form-group">
                         <label>Submit Paystub Picture</label>
                              <input type="file">
-                    </div>
+                    </div> -->
 					<div class="col-lg-4">
                                 <form role="form">
 									<label>Paycheck Period Start Date</label>

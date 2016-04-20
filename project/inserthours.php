@@ -52,14 +52,14 @@
     
     // check if it worked
     if ($result) {
-        header("Location: " . $baseURL . "userpage.php");
+        header("Location: " . $baseURL . "usersplash.php");
         
        
     } else {
        
         echo "<p>There was an error: " . $db->error;
         echo "<p>This was the sql statement: " . $query;
-        echo "<p>Please <a href='userpage.php'>try again</a>";
+        echo "<p>Please <a href='usersplash.php'>try again</a>";
     }
     
     $db->close();

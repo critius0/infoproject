@@ -10,9 +10,40 @@ session_start();
 	
 	$menu=1;
 	$jobid = $_POST['jobid'];
+	if (!isset($_SESSION['jobid'])) {
+        // if this variable is not set, then set it
+        $_SESSION['jobid'] = $jobid;
+    }
+
+    
+	
 	include_once('header2.php');
+	include_once('config.php');
+	include_once('util.php');
 
-
+	
+	//prepare query for selected job specific information
+	// get a handle to the database
+	$db = connect($dbHost, $dbUser, $dbPassword, $dbName);
+							
+	// prepare sql statement
+	$query = "SELECT jobTitle FROM Jobinfo WHERE jobid={$_SESSION['jobid']};";    
+							// execute sql statement
+							$result = $db->query($query);
+	if ($result) {
+		$numberofrows = $result->num_rows;
+								
+			for($i=0; $i < $numberofrows; $i++) {
+				$row = $result->fetch_assoc();
+				$job = $row['jobTitle'];
+	}
+	}
+	 else {
+								reportErrorAndDie("Something went wrong when retrieving jobs from the database.<p>" .
+												  "This was the error: " . $db->error . "<p>", $query);
+							}
+							
+	$db->close();
 ?>
 <head>
 
@@ -367,11 +398,7 @@ session_start();
 		<!-- enter hours form -->
 		<div id="page-wrapper">
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="page-header">
-					<h1 class="text-primary">Enter Work Info</h1>
-					</div>
-				</div>
+                
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
@@ -379,7 +406,7 @@ session_start();
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h4>Enter Hours</h4>
+                            <h4>Enter Hours for: <?php echo $job ?></h4>
                         </div>
                     <div class="panel-body">
                         <div class="row">
@@ -400,7 +427,7 @@ session_start();
 								
 								<!-- hidden value included for transfer of the jobinfo -->
 								<div class="form-group">
-									<input type='hidden' name='jobid' value= <?php echo $jobid ?> />
+									<input type='hidden' name='jobid' value= <?php echo $_SESSION[jobid] ?> />
 								</div>
 								
 							</div>

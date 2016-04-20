@@ -2,12 +2,15 @@
 	include_once("config.php");
 	$title ="AntiWageTheft.org";
 	$menu=2;
-	include_once("header.php");
-	  session_start();
-    if (!isset($_SESSION['userid'])) {
-        // if this variable is not set, then kick user back to login screen
-        header("Location: " . $baseURL . "login.php");
-    }
+	
+	 session_start();
+     if (!isset($_SESSION['username'])) {
+        // if logged in show logout and user header
+			include("header.php");
+	}
+	else{
+		include("header2.php");
+	}
 	//if (isset($_SESSION['userid'])=='2')) {
         // check for usertype: admin
       //  header("Location: " . $baseURL . "admin.html");
