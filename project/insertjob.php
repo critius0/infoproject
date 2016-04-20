@@ -25,19 +25,22 @@
   
     //check that an employer was selected
 	if (!$employerid) {
-        echo "Hey, you didn't select an Employer. Please <a href='addjob.php'>try again</a>";
-        exit;
+        $msg = "<p>Hey, you didn't select an employer.</p>";
+				header("Location:addjob.php?msg=$msg");
+				exit;
     }
     // check that we have a job title
     if (!$jobTitle) {
-        echo "Hey, you didn't add a Job Title. Please <a href='addjob.php'>try again</a>";
-        exit;
+        $msg = "<p>Hey, you didn't add a job title.</p>";
+				header("Location:addjob.php?msg=$msg");
+				exit;
     }
     
     // check that we have a hourly rate 
     if (!$hourlyrate) {
-        echo "Hey, you didn't input your hourly wage. Please <a href='addjob.php'>try again</a>";
-        exit;
+        $msg = "<p>Hey, you didn't enter an hourly rate.</p>";
+				header("Location:addjob.php?msg=$msg");
+				exit;
     }
 
     

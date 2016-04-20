@@ -28,8 +28,12 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="page-header">
-            <!-- Header -->
-            <h1>Registration Page</h1>
+            <!-- Error report area -->
+            <span style="color:red; font-weight:bold">
+		<?php if(isset($_GET['msg']))
+			echo $_GET['msg'];
+		?>
+		</span>
         </div>
 		<h2>Please signup for an AntiWageTheft.org account:</h2>
 		<p></p>
@@ -44,15 +48,17 @@
         <label for="username">Username</label>
         <input type="text" class="form-control" name="username"/>
     </div>
+		
 	<div class="form-group">
         <label for="firstname">First Name</label>
         <input type="text" class="form-control" name="firstname"/>
-    </div>
-
-    <div class="form-group">
+	</div>
+		
+    <div class="form-group"> 
         <label for="lastname">Last Name</label>
         <input type="text" class="form-control" name="lastname"/>
     </div>
+	
     <div class="form-group">
         <label for="email">email</label>
         <input type="email" class="form-control" name="email"/>

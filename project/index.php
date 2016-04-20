@@ -21,7 +21,7 @@
 			<p>
 				AntiWageTheft
 			</p>
-			<img src="computer-joke.jpg" class="img-responsive" alt="Joke"/>
+			<img src="stopwagetheft.png" class="img-responsive" alt="AntiWageTheft"/>
 		</div>
 	
 		<!-- Sidebar -->

@@ -26,24 +26,28 @@
   
     //check that an employer was inserted
 	if (!$employername) {
-        echo "Hey, you didn't insert an Employer. Please <a href='addemployer.php'>try again</a>";
-        exit;
+        $msg = "<p>Hey, you didn't insert an employer name.</p>";
+				header("Location:addemployer.php?msg=$msg");
+				exit;
     }
     // check that we have an address
     if (!$employeraddress) {
-        echo "Hey, you didn't add a Job Title. Please <a href='addemployer.php'>try again</a>";
-        exit;
+        $msg = "<p>Hey, you didn't insert an employer address.</p>";
+				header("Location:addemployer.php?msg=$msg");
+				exit;
     }
     
     // check that we have a city  
     if (!$employercity) {
-        echo "Hey, you didn't input the employer city. Please <a href='addemployer.php'>try again</a>";
-        exit;
+        $msg = "<p>Hey, you didn't insert an employer city.</p>";
+				header("Location:addemployer.php?msg=$msg");
+				exit;
     }
 	 // check that we have a state  
     if (!$employerstate) {
-        echo "Hey, you didn't input the employer state. Please <a href='addemployer.php'>try again</a>";
-        exit;
+        $msg = "<p>Hey, you didn't insert an employer state.</p>";
+				header("Location:addemployer.php?msg=$msg");
+				exit;
     }
 
     
