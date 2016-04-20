@@ -25,13 +25,15 @@
   
     //check that hours were entered
 	if (!$hoursworked) {
-        echo "Hey, you didn't enter any hours. Please <a href='userpage.php'>try again</a>";
-        exit;
+        $msg = "<p>Hey, you didn't insert any hours.</p>";
+				header("Location:userpage.php?msg=$msg");
+				exit;
     }
     // check that a date was selected
     if (!$datereportedfor) {
-        echo "Hey, you didn't select a date. Please <a href='userpage.php'>try again</a>";
-        exit;
+        $msg = "<p>Hey, you didn't select a date.</p>";
+				header("Location:userpage.php?msg=$msg");
+				exit;
     }
 	
 	
