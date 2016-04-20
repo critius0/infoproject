@@ -1,19 +1,44 @@
 <?php
 	include_once("config.php");
 	include_once("util.php");
+	$title ="AntiWageTheft.org";
+	session_start();
+		
+	$menu=1;
+	include_once("header2.php");
+	
+    if (!isset($_SESSION['username'])) {
+        // if this variable is not set, then kick user back to login screen
+        header("Location: " . $baseURL . "login.php");
+    }
+	$jobid = $_POST['jobid'];
+	if (!isset($_SESSION['jobid'])) {
+        // if this variable is not set, then set it
+        $_SESSION['jobid'] = $jobid;
+    }
+	
+	
+	// get a handle to the database
+	$db = connect($dbHost, $dbUser, $dbPassword, $dbName);
+	//get info for job specific report
+	$query = "SELECT jobTitle FROM Jobinfo WHERE jobid={$_SESSION['jobid']};";    
+							// execute sql statement
+		$result = $db->query($query);
+	if ($result) {
+	$numberofrows = $result->num_rows;
+								
+			for($i=0; $i < $numberofrows; $i++) {
+				$row = $result->fetch_assoc();
+				$job = $row['jobTitle'];
+				
+				}
+	}
+	$db->close();
+
 ?>
-<html lang="en">
+<html>
 
 <head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>SB Admin 2 - Bootstrap Admin Theme</title>
-
     <!-- Bootstrap Core CSS -->
     <link href="../startbootstrap-sb-admin-2-1.0.8/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -32,15 +57,16 @@
     <!-- Custom Fonts -->
     <link href="../startbootstrap-sb-admin-2-1.0.8/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
+    
 </head>
 
+
+    
+<!-- <div class="container" style="width: 1024px">
+
+<div class="row">
+    <!--potential banner area or place to generate error notifications 
+</div> -->
 <body>
 
     <div id="wrapper">
@@ -54,7 +80,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="admindash.html">SB Admin v2.0</a>
+                <a class="navbar-brand" href="userpage.php">User Page</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -69,7 +95,7 @@
                                 <div>
                                     <strong>John Smith</strong>
                                     <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
+                                        <em>Time</em>
                                     </span>
                                 </div>
                                 <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
@@ -271,31 +297,19 @@
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-                        <li class="sidebar-search">
-                            <div class="input-group custom-search-form">
-                                <input type="text" class="form-control" placeholder="Search...">
-                                <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </span>
-                            </div>
-                            <!-- /input-group -->
-                        </li>
+                        
+						
                         <li>
-                            <a href="admindash.php"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-                        </li>
-                        <li>
-                            <a href="companyoverview.php"><i class="fa fa-table fa-fw"></i> Company Overviews</a>
+							<a href="usersplash.php"><i class="fa fa-user fa-fw"></i> My Jobs</a>
                         </li>
 						<li>
-                            <a href="companylookup.php"><i class="fa fa-building fa-fw"></i> Company Lookup</a>
+                            <a href="companylookup.html"><i class="fa fa-gear fa-fw"></i>My Employers</a>
                         </li>
 						<li>
-                            <a href="employeelookup.php"><i class="fa fa-male fa-fw"></i> Employee Lookup</a>
+                            <a href="companyoverview.html"><i class="fa fa-bar-chart fa-fw"></i>Company Lookups</a>
                         </li>
 						<li>
-                            <a href="caselog.php"><i class="fa fa-briefcase fa-fw"></i> Case Log</a>
+                            <a href="caselog.html"><i class="fa fa-sign-out fa-fw"></i>My CaseLogs</a>
                         </li>
               
                     </ul>
@@ -304,25 +318,27 @@
             </div>
             <!-- /.navbar-static-side -->
         </nav>
-		<!-- End of header -->
-		
+		<!-- jobs form -->
 		<div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Company Lookup</h1>
-                </div>
+                    <div class="page-header">
+					<h1 class="text-primary">Info for: <?php echo $job ?></h1>
+					</div>
+				</div>
                 <!-- /.col-lg-12 -->
             </div>
-			<div class="row">
+            <!-- /.row -->
+            <div class="row">
                 <div class="col-lg-12">
                     <table class="table table-striped">
 						<!-- Titles for table -->
 						<tr>
-							<td>Company ID</td> 
-							<td>Companies Name</td>
-							<td>Company Address</td>
-							<td>Company City </td>
-							<td>Company State </td>
+							<!-- <td>jobid</td> -->
+							<td>Hours Reported:</td>
+							<td>Date Recorded</td> 
+							<td> </td>
+							<td> </td>
 						</tr>
 						<!---------------->
 						<!-- List Jobs  -->
@@ -333,7 +349,7 @@
 						  $db = connect($dbHost, $dbUser, $dbPassword, $dbName);
 							
 							// prepare sql statement
-							$query = "SELECT employerid, employername, employeraddress, employercity, employerstate FROM Employer ORDER BY employername";    
+							$query = "SELECT * FROM Hoursreported WHERE jobid={$_SESSION['jobid']}";    
 							// execute sql statement
 							$result = $db->query($query);
 							
@@ -345,20 +361,20 @@
 								for($i=0; $i < $numberofrows; $i++) {
 									$row = $result->fetch_assoc();
 									echo "\n <tr>";
-									echo "\n <td>" . $row['employerid'] . "</td>";
-									$employerid = $row['employerid'];
-									echo "\n <td>" . $row['employername'] . "</td>";
-									$employername = $row['employername'];
-									echo "\n <td>" . $row['employeraddress'] . "</td>";
-									$employeraddress = $row['employeraddress'];
-									echo "\n <td>" . $row['employercity'] . "</td>";
-									$employercity = $row['employercity'];
-									echo "\n <td>" . $row['employerstate'] . "</td>";
-									$employerstate = $row['employerstate'];
-
+									echo "\n <td>" . $row['hoursworked'] . "</td>";
+									$date = $row['datereportedfor'];
+									$datereportedfor = date("m-d-Y", strtotime($date));
+									echo "\n <td>" . $datereportedfor . "</td>";
 									
-									/* echo " <td><form action='paycheck.php'  method='post'><input type='hidden' name='jobid' value={$jobid} />
-															<input type= 'submit' value= 'Other Info'/> </form></td>\n"; */
+									//$jobid = $row['jobid'];
+									//echo " <td><form action='userpage.php'  method='post'><input type='hidden' name='jobid' value={$jobid} />
+									//						<input type= 'submit' value= 'Enter Hours'/> </form></td>\n";
+												
+				
+
+									//need to change where this goes once a usersplash for job info page exists
+									//echo " <td><form action='jobinfo.php'  method='post'><input type='hidden' name='jobid' value={$jobid} />
+										//					<input type= 'submit' value= 'Other Info'/> </form></td>\n";
 									echo "\n </tr>";
 								}
 								
@@ -374,7 +390,15 @@
 					</table>
                 <!-- /.col-lg-12 -->
 				</div>
+				
+            <!-- /.row -->
 			</div>
-		</div><!-- page wrapper-->
-	</div><!--wrapper-->
+		</div>
+		<!-- enter hours form -->
+
+
+</div> <!-- Closing container div -->
+
 </body>
+
+</html>

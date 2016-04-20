@@ -54,7 +54,7 @@
     
     // check if it worked
     if ($result) {
-        header("Location: " . $baseURL . "usersplash.php");
+        header("Location: " . $baseURL . "jobinfo.php");
         
        
     } else {

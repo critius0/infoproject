@@ -44,8 +44,8 @@
                 $_SESSION['username'] = $username;
 				$_SESSION['userid'] = $userid;
 				$_SESSION['usertype'] = $usertype;
-				//header("Location: " . $baseURL . "usersplash.php");
-			//testing from here to next comment on check usertype, direct to corresponding page	
+				
+			//check usertype, direct to corresponding page	
 				if ($usertype ==0){
 					header("Location: " . $baseURL . "usersplash.php");
 					
@@ -55,10 +55,7 @@
 				}
 				
 				
-				
-				
-				
-			//above is in progress
+		
             } else {
                 // wrong password
                 $msg = "<p>Incorrect Password.</p>";

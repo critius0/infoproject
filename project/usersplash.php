@@ -278,29 +278,8 @@
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-                        <li class="sidebar-search">
-                            <div class="input-group custom-search-form">
-                                <input type="text" class="form-control" placeholder="Search...">
-                                <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </span>
-                            </div>
-                            <!-- /input-group -->
-                        </li>
-						<li class="active">
-                            <a href="#"><i class="fa fa-table fa-fw"></i> Enter Work Info<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li class="active">
-                                    <a href="userpage.php"><i class="fa fa-clock-o fa-fw"></i> Enter Hours</a>
-                                </li>
-                                <li>
-                                    <a href="paycheck.php"><i class="fa fa-dollar fa-fw"></i> Enter Paycheck</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
+                        
+						
                         <li>
 							<a href="usersplash.php"><i class="fa fa-user fa-fw"></i> My Jobs</a>
                         </li>
@@ -372,7 +351,7 @@
 				
 
 									//need to change where this goes once a usersplash for job info page exists
-									echo " <td><form action='paycheck.php'  method='post'><input type='hidden' name='jobid' value={$jobid} />
+									echo " <td><form action='jobinfo.php'  method='post'><input type='hidden' name='jobid' value={$jobid} />
 															<input type= 'submit' value= 'Other Info'/> </form></td>\n";
 									echo "\n </tr>";
 								}
