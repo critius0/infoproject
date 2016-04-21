@@ -2,4 +2,4 @@
 
 This is group 8's project for Informatics Project.
 
-Main page is index.php
+Main page is at /project/index.php
