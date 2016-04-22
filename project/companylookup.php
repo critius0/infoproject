@@ -297,6 +297,9 @@
 						<li>
                             <a href="caselog.php"><i class="fa fa-briefcase fa-fw"></i> Case Log</a>
                         </li>
+						<li>
+                            <a href="addaccounts.php"><i class="fa fa-plus-circle fa-fw"></i> Manage Users</a>
+                        </li>
               
                     </ul>
                 </div>

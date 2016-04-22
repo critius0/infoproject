@@ -1,6 +1,21 @@
 <?php
 	include_once("config.php");
 	include_once("util.php");
+	   /*  session_start();
+    if (!isset($_SESSION['username'])) {
+        // if this variable is not set, then kick user back to login screen
+        header("Location: " . $baseURL . "login.php");
+    } */
+		
+	    // get a handle to the database
+    $db = connect($dbHost, $dbUser, $dbPassword, $dbName);
+    
+    // prepare sql statement to build current employer options list
+    $query = "SELECT employerid, employername FROM Employer ORDER BY employername;";
+    
+    // execute sql statement
+    $result = $db->query($query);
+	$db->close();
 ?>
 <html lang="en">
 
@@ -300,7 +315,6 @@
 						<li>
                             <a href="addaccounts.php"><i class="fa fa-plus-circle fa-fw"></i> Manage Users</a>
                         </li>
-              
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->
@@ -312,72 +326,130 @@
 		<div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Employee Lookup</h1>
-                </div>
+                    <div class="page-header">
+					<h1 class="text">Create a User</h1>
+					</div>
+				</div>
+			<!-- Span for error messages -->	
+				<span style="color:red; font-weight:bold">
+					<?php if(isset($_GET['msg']))
+						echo $_GET['msg'];
+					?>
+			</span>
                 <!-- /.col-lg-12 -->
             </div>
 			<div class="row">
                 <div class="col-lg-12">
-                    <table class="table table-striped">
-						<!-- Titles for table -->
-						<tr>
-							<td>User ID</td> 
-							<td>First Name</td>
-							<td>Last Name</td>
-							<td>Email</td>
-							<td>Job</td>
-						</tr>
-						<!---------------->
-						<!-- List Jobs  -->
-						<!---------------->
-						<?php
+					<form action="insertaccount.php" method="post" enctype="multipart/form-data">
+					<!-- row open for username and email-->
+						<div class="row">
+							<div class="form-group col-xs-6">
+								<label for="username">Username</label>
+								<input type="text" class="form-control" name="username"/>
+							</div>
+							<div class="form-group col-xs-6">
+								<label for="email">email</label>
+								<input type="email" class="form-control" name="email"/>
+							</div>
+						</div> <!-- row close for username and email-->
+						<!-- row open for first and last name -->
+						<div class="row">
+							<div class="form-group col-xs-6">
+								<label for="firstname">First Name</label>
+								<input type="text" class="form-control" name="firstname"/>
+							</div>
+							
+							<div class="form-group col-xs-6"> 
+								<label for="lastname">Last Name</label>
+								<input type="text" class="form-control" name="lastname"/>
+							</div>
+						</div> <!--row close for firs and last name -->
+						
+						<!--open row for password and confirm password -->
+						<div class="row">
+					
+							<div class="form-group col-xs-6">
+								<label for="password">password</label>
+								<input type="password" class="form-control" name="password" id="password"/>
+							</div>  
+							
+							<div class="form-group col-xs-6">
+								<label for="confirmpassword">confirm password</label>
+								<input type="password" class="form-control" name="confirmpassword" id="password"/>
+							</div> 
+						</div> <!-- close row for password and confirm password -->
+						
+						<!-- open row for choosing user type -->
+						<div class="form-group">
+							<label for="usertype">User Type</label>
+							<select type ="int" class="form-control" name="usertype" id="usertype">
+							<option>Please Choose</option>
+								<option value="0">0 (User)</option>
+								<option value="1">1 (Non-Profit)</option>
+								<option value="2">2 (Admin)</option>
+							</select>
+						</div><!-- close row for choosing user type-->
+						
+					<button type="submit" class="btn btn-default">Create Account</button>
+					</form>
+				</div>
+				
+				<div>
+					<!-- list users-->
+					<table class="table table-striped"> 
+					<!-- Titles for table -->
+					<tr>
+						<td>Username</td>
+						<td>First Name</td>
+						<td>Last Name</td>
+						<td>email</td>
+						<td>User type</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<?php
+						include_once("util.php");
+						include_once("config.php");
 
-							// get a handle to the database
-						  $db = connect($dbHost, $dbUser, $dbPassword, $dbName);
+						// get a handle to the database
+						$db = connect($dbHost, $dbUser, $dbPassword, $dbName);
+						
+						// prepare sql statement
+						$query = "SELECT userid, username, firstname, lastname, email, usertype FROM Users ORDER BY usertype ;";
+						
+						// execute sql statement
+						$result = $db->query($query);
+						
+						// check if it worked
+						if ($result) {
+							$numberofrows = $result->num_rows;
 							
-							// prepare sql statement
-							$query = "SELECT Users.userid, firstname, lastname, email, jobtitle, employername, Jobinfo.userid, Jobinfo.employerid, Employer.employerid FROM Jobinfo, Users, Employer WHERE Users.userid=Jobinfo.userid AND Jobinfo.employerid=Employer.employerid ORDER BY Users.lastname";    
-							// execute sql statement
-							$result = $db->query($query);
-							
-							
-							// check if it u
-							if ($result) {
-								$numberofrows = $result->num_rows;
-								
-								for($i=0; $i < $numberofrows; $i++) {
-									$row = $result->fetch_assoc();
-									echo "\n <tr>";
-									echo "\n <td>" . $row['userid'] . "</td>";
-									$userid = $row['userid'];
-									echo "\n <td>" . $row['firstname'] . "</td>";
-									$firstname = $row['firstname'];
-									echo "\n <td>" . $row['lastname'] . "</td>";
-									$lastname = $row['lastname'];
-									echo "\n <td>" . $row['email'] . "</td>";
-									$email = $row['email'];
-									echo "\n <td>" . $row['jobtitle']." at ".$row['employername'] . "</td>";
-									$employername = $row['employername'];
-
-									
-									/* echo " <td><form action='paycheck.php'  method='post'><input type='hidden' name='jobid' value={$jobid} />
-															<input type= 'submit' value= 'Other Info'/> </form></td>\n"; */
-									echo "\n </tr>";
-								}
-								
-							} else {
-								reportErrorAndDie("Something went wrong when retrieving jobs from the database.<p>" .
-												  "This was the error: " . $db->error . "<p>", $query);
+							for($i=0; $i < $numberofrows; $i++) {
+								$row = $result->fetch_assoc();
+								echo "\n <tr>";
+								echo "\n <td>" . $row['username'] . "</td>";
+								echo "\n <td>" . $row['firstname'] . "</td>";
+								echo "\n <td>" . $row['lastname'] . "</td>";
+								echo "\n <td>" . $row['email'] . "</td>";
+								echo "\n <td>" . $row['usertype'] . "</td>";
+								echo "\n <td><button type='button' onclick='deleteRecord(" . $row['id'] . ', "' .
+									$row['firstname'] . " " . $row['lastname'] . '"' . ");'>Delete</button></td>";
+								echo "\n <td><button type='button' onclick='editRecord(" . $row['id'] . ', "' .
+									$row['firstname'] . '", "' . $row['lastname'] . '", "' . $row['email'] . '"' . ");'>Edit</button></td>";
+								echo "\n </tr>";
 							}
 							
-							$db->close();
-							
-						?>    
-  
+						} else {
+							reportErrorAndDie("Something went wrong when retrieving people from the database.<p>" .
+											  "This was the error: " . $db->error . "<p>", $query);
+						}
+						
+						$db->close();
+						
+					?>    
+						
 					</table>
-                <!-- /.col-lg-12 -->
 				</div>
-			</div>
-		</div><!-- page wrapper-->
+			</div><!-- page wrapper-->
 	</div><!--wrapper-->
 </body>
