@@ -46,6 +46,12 @@
 
     <!-- Custom Fonts -->
     <link href="../startbootstrap-sb-admin-2-1.0.8/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	
+	<!-- jQuery stuff -->
+	<script src="http://code.jquery.com/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>   
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>	
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -432,9 +438,9 @@
 								echo "\n <td>" . $row['lastname'] . "</td>";
 								echo "\n <td>" . $row['email'] . "</td>";
 								echo "\n <td>" . $row['usertype'] . "</td>";
-								echo "\n <td><button type='button' onclick='deleteRecord(" . $row['id'] . ', "' .
+								echo "\n <td><button type='button' onclick='deleteRecord(" . $row['userid'] . ', "' .
 									$row['firstname'] . " " . $row['lastname'] . '"' . ");'>Delete</button></td>";
-								echo "\n <td><button type='button' onclick='editRecord(" . $row['id'] . ', "' .
+								echo "\n <td><button type='button' onclick='editRecord(" . $row['userid'] . ', "' .
 									$row['firstname'] . '", "' . $row['lastname'] . '", "' . $row['email'] . '"' . ");'>Edit</button></td>";
 								echo "\n </tr>";
 							}
@@ -449,7 +455,112 @@
 					?>    
 						
 					</table>
+			
 				</div>
 			</div><!-- page wrapper-->
 	</div><!--wrapper-->
+	
+				<!-- Code for editing form -->
+					<div id="dialog-form" title="Edit person" style="display: none">
+						<form>
+						  <fieldset>
+							<div class="form-group">
+								<label for="first name">First Name</label>
+								<input type="text" name="editfirstname" id="editfirstname" class="form-control" />
+							</div>
+						
+							<div class="form-group">
+								<label for="last name">Last Name</label>
+								<input type="text" name="editlastname" id="editlastname" value="" class="form-control" />
+							</div>
+						
+							<div class="form-group">
+								<label for="email">Email</label>
+								<input type="text" name="editemail" id="editemail" value="" class="form-control" />
+							</div>
+							<input type="hidden" name="edituserid" id="edituserid"/>
+						  </fieldset>
+						</form>
+					</div>
 </body>
+					<script>						
+						// confirm that a user wants to delete, then call php script to do deletion
+						function deleteRecord(userid, lastname) {
+							// delete record from people table identified by id, if user agrees
+							var decision = confirm("Would you like to delete " + lastname + "?");
+							if (decision == true) {
+								var xmlhttp = new XMLHttpRequest();
+								
+								// this part of code receives a response from deleteaccounts.php 
+								xmlhttp.onreadystatechange=function() {
+									if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+										if(xmlhttp.responseText == "Person deleted") {
+											location.reload();
+										} else {
+											alert("Unsuccessful delete: " + xmlhttp.responseText);
+										}
+									}
+								}
+								
+								// this sends the data request to deleteaccounts.php
+								xmlhttp.open("POST", "deleteaccounts.php", true);
+								xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+								xmlhttp.send("userid=" + userid);
+							}
+						}
+						
+						// pop up a form to edit a record that provides option to cancel or save changes
+						function editRecord(userid, firstname, lastname, email) {
+							document.getElementById("editfirstname").value = firstname;
+							document.getElementById("editlastname").value = lastname;
+							document.getElementById("editemail").value = email;
+							document.getElementById("edituserid").value = userid;
+							$("#dialog-form").dialog("open");        
+						}
+						
+						$("#dialog-form").dialog(
+							{
+								autoOpen: false,
+								height: 400,
+								width: 400,
+								modal: true,
+								buttons: {
+									"Save": function() {
+										var xmlhttp = new XMLHttpRequest();
+								
+										// this part of code receives a response from editperson.php 
+										xmlhttp.onreadystatechange=function() {
+											if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+												if(xmlhttp.responseText == "Person edited") {
+													location.reload();
+												} else {
+													alert("Unsuccessful save: " + xmlhttp.responseText);
+													location.reload();
+												}
+											}
+										}
+														  
+										// this sends the data request to editperson.php
+										xmlhttp.open("POST", "editperson.php", true);
+										xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+										
+										// get variables
+										var editfirstname = document.getElementById("editfirstname").value;
+										var editlastname = document.getElementById("editlastname").value;
+										var editemail = document.getElementById("editemail").value;
+										var edituserid = document.getElementById("edituserid").value;
+										
+										// send data to editperson.php
+										xmlhttp.send("userid=" + edituserid + "&firstname=" + editfirstname + "&lastname=" + editlastname + "&email=" + editemail);
+									},
+									"Cancel": function() {
+										$(this).dialog("close");       
+									}
+								}
+							}
+												 
+											 )
+						
+						
+					</script>
+</html>
