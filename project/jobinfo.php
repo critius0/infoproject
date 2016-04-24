@@ -285,7 +285,7 @@
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="login.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -303,13 +303,13 @@
 							<a href="usersplash.php"><i class="fa fa-user fa-fw"></i> My Jobs</a>
                         </li>
 						<li>
-                            <a href="companylookup.html"><i class="fa fa-gear fa-fw"></i>My Employers</a>
+                            <a href="companylookup.php"><i class="fa fa-gear fa-fw"></i>My Employers</a>
                         </li>
 						<li>
-                            <a href="companyoverview.html"><i class="fa fa-bar-chart fa-fw"></i>Company Lookups</a>
+                            <a href="companyoverview.php"><i class="fa fa-bar-chart fa-fw"></i>Company Lookups</a>
                         </li>
 						<li>
-                            <a href="caselog.html"><i class="fa fa-sign-out fa-fw"></i>My CaseLogs</a>
+                            <a href="caselog.php"><i class="fa fa-sign-out fa-fw"></i>My CaseLogs</a>
                         </li>
               
                     </ul>
@@ -336,9 +336,12 @@
 						<tr>
 							<!-- <td>jobid</td> -->
 							<td>Hours Reported:</td>
-							<td>Date Recorded</td> 
+							<td>Hourly Wage</td> 
+							<td>Expected Wage</td>
+							<td>Date Reported</td>
 							<td> </td>
 							<td> </td>
+							
 						</tr>
 						<!---------------->
 						<!-- List Jobs  -->
@@ -349,7 +352,7 @@
 						  $db = connect($dbHost, $dbUser, $dbPassword, $dbName);
 							
 							// prepare sql statement
-							$query = "SELECT * FROM Hoursreported WHERE jobid={$_SESSION['jobid']}";    
+							$query = "SELECT Hoursreported.hoursworked, Hoursreported.datereportedfor, Jobinfo.hourlyrate FROM Hoursreported, Jobinfo WHERE Jobinfo.jobid={$_SESSION['jobid']} AND Hoursreported.jobid={$_SESSION['jobid']}";    
 							// execute sql statement
 							$result = $db->query($query);
 							
@@ -361,10 +364,13 @@
 								for($i=0; $i < $numberofrows; $i++) {
 									$row = $result->fetch_assoc();
 									echo "\n <tr>";
-									echo "\n <td>" . $row['hoursworked'] . "</td>";
+									echo "\n <td>" . $row['hoursworked'] . "hrs</td>";
+									echo "\n <td>$" . $row['hourlyrate'] . "</td>";
+									echo "\n <td>$" . $row['hoursworked']*$row['hourlyrate']. "</td>";
 									$date = $row['datereportedfor'];
 									$datereportedfor = date("m-d-Y", strtotime($date));
 									echo "\n <td>" . $datereportedfor . "</td>";
+									
 									
 									//$jobid = $row['jobid'];
 									//echo " <td><form action='userpage.php'  method='post'><input type='hidden' name='jobid' value={$jobid} />
@@ -390,6 +396,75 @@
 					</table>
                 <!-- /.col-lg-12 -->
 				</div>
+				<div class="col-lg-12">
+                    <table class="table table-striped">
+						<!-- Titles for table -->
+						<tr>
+							<!-- <td>jobid</td> -->
+							<td>Paycheck-Amount Earned</td>
+							<td>Paycheck-Hours Worked</td> 
+							<td>Paycheck-Start Date</td>
+							<td>Paycheck-End Date</td>
+							<td> </td>
+							<td> </td>
+							
+						</tr>
+						<!---------------->
+						<!-- List Jobs  -->
+						<!---------------->
+						<?php
+
+							// get a handle to the database
+						  $db = connect($dbHost, $dbUser, $dbPassword, $dbName);
+							
+							// prepare sql statement
+							$query = "SELECT * FROM Paycheck WHERE Paycheck.jobid={$_SESSION['jobid']}";    
+							// execute sql statement
+							$result = $db->query($query);
+							
+							
+							// check if it worked
+							if ($result) {
+								$numberofrows = $result->num_rows;
+								
+								for($i=0; $i < $numberofrows; $i++) {
+									$row = $result->fetch_assoc();
+									echo "\n <tr>";
+									echo "\n <td>$" . $row['amountearned'] . "</td>";
+									echo "\n <td>" . $row['hoursworked'] . "</td>";
+									$date = $row['payCheckPeriodStart'];
+									$payCheckPeriodStart = date("m-d-Y", strtotime($date));
+									echo "\n <td>" . $payCheckPeriodStart . "</td>";
+									$date = $row['payCheckPeriodEnd'];
+									$payCheckPeriodEnd = date("m-d-Y", strtotime($date));
+									echo "\n <td>" . $payCheckPeriodEnd . "</td>";
+									
+									
+									//$jobid = $row['jobid'];
+									//echo " <td><form action='userpage.php'  method='post'><input type='hidden' name='jobid' value={$jobid} />
+									//						<input type= 'submit' value= 'Enter Hours'/> </form></td>\n";
+												
+				
+
+									//need to change where this goes once a usersplash for job info page exists
+									//echo " <td><form action='jobinfo.php'  method='post'><input type='hidden' name='jobid' value={$jobid} />
+										//					<input type= 'submit' value= 'Other Info'/> </form></td>\n";
+									echo "\n </tr>";
+								}
+								
+							} else {
+								reportErrorAndDie("Something went wrong when retrieving jobs from the database.<p>" .
+												  "This was the error: " . $db->error . "<p>", $query);
+							}
+							
+							$db->close();
+							
+						?>    
+  
+					</table>
+                <!-- /.col-lg-12 -->
+				</div>
+				
 				
             <!-- /.row -->
 			</div>

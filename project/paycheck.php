@@ -322,7 +322,7 @@ include_once('util.php');
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="login.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -351,13 +351,13 @@ include_once('util.php');
 							<a href="usersplash.php"><i class="fa fa-user fa-fw"></i> My Jobs</a>
                         </li>
 						<li>
-                            <a href="companylookup.html"><i class="fa fa-gear fa-fw"></i> My Settings</a>
+                            <a href="companylookup.php"><i class="fa fa-gear fa-fw"></i> My Settings</a>
                         </li>
 						<li>
-                            <a href="companyoverview.html"><i class="fa fa-bar-chart fa-fw"></i> My Stats</a>
+                            <a href="companyoverview.php"><i class="fa fa-bar-chart fa-fw"></i> My Stats</a>
                         </li>
 						<li>
-                            <a href="caselog.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                            <a href="caselog.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
               
                     </ul>

@@ -19,7 +19,7 @@
 ?>
 <html>
 
-<head>
+<head >
     <!-- Bootstrap Core CSS -->
     <link href="../startbootstrap-sb-admin-2-1.0.8/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -266,7 +266,7 @@
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="login.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -284,13 +284,13 @@
 							<a href="usersplash.php"><i class="fa fa-user fa-fw"></i> My Jobs</a>
                         </li>
 						<li>
-                            <a href="companylookup.html"><i class="fa fa-gear fa-fw"></i>My Employers</a>
+                            <a href="companylookup.php"><i class="fa fa-gear fa-fw"></i>My Employers</a>
                         </li>
 						<li>
-                            <a href="companyoverview.html"><i class="fa fa-bar-chart fa-fw"></i>Company Lookups</a>
+                            <a href="companyoverview.php"><i class="fa fa-bar-chart fa-fw"></i>Company Lookups</a>
                         </li>
 						<li>
-                            <a href="caselog.html"><i class="fa fa-sign-out fa-fw"></i>My CaseLogs</a>
+                            <a href="caselog.php"><i class="fa fa-sign-out fa-fw"></i>My CaseLogs</a>
                         </li>
               
                     </ul>
@@ -352,7 +352,7 @@
 
 									//need to change where this goes once a usersplash for job info page exists
 									echo " <td><form action='jobinfo.php'  method='post'><input type='hidden' name='jobid' value={$jobid} />
-															<input type= 'submit' value= 'Other Info'/> </form></td>\n";
+															<input type= 'submit' value= 'Submitted Hours'/> </form></td>\n";
 									echo "\n </tr>";
 								}
 								
