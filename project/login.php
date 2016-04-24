@@ -44,7 +44,7 @@
 </div>
 
 <div class="row">
-<div class="col-xs-12">
+<div class="col-xs-6">
 <form action="loginprocess.php" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label for="email">username:</label>
