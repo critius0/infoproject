@@ -96,14 +96,20 @@
     
     // check if it worked
     if ($result) {
-        echo $firstname . " " . $lastname . " Congrats on creating an account.  You can now login";
-        echo "<p>";
-        echo "<a href='login.php'>Login</a>";
-        
-        // inform new user that an account has been created for them
+		// inform new user that an account has been created for them
         $subject = "You have successfully created an account for the my antiwagetheft.org";
         $mailcontent = "Please login at http://webdev.divms.uiowa.edu/~cmcgillin/infoproject/project/login.php";
         mail($email, $subject, $mailcontent, "From: " . $adminEmail);
+		
+		//then direct for login
+		$msg = "<p>Successful account creation!</p>";
+				header("Location:login.php?msg=$msg");
+				exit;
+       // echo $firstname . " " . $lastname . " Congrats on creating an account.  You can now login";
+       // echo "<p>";
+       // echo "<a href='login.php'>Login</a>";
+        
+        
     } else {
         echo "Something went horribly wrong when adding " . $firstname . " " . $lastname . ".";
         echo "<p>This was the error: " . $db->error;
