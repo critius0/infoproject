@@ -428,12 +428,12 @@ include_once('util.php');
                                 <form action="insertpaycheck.php" method="post" enctype="multipart/form-data" role="form">
 								<div class="form-group">
                                         <label>Hours Worked</label>
-                                        <input type="number" class="form-control" placeholder="Ex: 20">
+                                        <input type="number" class="form-control" name="paycheckhours" placeholder="Ex: 20">
                                 </div>
 								<label>Paycheck Amount</label>
                                <div class="form-group input-group">
                                     <span class="input-group-addon">$</span>
-                                    <input type="number" class="form-control" placeholder="Ex: 500.00">
+                                    <input type="number" class="form-control" name="amountearned" placeholder="Ex: 500.00">
                                 </div>
 							</div>
                                
@@ -448,14 +448,14 @@ include_once('util.php');
 					<div class="col-lg-4">
                                 <form role="form">
 									<label>Paycheck Period Start Date</label>
-									<input type="text" id="mytarget" class="form-control" placeholder="Choose a Date">
+									<input type="text" id="mytarget" class="form-control" name="paycheckstartdate" placeholder="Choose a Date">
                                     <div class="monthly" id="mycalendar1"></div>
 								
 							</div>
 					<div class="col-lg-4">
                                 <form role="form">
 									<label>Paycheck Period End Date</label>
-									<input type="text" id="mytarget2" class="form-control" placeholder="Choose a Date">
+									<input type="text" id="mytarget2" class="form-control" name="paycheckenddate" placeholder="Choose a Date">
                                     <div class="monthly" id="mycalendar2"></div>
 								
 							</div>
