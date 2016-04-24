@@ -1,14 +1,11 @@
 <html>
 
 <head>
-    <title>Insert Hours</title>
+    <title>Insert paycheck</title>
 </head>
 
 <body>
 
-<h1>
-    Insert Hours for Job
-</h1>
 
 <?php
     include_once("util.php");
@@ -24,26 +21,30 @@
 	$paycheckenddate = $_POST['paycheckenddate'];
 	$amountearned = $_POST['amountearned'];
     //need to correctly get jobid at the moment it is coming from userpage.php and from usersplash.php
-	$jobid = $_POST['jobid'];
+	$jobid = $_SESSION['jobid'];
   
     //check that hours were entered
 	if (!$paycheckhours) {
-        echo "Hey, you didn't enter any hours. Please <a href='paycheck.php'>try again</a>";
-        exit;
+        $msg = "<p>Hey, you didn't insert any hoursworked.</p>";
+				header("Location:paycheck.php?msg=$msg");
+				exit;
     }
     // check that a start and end dates were selected
     if (!$paycheckstartdate) {
-        echo "Hey, you didn't select a start date. Please <a href='paycheck.php'>try again</a>";
-        exit;
+        $msg = "<p>Hey, you didn't insert a paycheck start date.</p>";
+				header("Location:paycheck.php?msg=$msg");
+				exit;
     }
 	if (!$paycheckenddate) {
-        echo "Hey, you didn't select an end date. Please <a href='paycheck.php'>try again</a>";
-        exit;
+        $msg = "<p>Hey, you didn't insert a paycheck end date.</p>";
+				header("Location:paycheck.php?msg=$msg");
+				exit;
     }
-	//check that hours were entered.
+	//check that amount earned was entered.
 	if (!$amountearned) {
-        echo "Hey, you didn't insert amount earned. Please <a href='paycheck.php'>try again</a>";
-        exit;
+        $msg = "<p>Hey, you didn't insert how much you earned.</p>";
+				header("Location:paycheck.php?msg=$msg");
+				exit;
     }
 	
 	
@@ -60,11 +61,11 @@
     
     // prepare sql statement for entering job info into paycheck table
     $query = "insert into Paycheck (jobid, hoursworked, amountearned, payCheckPeriodStart, payCheckPeriodEnd)
-        values ('" . {$_SESSION['jobid']} . "', '" . $hoursworked . "', '" . $amountearned . "', '" . $paycheckstartdate . "', '" . $paycheckenddate . "');";
+        values ('" . $jobid . "', '" . $hoursworked . "', '" . $amountearned . "', '" . $paycheckstartdate . "', '" . $paycheckenddate . "');";
     
     // execute sql statement and add job
     $result = $db->query($query);
-    
+    $db->close();
     // check if it worked
     if ($result) {
         header("Location: " . $baseURL . "userpage.php");
@@ -77,7 +78,7 @@
         echo "<p>Please <a href='paycheck.php'>try again</a>";
     }
     
-    $db->close();
+    
 ?>
 
 </body>
