@@ -5,7 +5,13 @@
 
 	$menu=4;
 	$title ="AntiWageTheft.org";
-	include_once("header.php");
+	session_start();
+ if (!isset($_SESSION['username'])) {
+        include_once("header.php");
+    }
+else{
+	include_once("header2.php");
+	}
 ?>
 <head>
     

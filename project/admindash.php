@@ -1,5 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+$title ="AntiWageTheft.org";
+$menu=1;
+session_start();
+ if (!isset($_SESSION['username'])) {
+        // if this variable is not set, then kick user back to login screen
+        header("Location: " . $baseURL . "login.php");
+    }
+	include_once('header2.php');
+	include_once('config.php');
+	?>
 
 <head>
 
