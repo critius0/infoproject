@@ -346,13 +346,13 @@
 									//echo "\n <td>" . $row['username'] . "</td>";
 									$jobid = $row['jobid'];
 									echo " <td><form action='userpage.php'  method='post'><input type='hidden' name='jobid' value={$jobid} />
-															<input type= 'submit' value= 'Enter Hours'/> </form></td>\n";
+															<input type= 'submit' value= 'Enter Hours/Paychecks'/> </form></td>\n";
 												
 				
 
 									//need to change where this goes once a usersplash for job info page exists
 									echo " <td><form action='jobinfo.php'  method='post'><input type='hidden' name='jobid' value={$jobid} />
-															<input type= 'submit' value= 'Submitted Hours'/> </form></td>\n";
+															<input type= 'submit' value= 'Submitted Hours/Paychecks'/> </form></td>\n";
 									echo "\n </tr>";
 								}
 								

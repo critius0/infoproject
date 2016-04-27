@@ -5,13 +5,20 @@
 	$title ="AntiWageTheft.org";
 	session_start();
 	
-    if (!isset($_SESSION['username'])) {
-        // if logged in show logout and user header
+    if (!isset($_SESSION['usertype'])) {
+        // if not logged in show header with login feature
 			include("header.php");
-	}
-	else{
+			
+	} //determine to show header for an admin or regular user
+	elseif (($_SESSION['usertype']) ==0){
+		
 		include("header2.php");
+
 	}
+	elseif (($_SESSION['usertype']) >0){
+		include("header3.php");
+	}
+	
 ?>
 
 

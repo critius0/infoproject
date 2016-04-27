@@ -1,6 +1,7 @@
 <html>
 
 <head>
+
     <title>Insert Hours</title>
 </head>
 
@@ -35,16 +36,25 @@
 				header("Location:userpage.php?msg=$msg");
 				exit;
     }
-	
-	
+	 // get a handle to the database
+    $db = connect($dbHost, $dbUser, $dbPassword, $dbName);
+    $query1 = "SELECT * FROM Hoursreported WHERE jobid=17 AND datereportedfor='2016-04-11';" ;
+	 //execute query1
+	 $result1 = $db->query($query1);
+	if ($result1) {
+		//needs javascript to alert user about potential isse of adding hours 
+
+
+	}
+    
+   
     //convert date format for correct use with MariaDB
     $date = $datereportedfor;
 	$datereportedfor = date("Y-m-d", strtotime($date));
-    // get a handle to the database
-    $db = connect($dbHost, $dbUser, $dbPassword, $dbName);
-    
-  
-    
+	
+   
+	// get a handle to the database
+    //$db = connect($dbHost, $dbUser, $dbPassword, $dbName);
     // prepare sql statement for entering job info into Jobinfo table
     $query = "insert into Hoursreported (jobid, hoursworked, datereportedfor)
         values ('" . $jobid . "', '" . $hoursworked . "', '" . $datereportedfor . "');";

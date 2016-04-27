@@ -2,7 +2,20 @@
 	include_once("config.php");
 	$title ="AntiWageTheft.org";
 	$menu=5;
-	include_once("header.php");
+	if (!isset($_SESSION['usertype'])) {
+        // if not logged in show header with login feature
+			include("header.php");
+			
+	} //determine to show header for an admin or regular user
+	elseif (($_SESSION['usertype']) ==0){
+		
+		include("header2.php");
+
+	}
+	elseif (($_SESSION['usertype']) >0){
+		include("header3.php");
+	}
+	
 ?>
 <html>
 
