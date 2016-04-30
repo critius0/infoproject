@@ -389,8 +389,8 @@
 						<form>
 						  <fieldset>
 							<div class="form-group">
-								<label for="hours worked">Notes</label>
-								<input type="text" name="addnotes" id="addnotes" class="form-control" />
+								<label for="hours worked">Add Notes for Review</label>
+								<input type="text" name="addnotes" id="addnotes" class="form-control" placeholder="Include 1)Job Title and 2)Paycheck Start/End Dates" rows="4"/>
 							</div>					
 							<input type="hidden" name="addjobid" id="addjobid"/>
 						  </fieldset>
@@ -402,14 +402,15 @@
 						function addRecord(jobid) {						
 							document.getElementById("addjobid").value = jobid;
 							$("#dialog-form").dialog("open");  
+							 $( "#resizable" ).resizable();
 										
 						}
 						
 						$("#dialog-form").dialog(
 							{
 								autoOpen: false,
-								height: 400,
-								width: 400,
+								height: 215,
+								width: 600,
 								modal: true,
 								buttons: {
 									"Add": function() {
