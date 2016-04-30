@@ -62,7 +62,7 @@
     <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>   
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>	
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
-	<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+	<!-- <script src="//code.jquery.com/jquery-1.12.0.min.js"></script> -->
 	<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
 	<script src="https://cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"></script>
 </head>
@@ -382,7 +382,7 @@
 									echo "\n <td>" . $datereportedfor . "</td>";
 									echo "\n <td><button type='button' onclick='deleteRecord(" . $row['reportingid'] . ");'>Delete</button></td>";
 								echo "\n <td><button type='button' onclick='editRecord(" . $row['reportingid'] . ', "' .
-									$row['hoursworked'] . '", "' . $row['datereportedfor'] . ");'>Edit</button></td>";
+									$row['hoursworked'] . '", "' . $row['datereportedfor'] . '"'. ");'>Edit</button></td>";
 									
 									
 						
@@ -490,6 +490,23 @@ $('#example').dataTable( {
   ]
 } );
 </script>
+				<!-- Code for editing form -->
+					<div id="dialog-form" title="Edit hours" style="display: none">
+						<form>
+						  <fieldset>
+							<div class="form-group">
+								<label for="hours worked">Hours Worked</label>
+								<input type="int" name="edithoursworked" id="edithoursworked" value=""class="form-control" />
+							</div>
+						
+							<div class="form-group">
+								<label for="date reported for">Date Reported</label>
+								<input type="date" name="editdatereportedfor" id="editdatereportedfor" value="" class="form-control" />
+							</div>
+							<input type="hidden" name="editreportingid" id="editreportingid"/>
+						  </fieldset>
+						</form>
+					</div>
 
 <script>						
 						// confirm that a user wants to delete, then call php script to do deletion
@@ -519,11 +536,13 @@ $('#example').dataTable( {
 						
 						// pop up a form to edit a record that provides option to cancel or save changes
 						function editRecord(reportingid, hoursworked, datereportedfor) {
+							
 							document.getElementById("edithoursworked").value = hoursworked;
 							document.getElementById("editdatereportedfor").value = datereportedfor;
 							document.getElementById("editreportingid").value = reportingid;
+							$("#dialog-form").dialog("open");  
 							
-							$("#dialog-form").dialog("open");        
+							
 						}
 						
 						$("#dialog-form").dialog(

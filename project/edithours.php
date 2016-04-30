@@ -25,7 +25,8 @@
       , echo "No id received";
 		exit;
     }
-    
+    $date1 = $datereportedfor;
+	$datereportedfor = date("Y-m-d", strtotime($date1));
     
     
     // get a handle to the database
@@ -33,7 +34,7 @@
 	
    
     
-    $updateQuery = "UPDATE Hoursreported SET hoursworked='" . $hoursworked . "' .  WHERE reportingid = " . $reportingid . ";";
+    $updateQuery = "UPDATE Hoursreported SET hoursworked='" . $hoursworked . "', datereportedfor='" . $datereportedfor . "' WHERE reportingid = " . $reportingid . ";";
     
     $result = $DB->query($updateQuery);
     
