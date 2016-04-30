@@ -65,7 +65,7 @@
 	}
 	
 	   // check that we have a user type
-    if (!$usertype) {
+    if ($usertype != '0' and $usertype != '1' and $usertype != '2') {
         $msg = "<p>You didn't choose a usertype.</p>";
 				header("Location:addaccounts.php?msg=$msg");
 				exit;
