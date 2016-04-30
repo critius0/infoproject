@@ -284,9 +284,6 @@
 							<a href="usersplash.php"><i class="fa fa-user fa-fw"></i> My Jobs</a>
                         </li>
 						<li>
-                            <a href="companylookup.php"><i class="fa fa-gear fa-fw"></i>My Employers</a>
-                        </li>
-						<li>
                             <a href="companyoverview.php"><i class="fa fa-bar-chart fa-fw"></i>Company Lookups</a>
                         </li>
 						<li>
@@ -316,7 +313,7 @@
 						<!-- Titles for table -->
 						<tr>
 							<!-- <td>jobid</td> -->
-							<td>Job Title:</td>
+							<th>Job Title:</th>
 							<!-- <td>userid</td> -->
 							<td> </td>
 							<td> </td>

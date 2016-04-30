@@ -292,9 +292,6 @@
 							<a href="usersplash.php"><i class="fa fa-user fa-fw"></i> My Jobs</a>
                         </li>
 						<li>
-                            <a href="companylookup.php"><i class="fa fa-gear fa-fw"></i>My Employers</a>
-                        </li>
-						<li>
                             <a href="companyoverview.php"><i class="fa fa-bar-chart fa-fw"></i>Company Lookups</a>
                         </li>
 						<li>
@@ -399,10 +396,10 @@
 <script>						
 						
 						// pop up a form to edit a record that provides option to cancel or save changes
-						function addRecord(jobid) {						
+						function addRecord(jobid, notes) {						
 							document.getElementById("addjobid").value = jobid;
 							$("#dialog-form").dialog("open");  
-							 $( "#resizable" ).resizable();
+							$( "#resizable" ).resizable();
 										
 						}
 						
@@ -440,6 +437,7 @@
 										xmlhttp.send("&jobid=" + addjobid + "&notes=" + addnotes);
 									},
 									"Cancel": function() {
+										alert("Unsuccessful add: " + "%jobid);
 										$(this).dialog("close");       
 									}
 								}
