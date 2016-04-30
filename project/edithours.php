@@ -6,10 +6,10 @@
     $hoursworked = $_POST['hoursworked'];
     $datereportedfor = $_POST['datereportedfor'];
 	$reportingid = $_POST['reportingid'];
-   
+    
 
     // check that we have an hours
-    if (!$hoursworked) {
+    if ($hoursworked) {
         echo "No hours received";
 		exit;
     }
@@ -25,23 +25,22 @@
       , echo "No id received";
 		exit;
     }
-    $date1 = $datereportedfor;
-	$datereportedfor = date("Y-m-d", strtotime($date1));
     
     
+    $date = $datereportedfor;
+	$datereportedfor = date("Y-m-d", strtotime($date));
     // get a handle to the database
     $DB = connect($dbHost, $dbUser, $dbPassword, $dbName);
-	
-   
     
-    $updateQuery = "UPDATE Hoursreported SET hoursworked='" . $hoursworked . "', datereportedfor='" . $datereportedfor . "' WHERE reportingid = " . $reportingid . ";";
+    $updateQuery = "UPDATE Hoursreported SET hoursworked=" . $hoursworked  . ", datereportedfor=" . "'" . $datereportedfor . "'"
+        . "WHERE reportingid = " . $reportingid . ";";
     
     $result = $DB->query($updateQuery);
     
     if ($result) {
         echo "Hours edited";
     } else {
-        echo "soemthing bad happened with the query. " . $DB->error . " This was the query: " . $updateQuery;    
+        echo "Something bad happened with the query. " . $DB->error . " This was the query: " . $updateQuery;    
     }
     
 ?>

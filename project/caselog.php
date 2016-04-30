@@ -11,35 +11,16 @@
         // if this variable is not set, then kick user back to login screen
         header("Location: " . $baseURL . "login.php");
     }
-	$jobid = $_POST['jobid'];
-	if (!isset($_SESSION['jobid'])) {
-        // if this variable is not set, then set it
-        $_SESSION['jobid'] = $jobid;
+	if (isset($_SESSION['jobid'])) {
+        unset($_SESSION['jobid']);
     }
 	
-	
-	// get a handle to the database
-	$db = connect($dbHost, $dbUser, $dbPassword, $dbName);
-	//get info for job specific report
-	$query = "SELECT jobTitle FROM Jobinfo WHERE jobid={$_SESSION['jobid']};";    
-							// execute sql statement
-		$result = $db->query($query);
-	if ($result) {
-	$numberofrows = $result->num_rows;
-								
-			for($i=0; $i < $numberofrows; $i++) {
-				$row = $result->fetch_assoc();
-				$job = $row['jobTitle'];
-				
-				}
-	}
-	$db->close();
 
 ?>
 <html>
 
-<head>
- <!-- Bootstrap Core CSS -->
+<head >
+    <!-- Bootstrap Core CSS -->
     <link href="../startbootstrap-sb-admin-2-1.0.8/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
@@ -56,8 +37,8 @@
 
     <!-- Custom Fonts -->
     <link href="../startbootstrap-sb-admin-2-1.0.8/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-	
-	<!-- jQuery stuff -->
+
+    <!-- jQuery stuff -->
 	<script src="http://code.jquery.com/jquery.min.js"></script>
     <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>   
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>	
@@ -65,6 +46,7 @@
 	<!-- <script src="//code.jquery.com/jquery-1.12.0.min.js"></script> -->
 	<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
 	<script src="https://cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"></script>
+
 </head>
 
 
@@ -330,7 +312,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="page-header">
-					<h1 class="text-primary">Info for: <?php echo $job ?></h1>
+					<h1 class="text-primary">Potential Cases</h1>
 					</div>
 				</div>
                 <!-- /.col-lg-12 -->
@@ -338,81 +320,18 @@
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-12">
-                    <table id="example" class="table table-striped" cellspacing="0" width="100%">
-						<!-- Titles for table -->
-						<thead>
-							<tr>
-							
-							<th>Hours Reported:</th>
-							<th>Hourly Wage</th> 
-							<th>Expected Wage</th>
-							<th>Date Reported</th>
-							<th> </th>
-							<th> </th>
-							
-						</tr>
-						</thead>
-						<tbody>
-						<!---------------->
-						<!-- List Jobs  -->
-						<!---------------->
-						<?php
-
-							// get a handle to the database
-						  $db = connect($dbHost, $dbUser, $dbPassword, $dbName);
-							
-							// prepare sql statement
-							$query = "SELECT Hoursreported.reportingid, Hoursreported.hoursworked, Hoursreported.datereportedfor, Jobinfo.hourlyrate FROM Hoursreported, Jobinfo WHERE Jobinfo.jobid={$_SESSION['jobid']} AND Hoursreported.jobid={$_SESSION['jobid']}";    
-							// execute sql statement
-							$result = $db->query($query);
-							
-							
-							// check if it worked
-							if ($result) {
-								$numberofrows = $result->num_rows;
-								
-								for($i=0; $i < $numberofrows; $i++) {
-									$row = $result->fetch_assoc();
-									echo "\n <tr>";
-									echo "\n <td>" . $row['hoursworked'] . "hrs</td>";
-									echo "\n <td>$" . $row['hourlyrate'] . "</td>";
-									echo "\n <td>$" . $row['hoursworked']*$row['hourlyrate']. "</td>";
-									$date = $row['datereportedfor'];
-									$datereportedfor = date("m-d-Y", strtotime($date));
-									echo "\n <td>" . $datereportedfor . "</td>";
-									echo "\n <td><button type='button' onclick='deleteRecord(" . $row['reportingid'] . ");'>Delete</button></td>";
-									echo "\n <td><button type='button' onclick='editRecord(" . $row['reportingid'] . ', "' .
-									$row['hoursworked'] . '", "' . $row['datereportedfor'] . '"'. ");'>Edit</button></td>";
-									
-									
-						
-									echo "\n </tr>";
-								}
-								
-							} else {
-								reportErrorAndDie("Something went wrong when retrieving jobs from the database.<p>" .
-												  "This was the error: " . $db->error . "<p>", $query);
-							}
-							
-							$db->close();
-							
-						?>    
-						</tbody>
-					</table>
-                <!-- /.col-lg-12 -->
-				</div>
-				<div class="col-lg-12">
                     <table class="table table-striped">
 						<!-- Titles for table -->
 						<tr>
 							<!-- <td>jobid</td> -->
-							<td>Paycheck-Amount Earned</td>
-							<td>Paycheck-Hours Worked</td> 
-							<td>Paycheck-Start Date</td>
-							<td>Paycheck-End Date</td>
+							<th>Job Title</th>
+							<th>Paycheck Period Start</th>
+							<th>Paycheck Period End</th>
+							<th>Amount Earned Reported</th>
+							<th>Amount Expected</th>
+							<td></td>
 							<td> </td>
 							<td> </td>
-							
 						</tr>
 						<!---------------->
 						<!-- List Jobs  -->
@@ -423,7 +342,7 @@
 						  $db = connect($dbHost, $dbUser, $dbPassword, $dbName);
 							
 							// prepare sql statement
-							$query = "SELECT * FROM Paycheck WHERE Paycheck.jobid={$_SESSION['jobid']}";    
+							$query = "SELECT jobTitle, Jobinfo.hourlyrate, Paycheck.payCheckPeriodStart, Paycheck.payCheckPeriodEnd, Paycheck.amountearned, Paycheck.hoursworked FROM Jobinfo, Users, Paycheck WHERE Paycheck.hoursworked*Jobinfo.hourlyrate>Paycheck.amountearned AND Jobinfo.userid = Users.userid AND Paycheck.jobid=Jobinfo.jobid AND Users.userid = {$_SESSION[userid]};";    
 							// execute sql statement
 							$result = $db->query($query);
 							
@@ -435,17 +354,12 @@
 								for($i=0; $i < $numberofrows; $i++) {
 									$row = $result->fetch_assoc();
 									echo "\n <tr>";
-									echo "\n <td>$" . $row['amountearned'] . "</td>";
-									echo "\n <td>" . $row['hoursworked'] . "</td>";
-									$date = $row['payCheckPeriodStart'];
-									$payCheckPeriodStart = date("m-d-Y", strtotime($date));
-									echo "\n <td>" . $payCheckPeriodStart . "</td>";
-									$date = $row['payCheckPeriodEnd'];
-									$payCheckPeriodEnd = date("m-d-Y", strtotime($date));
-									echo "\n <td>" . $payCheckPeriodEnd . "</td>";
-									
-									
-							
+									echo "\n <td>" . $row['jobTitle'] . "</td>";
+									echo "\n <td>" . $row['payCheckPeriodStart'] . "</td>";
+									echo "\n <td>" . $row['payCheckPeriodEnd'] . "</td>";
+									echo "\n <td>" . $row['amountearned'] . "</td>";
+									echo "\n <td>" . $row['hourlyrate'] * $row['hoursworked']. "</td>";
+									echo "\n <td><button type='button' onclick='addRecord(" . $row['jobid'] . '"'. ");'>Create Case</button></td>";
 									echo "\n </tr>";
 								}
 								
@@ -461,8 +375,6 @@
 					</table>
                 <!-- /.col-lg-12 -->
 				</div>
-				
-				
             <!-- /.row -->
 			</div>
 		</div>
@@ -472,77 +384,25 @@
 </div> <!-- Closing container div -->
 
 </body>
-<script>
-<!-- script for table rendering -->
-$(document).ready(function() {
-    $('#example').DataTable();
-} );
-$('#example').dataTable( {
-  "columnDefs": [ {
-      "targets": [ 0,1, 2,4,5 ],
-      "orderable": false
-    } ]
-} );
-$('#example').dataTable( {
-  "columnDefs": [
-    { "width": "15%", "targets": [0,1,2,4,5] }
-	{ "width": "25%", "targets": 3 }
-  ]
-} );
-</script>
-				<!-- Code for editing form -->
-					<div id="dialog-form" title="Edit hours" style="display: none">
+				<!-- Code for adding form -->
+					<div id="dialog-form" title="Create Case" style="display: none">
 						<form>
 						  <fieldset>
 							<div class="form-group">
-								<label for="hours worked">Hours Worked</label>
-								<input type="int" name="edithoursworked" id="edithoursworked" class="form-control" />
-							</div>
-						
-							<div class="form-group">
-								<label for="date reported for">Date Reported</label>
-								<input type="text" name="editdatereportedfor" id="editdatereportedfor" value="" class="form-control" />
-							</div>
-							<input type="hidden" name="editreportingid" id="editreportingid"/>
+								<label for="hours worked">Notes</label>
+								<input type="text" name="addnotes" id="addnotes" class="form-control" />
+							</div>					
+							<input type="hidden" name="addjobid" id="addjobid"/>
 						  </fieldset>
 						</form>
 					</div>
-
 <script>						
-						// confirm that a user wants to delete, then call php script to do deletion
-						function deleteRecord(reportingid) {
-							// delete record from Hoursreported table identified by reportingid, if user agrees
-							var decision = confirm("Would you like to delete these hours?");
-							if (decision == true) {
-								var xmlhttp = new XMLHttpRequest();
-								
-								// this part of code receives a response from deleteaccounts.php 
-								xmlhttp.onreadystatechange=function() {
-									if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-										if(xmlhttp.responseText == "Hours deleted") {
-											location.reload();
-										} else {
-											alert("Unsuccessful delete: " + xmlhttp.responseText);
-										}
-									}
-								}
-								
-								// this sends the data request to deletehours.php
-								xmlhttp.open("POST", "deletehours.php", true);
-								xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-								xmlhttp.send("reportingid=" + reportingid);
-							}
-						}
 						
 						// pop up a form to edit a record that provides option to cancel or save changes
-						function editRecord(reportingid, hoursworked, datereportedfor) {
-							
-							document.getElementById("edithoursworked").value = hoursworked;
-							document.getElementById("editdatereportedfor").value = datereportedfor;
-							document.getElementById("editreportingid").value = reportingid;
+						function addRecord(jobid) {						
+							document.getElementById("addjobid").value = jobid;
 							$("#dialog-form").dialog("open");  
-							
-							
+										
 						}
 						
 						$("#dialog-form").dialog(
@@ -552,33 +412,31 @@ $('#example').dataTable( {
 								width: 400,
 								modal: true,
 								buttons: {
-									"Save": function() {
+									"Add": function() {
 										var xmlhttp = new XMLHttpRequest();
 								
-										// this part of code receives a response from edithours.php 
+										// this part of code receives a response from addcase.php 
 										xmlhttp.onreadystatechange=function() {
 											if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-												if(xmlhttp.responseText == "Hours edited") {
+												if(xmlhttp.responseText == "Case Added") {
 													location.reload();
 												} else {
-													alert("Unsuccessful save: " + xmlhttp.responseText);
+													alert("Unsuccessful add: " + xmlhttp.responseText);
 													location.reload();
 												}
 											}
 										}
 														  
-										// this sends the data request to edithours.php
-										xmlhttp.open("POST", "edithours.php", true);
+										// this sends the data request to addcase.php
+										xmlhttp.open("POST", "addcase.php", true);
 										xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 										
 										// get variables
-										var editreportingid = document.getElementById("editreportingid").value;
-										var edithoursworked = document.getElementById("edithoursworked").value;
-										var editdatereportedfor = document.getElementById("editdatereportedfor").value;
-										
-										
-										// send data to edithours.php
-										xmlhttp.send("&reportingid=" + editreportingid + "&hoursworked=" + edithoursworked + "&datereportedfor=" + editdatereportedfor);
+										var addjobid = document.getElementById("addjobid").value;
+										var addnotes = document.getElementById("addnotes").value;				
+																
+										// send data to addcase.php
+										xmlhttp.send("&jobid=" + addjobid + "&notes=" + addnotes);
 									},
 									"Cancel": function() {
 										$(this).dialog("close");       
