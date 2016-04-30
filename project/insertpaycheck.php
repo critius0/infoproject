@@ -16,7 +16,7 @@
         header("Location: " . $baseURL . "login.php");
     }
     // get data from from paycheck.php entry form
-	$paycheckhours = $_POST['paycheckhours'];
+	$hoursworked = $_POST['hoursworked'];
     $paycheckstartdate = $_POST['paycheckstartdate'];
 	$paycheckenddate = $_POST['paycheckenddate'];
 	$amountearned = $_POST['amountearned'];
@@ -24,8 +24,8 @@
 	$jobid = $_SESSION['jobid'];
   
     //check that hours were entered
-	if (!$paycheckhours) {
-        $msg = "<p>Hey, you didn't insert any hoursworked.</p>";
+	if (!$hoursworked) {
+        $msg = "<p>Hey, you didn't insert any hours worked.</p>";
 				header("Location:paycheck.php?msg=$msg");
 				exit;
     }
@@ -61,7 +61,7 @@
     
     // prepare sql statement for entering job info into paycheck table
     $query = "insert into Paycheck (jobid, hoursworked, amountearned, payCheckPeriodStart, payCheckPeriodEnd)
-        values ('" . $jobid . "', '" . $hoursworked . "', '" . $amountearned . "', '" . $paycheckstartdate . "', '" . $paycheckenddate . "');";
+        values ('" . $jobid . "', " . $hoursworked . ", '" . $amountearned . "', '" . $paycheckstartdate . "', '" . $paycheckenddate . "');";
     
     // execute sql statement and add job
     $result = $db->query($query);

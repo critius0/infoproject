@@ -427,13 +427,13 @@ include_once('util.php');
                             <div class="col-lg-6">
                                 <form action="insertpaycheck.php" method="post" enctype="multipart/form-data" role="form">
 								<div class="form-group">
-                                        <label>Hours Worked</label>
-                                        <input type="number" class="form-control" name="paycheckhours" placeholder="Ex: 20">
+                                    <label>Hours Worked</label>
+                                    <input type="int" class="form-control" name="hoursworked" placeholder="Ex: 20">
                                 </div>
 								<label>Paycheck Amount</label>
                                <div class="form-group input-group">
                                     <span class="input-group-addon">$</span>
-                                    <input type="number" class="form-control" name="amountearned" placeholder="Ex: 500.00">
+                                    <input type="int" class="form-control" name="amountearned" placeholder="Ex: 500.00">
                                 </div>
 							</div>
                                
