@@ -62,7 +62,9 @@
     <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>   
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>	
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
-
+	<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"></script>
 </head>
 
 
@@ -336,18 +338,20 @@
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-12">
-                    <table class="table table-striped">
+                    <table id="example" class="table table-striped" cellspacing="0" width="100%">
 						<!-- Titles for table -->
-						<tr>
-							<!-- <td>jobid</td> -->
-							<td>Hours Reported:</td>
-							<td>Hourly Wage</td> 
-							<td>Expected Wage</td>
-							<td>Date Reported</td>
-							<td> </td>
-							<td> </td>
+						<thead>
+							<tr>
+							
+							<th>Hours Reported:</th>
+							<th>Hourly Wage</th> 
+							<th>Expected Wage</th>
+							<th>Date Reported</th>
+							<th> </th>
+							<th> </th>
 							
 						</tr>
+						<tbody>
 						<!---------------->
 						<!-- List Jobs  -->
 						<!---------------->
@@ -392,7 +396,7 @@
 							$db->close();
 							
 						?>    
-  
+						</tbody>
 					</table>
                 <!-- /.col-lg-12 -->
 				</div>
@@ -467,6 +471,19 @@
 </div> <!-- Closing container div -->
 
 </body>
+<script>
+<!-- script for table rendering -->
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
+$('#example').dataTable( {
+  "columnDefs": [ {
+      "targets": [ 0,1, 2,4,5 ],
+      "orderable": false
+    } ]
+} );
+</script>
+
 <script>						
 						// confirm that a user wants to delete, then call php script to do deletion
 						function deleteRecord(reportingid) {
