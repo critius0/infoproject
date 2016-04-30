@@ -359,7 +359,7 @@
 									echo "\n <td>" . $row['payCheckPeriodEnd'] . "</td>";
 									echo "\n <td>" . $row['amountearned'] . "</td>";
 									echo "\n <td>" . $row['hourlyrate'] * $row['hoursworked']. "</td>";
-									echo "\n <td><button type='button' onclick='addRecord(" . $row['jobid'] . '"'. ");'>Create Case</button></td>";
+									echo "\n <td><button type='button' onclick='addRecord(" . $row['jobid'] . ");'>Create Case</button></td>";
 									echo "\n </tr>";
 								}
 								
