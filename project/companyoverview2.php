@@ -1,51 +1,18 @@
-
-
 <?php
-$title ="AntiWageTheft.org";
+	include_once("config.php");
+	include_once("util.php");
+	$title ="AntiWageTheft.org";
 $menu=1;
 session_start();
  if (!isset($_SESSION['username'])) {
         // if this variable is not set, then kick user back to login screen
         header("Location: " . $baseURL . "login.php");
     }
-	
-	
-	$jobid = $_POST['jobid'];
-	if (!isset($_SESSION['jobid'])) {
-        // if this variable is not set, then set it
-        $_SESSION['jobid'] = $jobid;
-    }
-
-    
-	
 	include_once('header2.php');
-	include_once('config.php');
-	include_once('util.php');
-
 	
-	//prepare query for selected job specific information
-	// get a handle to the database
-	$db = connect($dbHost, $dbUser, $dbPassword, $dbName);
-							
-	// prepare sql statement
-	$query = "SELECT jobTitle FROM Jobinfo WHERE jobid={$_SESSION['jobid']};";    
-							// execute sql statement
-							$result = $db->query($query);
-	if ($result) {
-		$numberofrows = $result->num_rows;
-								
-			for($i=0; $i < $numberofrows; $i++) {
-				$row = $result->fetch_assoc();
-				$job = $row['jobTitle'];
-	}
-	}
-	 else {
-								reportErrorAndDie("Something went wrong when retrieving jobs from the database.<p>" .
-												  "This was the error: " . $db->error . "<p>", $query);
-							}
-							
-	$db->close();
 ?>
+<html lang="en">
+
 <head>
 
     <meta charset="utf-8">
@@ -54,7 +21,7 @@ session_start();
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Wage Theft - My Page</title>
+    <title>SB Admin 2 - Bootstrap Admin Theme</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../startbootstrap-sb-admin-2-1.0.8/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -74,30 +41,20 @@ session_start();
     <!-- Custom Fonts -->
     <link href="../startbootstrap-sb-admin-2-1.0.8/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-	<!-- Calendar Jquery Plugin -->
-	<link href="../Responsive-Event-Calendar-Date-Picker-jQuery-Plugin-Monthly/css/monthly.css" rel="stylesheet">
-	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-	<script src="../Responsive-Event-Calendar-Date-Picker-jQuery-Plugin-Monthly/js/monthly.js"></script>
-	
-	<!-- Bower Timepicker Plugin -->
-	<link type="text/css" href="../bootstrap-timepicker/css/bootstrap-timepicker.min.css" />
-	<script type="text/javascript" src="../bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
-	<link type="text/css" href="../bootstrap-timepicker/css/bootstrap-timepicker.css" />
-	
-	<script type="text/javascript" src="../bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
-   
-
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+	<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"></script>
 
 </head>
 
-
 <body>
+
     <div id="wrapper">
 
         <!-- Navigation -->
@@ -109,7 +66,7 @@ session_start();
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="userpage.php">User Page</a>
+                <a class="navbar-brand" href="admindash.html">SB Admin v2.0</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -124,7 +81,7 @@ session_start();
                                 <div>
                                     <strong>John Smith</strong>
                                     <span class="pull-right text-muted">
-                                        <em>Time</em>
+                                        <em>Yesterday</em>
                                     </span>
                                 </div>
                                 <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
@@ -314,7 +271,7 @@ session_start();
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="login.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -327,18 +284,6 @@ session_start();
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         
-						<li class="active">
-                            <a href="#"><i class="fa fa-table fa-fw"></i> Enter Work Info<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li class="active">
-                                    <a href="#"><i class="fa fa-clock-o fa-fw"></i> Enter Hours</a>
-                                </li>
-                                <li>
-                                    <a href="paycheck.php"><i class="fa fa-dollar fa-fw"></i> Enter Paycheck</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
                         <li>
 							<a href="usersplash.php"><i class="fa fa-user fa-fw"></i> My Jobs</a>
                         </li>
@@ -355,113 +300,92 @@ session_start();
             </div>
             <!-- /.navbar-static-side -->
         </nav>
-
-        <!-- calendar script -->
-		<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-		<script src="../Responsive-Event-Calendar-Date-Picker-jQuery-Plugin-Monthly/js/monthly.js"></script>
-		<script type="text/javascript">
-			$(window).load( function() {
+		<!-- End of header -->
 		
-			$('#mycalendar3').monthly({
-			mode: 'picker',
-			target: '#mytarget',
-			setWidth: '250px',
-			startHidden: false,
-			showTrigger: '#mytarget',
-			});
-
-			switch(window.location.protocol) {
-			case 'http:':
-			case 'https:':
-			// running on a server, should be good.
-			break;
-			case 'file:':
-			alert('Just a heads-up, events will not work when run locally.');
-				}
-			});
-		</script>
-		<!-- timepicker script-->
-		
-		
-		<!-- enter hours form -->
 		<div id="page-wrapper">
             <div class="row">
-                
+                <div class="col-lg-12">
+                    <h1 class="page-header">Company Lookup</h1>
+                </div>
                 <!-- /.col-lg-12 -->
             </div>
-            <!-- /.row -->
-            <div class="row">
+			<div class="row">
                 <div class="col-lg-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4>Enter Hours for: <?php echo $job ?></h4>
-                        </div>
-                    <div class="panel-body">
-					<!-- span for error message reporting -->
-					<span style="color:red; font-weight:bold">
-						<?php if(isset($_GET['msg']))
-						echo $_GET['msg'];
-						?>
-					</span>
-                        <div class="row">
-                            <div class="col-lg-3">
-                               <form action="inserthours.php" method="post" enctype="multipart/form-data">
-                                        <div class=form-group">
-											<label for"hoursworked">Hours Worked</label>
-											<input type="number" class="form-control" name="hoursworked" placeholder="Ex: 20">
-										</div>
-                                
-							<div class="col-lg-16">
-                                <div class="form-group">
+                    <table id="company" class="table table-striped" cellspacing="0" width="100%">
+						<!-- Titles for table -->
+						<thead>
+						<tr>
+							<th>Company ID</th> 
+							<th>Companies Name</th>
+							<th>Company Address</th>
+							<th>Company City </th>
+							<th>Company State </th>
+						</tr>
+						</thead>
+						<tbody>
+						<!---------------->
+						<!-- List Jobs  -->
+						<!---------------->
+						<?php
+
+							// get a handle to the database
+						  $db = connect($dbHost, $dbUser, $dbPassword, $dbName);
+							
+							// prepare sql statement
+							$query = "SELECT employerid, employername, employeraddress, employercity, employerstate FROM Employer ORDER BY employername";    
+							// execute sql statement
+							$result = $db->query($query);
+							
+							
+							// check if it worked
+							if ($result) {
+								$numberofrows = $result->num_rows;
+								
+								for($i=0; $i < $numberofrows; $i++) {
+									$row = $result->fetch_assoc();
+									echo "\n <tr>";
+									echo "\n <td>" . $row['employerid'] . "</td>";
+									$employerid = $row['employerid'];
+									echo "\n <td>" . $row['employername'] . "</td>";
+									$employername = $row['employername'];
+									echo "\n <td>" . $row['employeraddress'] . "</td>";
+									$employeraddress = $row['employeraddress'];
+									echo "\n <td>" . $row['employercity'] . "</td>";
+									$employercity = $row['employercity'];
+									echo "\n <td>" . $row['employerstate'] . "</td>";
+									$employerstate = $row['employerstate'];
+
 									
-									<label for='datereportedfor'>Date</label>
-									<input type="text" id="mytarget" class="form-control" name='datereportedfor' placeholder="Choose a Date">
-                                    <div class="monthly" id="mycalendar3"></div>
-								</div>	
+									/* echo " <td><form action='paycheck.php'  method='post'><input type='hidden' name='jobid' value={$jobid} />
+															<input type= 'submit' value= 'Other Info'/> </form></td>\n"; */
+									echo "\n </tr>";
+								}
 								
-								<!-- hidden value included for transfer of the jobinfo -->
-								<div class="form-group">
-									<input type='hidden' name='jobid' value= <?php echo $_SESSION[jobid] ?> />
-								</div>
-								
-							</div>
-							</div>
-                                <!-- /.col-lg-6 (nested) -->
-                            <!-- /.row (nested) -->
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
-					<button type="submit" class="btn btn-default">Submit Button</button>
-                    <button type="reset" class="btn btn-default">Reset Button</button>
-					</form>
-					</div>
+							} else {
+								reportErrorAndDie("Something went wrong when retrieving jobs from the database.<p>" .
+												  "This was the error: " . $db->error . "<p>", $query);
+							}
+							
+							$db->close();
+							
+						?>    
+						</tbody>
+					</table>
                 <!-- /.col-lg-12 -->
 				</div>
-            <!-- /.row -->
 			</div>
-		</div>
-		<!-- enter hours form -->
-		
-		
-
-    <!-- jQuery -->
-    <!-- <script src="../startbootstrap-sb-admin-2-1.0.8/bower_components/jquery/dist/jquery.min.js"></script> -->
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="../startbootstrap-sb-admin-2-1.0.8/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="../startbootstrap-sb-admin-2-1.0.8/bower_components/metisMenu/dist/metisMenu.min.js"></script>
-
-    <!-- Morris Charts JavaScript -->
-    <script src="../startbootstrap-sb-admin-2-1.0.8/bower_components/raphael/raphael-min.js"></script>
-    <script src="../startbootstrap-sb-admin-2-1.0.8/bower_components/morrisjs/morris.min.js"></script>
-    <script src="../startbootstrap-sb-admin-2-1.0.8/js/morris-data.js"></script>
-
-    <!-- Custom Theme JavaScript -->
-    <script src="../startbootstrap-sb-admin-2-1.0.8/dist/js/sb-admin-2.js"></script>
-
+		</div><!-- page wrapper-->
+	</div><!--wrapper-->
 </body>
-
-</html>
+<script>
+<!-- script for table rendering -->
+$(document).ready(function() {
+    $('#company').DataTable();
+} );
+$('#company').dataTable( {
+  "columnDefs": [ {
+      "targets": [],
+      "orderable": false
+    } ]
+} );
+</script>
