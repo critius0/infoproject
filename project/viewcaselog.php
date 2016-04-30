@@ -324,11 +324,12 @@ session_start();
 						<!-- Titles for table -->
 						<thead>
 						<tr>
-							<th>Company ID</th> 
-							<th>Companies Name</th>
-							<th>Company Address</th>
-							<th>Company City </th>
-							<th>Company State </th>
+							<th>Case ID</th> 
+							<th>Job ID</th>
+							<th>User ID</th>
+							<th>Employer ID</th>
+							<th>Case Notes</th>
+							<th> </th>
 						</tr>
 						</thead>
 						<tbody>
@@ -341,7 +342,7 @@ session_start();
 						  $db = connect($dbHost, $dbUser, $dbPassword, $dbName);
 							
 							// prepare sql statement
-							$query = "SELECT employerid, employername, employeraddress, employercity, employerstate FROM Employer ORDER BY employername";    
+							$query = "SELECT Caselog.reportId, Caselog.jobid, Caselog.notes, Jobinfo.jobid, Jobinfo.userid, Users.userid, Jobinfo.employerid, Employer.employerid, Employer.employername FROM Caselog, Jobinfo, Users, Employer WHERE Jobinfo.jobid=Caselog.jobid AND Jobinfo.userid=Users.userid AND Jobinfo.employerid=Employer.employerid ORDER BY Caselog.reportId";    
 							// execute sql statement
 							$result = $db->query($query);
 							
@@ -353,16 +354,17 @@ session_start();
 								for($i=0; $i < $numberofrows; $i++) {
 									$row = $result->fetch_assoc();
 									echo "\n <tr>";
+									echo "\n <td>" . $row['reportId'] . "</td>";
+									$reportId = $row['reportId'];
+									echo "\n <td>" . $row['jobid'] . "</td>";
+									$jobid = $row['jobid'];
+									echo "\n <td>" . $row['userid'] . "</td>";
+									$userid = $row['userid'];
 									echo "\n <td>" . $row['employerid'] . "</td>";
-									$employerid = $row['employerid'];
-									echo "\n <td>" . $row['employername'] . "</td>";
-									$employername = $row['employername'];
-									echo "\n <td>" . $row['employeraddress'] . "</td>";
-									$employeraddress = $row['employeraddress'];
-									echo "\n <td>" . $row['employercity'] . "</td>";
-									$employercity = $row['employercity'];
-									echo "\n <td>" . $row['employerstate'] . "</td>";
-									$employerstate = $row['employerstate'];
+									$notes = $row['notes'];
+									echo "\n <td>" . $row['notes'] . "</td>";
+									$notes = $row['notes'];
+									
 
 									
 									/* echo " <td><form action='paycheck.php'  method='post'><input type='hidden' name='jobid' value={$jobid} />

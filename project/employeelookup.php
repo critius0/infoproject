@@ -1,6 +1,6 @@
 <?php
 	include_once("config.php");
-	include_once("util.php");\
+	include_once("util.php");
 	$title ="AntiWageTheft.org";
 $menu=1;
 session_start();
@@ -283,17 +283,7 @@ session_start();
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-                        <li class="sidebar-search">
-                            <div class="input-group custom-search-form">
-                                <input type="text" class="form-control" placeholder="Search...">
-                                <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </span>
-                            </div>
-                            <!-- /input-group -->
-                        </li>
+                
                         <li>
                             <a href="admindash.php"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
@@ -307,7 +297,7 @@ session_start();
                             <a href="employeelookup.php"><i class="fa fa-male fa-fw"></i> Employee Lookup</a>
                         </li>
 						<li>
-                            <a href="caselog.php"><i class="fa fa-briefcase fa-fw"></i> Case Log</a>
+                            <a href="viewcaselog.php"><i class="fa fa-briefcase fa-fw"></i> Case Log</a>
                         </li>
 						<li>
                             <a href="addaccounts.php"><i class="fa fa-plus-circle fa-fw"></i> Manage Users</a>
@@ -351,7 +341,7 @@ session_start();
 						  $db = connect($dbHost, $dbUser, $dbPassword, $dbName);
 							
 							// prepare sql statement
-							$query = "SELECT Users.userid, firstname, lastname, email, jobtitle, employername, Jobinfo.userid, Jobinfo.employerid, Employer.employerid FROM Jobinfo, Users, Employer WHERE Users.userid=Jobinfo.userid AND Jobinfo.employerid=Employer.employerid ORDER BY Users.lastname";    
+							$query = "SELECT Users.userid, Users.firstname, Users.lastname, Users.email, Jobinfo.jobtitle, Employer.employername, Jobinfo.userid, Jobinfo.employerid, Employer.employerid FROM Jobinfo, Users, Employer WHERE Users.userid=Jobinfo.userid AND Jobinfo.employerid=Employer.employerid ORDER BY Users.lastname";    
 							// execute sql statement
 							$result = $db->query($query);
 							

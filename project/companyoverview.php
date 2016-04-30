@@ -285,13 +285,22 @@ session_start();
                     <ul class="nav" id="side-menu">
                         
                         <li>
-							<a href="usersplash.php"><i class="fa fa-user fa-fw"></i> My Jobs</a>
+                            <a href="admindash.php"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="companyoverview.php"><i class="fa fa-table fa-fw"></i> Company Overviews</a>
                         </li>
 						<li>
-                            <a href="companyoverview.php"><i class="fa fa-bar-chart fa-fw"></i>Company Lookups</a>
+                            <a href="companylookup.php"><i class="fa fa-building fa-fw"></i> Company Lookup</a>
                         </li>
 						<li>
-                            <a href="caselog.php"><i class="fa fa-sign-out fa-fw"></i>My CaseLogs</a>
+                            <a href="employeelookup.php"><i class="fa fa-male fa-fw"></i> Employee Lookup</a>
+                        </li>
+						<li>
+                            <a href="viewcaselog.php"><i class="fa fa-briefcase fa-fw"></i> Case Log</a>
+                        </li>
+						<li>
+                            <a href="addaccounts.php"><i class="fa fa-plus-circle fa-fw"></i> Manage Users</a>
                         </li>
               
                     </ul>
