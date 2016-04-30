@@ -39,7 +39,7 @@
 <html>
 
 <head>
-    <!-- Bootstrap Core CSS -->
+ <!-- Bootstrap Core CSS -->
     <link href="../startbootstrap-sb-admin-2-1.0.8/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
@@ -56,8 +56,13 @@
 
     <!-- Custom Fonts -->
     <link href="../startbootstrap-sb-admin-2-1.0.8/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	
+	<!-- jQuery stuff -->
+	<script src="http://code.jquery.com/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>   
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>	
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
 
-    
 </head>
 
 
@@ -352,7 +357,7 @@
 						  $db = connect($dbHost, $dbUser, $dbPassword, $dbName);
 							
 							// prepare sql statement
-							$query = "SELECT Hoursreported.hoursworked, Hoursreported.datereportedfor, Jobinfo.hourlyrate FROM Hoursreported, Jobinfo WHERE Jobinfo.jobid={$_SESSION['jobid']} AND Hoursreported.jobid={$_SESSION['jobid']}";    
+							$query = "SELECT Hoursreported.reportingid, Hoursreported.hoursworked, Hoursreported.datereportedfor, Jobinfo.hourlyrate FROM Hoursreported, Jobinfo WHERE Jobinfo.jobid={$_SESSION['jobid']} AND Hoursreported.jobid={$_SESSION['jobid']}";    
 							// execute sql statement
 							$result = $db->query($query);
 							
@@ -370,17 +375,12 @@
 									$date = $row['datereportedfor'];
 									$datereportedfor = date("m-d-Y", strtotime($date));
 									echo "\n <td>" . $datereportedfor . "</td>";
+									echo "\n <td><button type='button' onclick='deleteRecord(" . $row['reportingid'] . ");'>Delete</button></td>";
+								echo "\n <td><button type='button' onclick='editRecord(" . $row['reportingid'] . ', "' .
+									$row['hoursworked'] . '", "' . $row['datereportedfor'] . ");'>Edit</button></td>";
 									
 									
-									//$jobid = $row['jobid'];
-									//echo " <td><form action='userpage.php'  method='post'><input type='hidden' name='jobid' value={$jobid} />
-									//						<input type= 'submit' value= 'Enter Hours'/> </form></td>\n";
-												
-				
-
-									//need to change where this goes once a usersplash for job info page exists
-									//echo " <td><form action='jobinfo.php'  method='post'><input type='hidden' name='jobid' value={$jobid} />
-										//					<input type= 'submit' value= 'Other Info'/> </form></td>\n";
+						
 									echo "\n </tr>";
 								}
 								
@@ -440,15 +440,7 @@
 									echo "\n <td>" . $payCheckPeriodEnd . "</td>";
 									
 									
-									//$jobid = $row['jobid'];
-									//echo " <td><form action='userpage.php'  method='post'><input type='hidden' name='jobid' value={$jobid} />
-									//						<input type= 'submit' value= 'Enter Hours'/> </form></td>\n";
-												
-				
-
-									//need to change where this goes once a usersplash for job info page exists
-									//echo " <td><form action='jobinfo.php'  method='post'><input type='hidden' name='jobid' value={$jobid} />
-										//					<input type= 'submit' value= 'Other Info'/> </form></td>\n";
+							
 									echo "\n </tr>";
 								}
 								
@@ -475,5 +467,85 @@
 </div> <!-- Closing container div -->
 
 </body>
+<script>						
+						// confirm that a user wants to delete, then call php script to do deletion
+						function deleteRecord(reportingid) {
+							// delete record from Hoursreported table identified by reportingid, if user agrees
+							var decision = confirm("Would you like to delete these hours?");
+							if (decision == true) {
+								var xmlhttp = new XMLHttpRequest();
+								
+								// this part of code receives a response from deleteaccounts.php 
+								xmlhttp.onreadystatechange=function() {
+									if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+										if(xmlhttp.responseText == "Hours deleted") {
+											location.reload();
+										} else {
+											alert("Unsuccessful delete: " + xmlhttp.responseText);
+										}
+									}
+								}
+								
+								// this sends the data request to deletehours.php
+								xmlhttp.open("POST", "deletehours.php", true);
+								xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+								xmlhttp.send("reportingid=" + reportingid);
+							}
+						}
+						
+						// pop up a form to edit a record that provides option to cancel or save changes
+						function editRecord(reportingid, hoursworked, datereportedfor) {
+							document.getElementById("edithoursworked").value = hoursworked;
+							document.getElementById("editdatereportedfor").value = datereportedfor;
+							document.getElementById("editreportingid").value = reportingid;
+							
+							$("#dialog-form").dialog("open");        
+						}
+						
+						$("#dialog-form").dialog(
+							{
+								autoOpen: false,
+								height: 400,
+								width: 400,
+								modal: true,
+								buttons: {
+									"Save": function() {
+										var xmlhttp = new XMLHttpRequest();
+								
+										// this part of code receives a response from editperson.php 
+										xmlhttp.onreadystatechange=function() {
+											if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+												if(xmlhttp.responseText == "Hours edited") {
+													location.reload();
+												} else {
+													alert("Unsuccessful save: " + xmlhttp.responseText);
+													location.reload();
+												}
+											}
+										}
+														  
+										// this sends the data request to edithours.php
+										xmlhttp.open("POST", "edithours.php", true);
+										xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+										
+										// get variables
+										var editreportingid = document.getElementById("editreportingid").value;
+										var edithoursworked = document.getElementById("edithoursworked").value;
+										var editdatereportedfor = document.getElementById("editdatereportedfor").value;
+										
+										
+										// send data to edithours.php
+										xmlhttp.send("&reportingid=" + editreportingid + "&hoursworked=" + edithoursworked + "&datereportedfor=" + editdatereportedfor);
+									},
+									"Cancel": function() {
+										$(this).dialog("close");       
+									}
+								}
+							}
+												 
+											 )
+						
+						
+					</script>
 
 </html>

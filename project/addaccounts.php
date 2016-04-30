@@ -1,11 +1,17 @@
 <?php
-	include_once("config.php");
+	
 	include_once("util.php");
-	   /*  session_start();
-    if (!isset($_SESSION['username'])) {
+	include_once('config.php');
+	$title ="AntiWageTheft.org";
+$menu=1;
+session_start();
+ if (!isset($_SESSION['username'])) {
         // if this variable is not set, then kick user back to login screen
         header("Location: " . $baseURL . "login.php");
-    } */
+    }
+	include_once('header3.php');
+	
+	 
 		
 	    // get a handle to the database
     $db = connect($dbHost, $dbUser, $dbPassword, $dbName);
