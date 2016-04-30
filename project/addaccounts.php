@@ -65,6 +65,11 @@ session_start();
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+	<!-- following 3 scripts for table rendering -->
+	<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"></script>
+
 
 </head>
 
@@ -408,17 +413,19 @@ session_start();
 				
 				<div>
 					<!-- list users-->
-					<table class="table table-striped"> 
+					<table id="addacountstable" class="table table-striped" cellspacing="0" width="100%"> 
 					<!-- Titles for table -->
+					<thead>
 					<tr>
-						<td>Username</td>
-						<td>First Name</td>
-						<td>Last Name</td>
-						<td>email</td>
-						<td>User type</td>
-						<td></td>
-						<td></td>
+						<th>Username</th>
+						<th>First Name</th>
+						<th>Last Name</th>
+						<th>email</th>
+						<th>User type</th>
+						
 					</tr>
+					</thead>
+					<tbody>
 					<?php
 						include_once("util.php");
 						include_once("config.php");
@@ -459,7 +466,7 @@ session_start();
 						$db->close();
 						
 					?>    
-						
+						</tbody>
 					</table>
 			
 				</div>
@@ -569,4 +576,18 @@ session_start();
 						
 						
 					</script>
+					<script>
+<!-- script for table rendering -->
+$(document).ready(function() {
+    $('#addacountstable').DataTable();
+} );
+$('#addacountstable').dataTable( {
+  "columnDefs": [ {
+      "targets": [5,6 ],
+      "orderable": false
+    } ]
+} );
+
+
+</script>
 </html>

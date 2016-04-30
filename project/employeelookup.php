@@ -46,7 +46,10 @@ session_start();
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <!-- following 3 scripts for table rendering -->
+	<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"></script>
 
 </head>
 
@@ -327,15 +330,18 @@ session_start();
             </div>
 			<div class="row">
                 <div class="col-lg-12">
-                    <table class="table table-striped">
+                    <table id="employeelookup" class="table table-striped" cellspacing="0" width="100%">
 						<!-- Titles for table -->
+						<thead>
 						<tr>
-							<td>User ID</td> 
-							<td>First Name</td>
-							<td>Last Name</td>
-							<td>Email</td>
-							<td>Job</td>
+							<th>User ID</th> 
+							<th>First Name</th>
+							<th>Last Name</th>
+							<th>Email</th>
+							<th>Job</th>
 						</tr>
+						</thead>
+						<tbody>
 						<!---------------->
 						<!-- List Jobs  -->
 						<!---------------->
@@ -382,7 +388,7 @@ session_start();
 							$db->close();
 							
 						?>    
-  
+						</tbody>
 					</table>
                 <!-- /.col-lg-12 -->
 				</div>
@@ -390,3 +396,15 @@ session_start();
 		</div><!-- page wrapper-->
 	</div><!--wrapper-->
 </body>
+<script>
+<!-- script for table rendering -->
+$(document).ready(function() {
+    $('#employeelookup').DataTable();
+} );
+$('#employeelookup').dataTable( {
+  "columnDefs": [ {
+      "targets": [ 0,1, 2,4,5 ],
+      "orderable": false
+    } ]
+} );
+</script>

@@ -351,6 +351,7 @@
 							<th> </th>
 							
 						</tr>
+						</thead>
 						<tbody>
 						<!---------------->
 						<!-- List Jobs  -->
@@ -481,6 +482,12 @@ $('#example').dataTable( {
       "targets": [ 0,1, 2,4,5 ],
       "orderable": false
     } ]
+} );
+$('#example').dataTable( {
+  "columnDefs": [
+    { "width": "15%", "targets": [0,1,2,4,5] }
+	{ "width": "25%", "targets": 3 }
+  ]
 } );
 </script>
 
