@@ -12,9 +12,10 @@
     
     // get a handle to the database
     $db = connect($dbHost, $dbUser, $dbPassword, $dbName);
-    
-    $deleteQuery = "DELETE FROM Users WHERE userid = " . $userid . ";";
-    
+    $predelete = "DELETE FROM Jobinfo WHERE userid= " . $userid . ";"
+	
+    $deleteQuery = "DELETE FROM Users WHERE userid = " . $userid . ";"
+    $db->query($predelete);
     $result = $db->query($deleteQuery);
     
      if ($result) {

@@ -490,7 +490,7 @@ session_start();
 						// confirm that a user wants to delete, then call php script to do deletion
 						function deleteRecord(userid, lastname) {
 							// delete record from people table identified by id, if user agrees
-							var decision = confirm("Would you like to delete " + lastname + "?");
+							var decision = confirm("Are you sure you want to delete " + lastname + "? this will delete all information in the database related to this user.");
 							if (decision == true) {
 								var xmlhttp = new XMLHttpRequest();
 								
