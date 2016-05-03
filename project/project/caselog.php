@@ -2,27 +2,24 @@
 	include_once("config.php");
 	include_once("util.php");
 	$title ="AntiWageTheft.org";
-$menu=1;
-session_start();
- if (!isset($_SESSION['username'])) {
+	session_start();
+		
+	$menu=1;
+	include_once("header2.php");
+	
+    if (!isset($_SESSION['username'])) {
         // if this variable is not set, then kick user back to login screen
         header("Location: " . $baseURL . "login.php");
     }
-	include_once('header3.php');
+	if (isset($_SESSION['jobid'])) {
+        unset($_SESSION['jobid']);
+    }
 	
+
 ?>
-<html lang="en">
+<html>
 
-<head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>SB Admin 2 - Bootstrap Admin Theme</title>
-
+<head >
     <!-- Bootstrap Core CSS -->
     <link href="../startbootstrap-sb-admin-2-1.0.8/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -40,22 +37,25 @@ session_start();
 
     <!-- Custom Fonts -->
     <link href="../startbootstrap-sb-admin-2-1.0.8/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-	
-	<!-- jQuery stuff -->
+
+    <!-- jQuery stuff -->
 	<script src="http://code.jquery.com/jquery.min.js"></script>
     <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>   
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>	
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
-
-    
-	<!-- following 3 scripts for table rendering -->
 	<!-- <script src="//code.jquery.com/jquery-1.12.0.min.js"></script> -->
 	<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
 	<script src="https://cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"></script>
 
-
 </head>
 
+
+    
+<!-- <div class="container" style="width: 1024px">
+
+<div class="row">
+    <!--potential banner area or place to generate error notifications 
+</div> -->
 <body>
 
     <div id="wrapper">
@@ -69,7 +69,7 @@ session_start();
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="admindash.html">Employee Lookup</a>
+                <a class="navbar-brand" href="userpage.php">User Page</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -84,7 +84,7 @@ session_start();
                                 <div>
                                     <strong>John Smith</strong>
                                     <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
+                                        <em>Time</em>
                                     </span>
                                 </div>
                                 <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
@@ -274,7 +274,7 @@ session_start();
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="login.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -286,27 +286,16 @@ session_start();
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-                
+                        
+						
                         <li>
-                            <a href="admindash.php"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-                        </li>
-                        <li>
-                            <a href="companyoverview.php"><i class="fa fa-table fa-fw"></i> Company Overviews</a>
+							<a href="usersplash.php"><i class="fa fa-user fa-fw"></i> My Jobs</a>
                         </li>
 						<li>
-                            <a href="companylookup.php"><i class="fa fa-building fa-fw"></i> Company Lookup</a>
+                            <a href="companyoverview2.php"><i class="fa fa-bar-chart fa-fw"></i>Company Lookups</a>
                         </li>
 						<li>
-                            <a href="employeelookup.php"><i class="fa fa-male fa-fw"></i> Employee Lookup</a>
-                        </li>
-						<li>
-                            <a href="viewcaselog.php"><i class="fa fa-briefcase fa-fw"></i> Case Log</a>
-                        </li>
-						<li>
-                            <a href="addaccounts.php"><i class="fa fa-plus-circle fa-fw"></i> Manage Users</a>
-                        </li>
-						<li>
-                            <a href="managecompanies.php"><i class="fa fa-plus-circle fa-fw"></i> Manage Companies</a>
+                            <a href="caselog.php"><i class="fa fa-sign-out fa-fw"></i>My CaseLogs</a>
                         </li>
               
                     </ul>
@@ -315,30 +304,32 @@ session_start();
             </div>
             <!-- /.navbar-static-side -->
         </nav>
-		<!-- End of header -->
-		
+		<!-- jobs form -->
 		<div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Employee Lookup</h1>
-                </div>
+                    <div class="page-header">
+					<h1 class="text-primary">Potential Cases</h1>
+					</div>
+				</div>
                 <!-- /.col-lg-12 -->
             </div>
-			<div class="row">
+            <!-- /.row -->
+            <div class="row">
                 <div class="col-lg-12">
-                    <table id="employee" class="table table-striped" cellspacing="0" width="100%">
+                    <table class="table table-striped">
 						<!-- Titles for table -->
-						<thead>
 						<tr>
-							<th>User ID</th> 
-							<th>First Name</th>
-							<th>Last Name</th>
-							<th>Email</th>
-							<th>Job</th>
-						
+							<!-- <td>jobid</td> -->
+							<th>Job Title</th>
+							<th>Paycheck Period Start</th>
+							<th>Paycheck Period End</th>
+							<th>Amount Earned Reported</th>
+							<th>Amount Expected</th>
+							<td></td>
+							<td> </td>
+							<td> </td>
 						</tr>
-						</thead>
-						<tbody>
 						<!---------------->
 						<!-- List Jobs  -->
 						<!---------------->
@@ -348,30 +339,24 @@ session_start();
 						  $db = connect($dbHost, $dbUser, $dbPassword, $dbName);
 							
 							// prepare sql statement
-							$query = "SELECT Users.userid, Users.firstname, Users.lastname, Users.email, Jobinfo.jobtitle, Employer.employername, Jobinfo.userid, Jobinfo.employerid, Employer.employerid FROM Jobinfo, Users, Employer WHERE Users.userid=Jobinfo.userid AND Jobinfo.employerid=Employer.employerid ORDER BY Users.lastname";    
+							$query = "SELECT jobTitle, Jobinfo.jobid, Jobinfo.hourlyrate, Paycheck.payCheckPeriodStart, Paycheck.payCheckPeriodEnd, Paycheck.amountearned, Paycheck.hoursworked FROM Jobinfo, Users, Paycheck WHERE Paycheck.hoursworked*Jobinfo.hourlyrate>Paycheck.amountearned AND Jobinfo.userid = Users.userid AND Paycheck.jobid=Jobinfo.jobid AND Users.userid = {$_SESSION[userid]};";    
 							// execute sql statement
 							$result = $db->query($query);
 							
 							
-							// check if it u
+							// check if it worked
 							if ($result) {
 								$numberofrows = $result->num_rows;
 								
 								for($i=0; $i < $numberofrows; $i++) {
 									$row = $result->fetch_assoc();
 									echo "\n <tr>";
-									echo "\n <td>" . $row['userid'] . "</td>";
-									$userid = $row['userid'];
-									echo "\n <td>" . $row['firstname'] . "</td>";
-									$firstname = $row['firstname'];
-									echo "\n <td>" . $row['lastname'] . "</td>";
-									$lastname = $row['lastname'];
-									echo "\n <td>" . $row['email'] . "</td>";
-									$email = $row['email'];
-									echo "\n <td>" . $row['jobtitle']." at ".$row['employername'] . "</td>";
-									$employername = $row['employername'];
-
-								
+									echo "\n <td>" . $row['jobTitle'] . "</td>";
+									echo "\n <td>" . $row['payCheckPeriodStart'] . "</td>";
+									echo "\n <td>" . $row['payCheckPeriodEnd'] . "</td>";
+									echo "\n <td>" . $row['amountearned'] . "</td>";
+									echo "\n <td>" . $row['hourlyrate'] * $row['hoursworked']. "</td>";
+									echo "\n <td><button type='button' onclick='addRecord(" . $row['jobid'] . ");'>Create Case</button></td>";
 									echo "\n </tr>";
 								}
 								
@@ -382,23 +367,85 @@ session_start();
 							
 							$db->close();
 							
-						?>
-						</tbody>
+						?>    
+  
 					</table>
                 <!-- /.col-lg-12 -->
 				</div>
+            <!-- /.row -->
 			</div>
-		</div><!-- page wrapper-->
-	</div><!--wrapper-->
+		</div>
+		<!-- enter hours form -->
+
+
+</div> <!-- Closing container div -->
+
 </body>
+				<!-- Code for adding form -->
+					<div id="dialog-form" title="Create Case" style="display: none">
+						<form>
+						  <fieldset>
+							<div class="form-group">
+								<label for="hours worked">Add Notes for Review</label>
+								<input type="text" name="addnotes" id="addnotes" class="form-control" placeholder="Include 1)Job Title and 2)Paycheck Start/End Dates" rows="4"/>
+							</div>					
+							<input type="hidden" name="addjobid" id="addjobid"/>
+						  </fieldset>
+						</form>
+					</div>
+<script>						
+						
+						// pop up a form to edit a record that provides option to cancel or save changes
+						function addRecord(jobid, notes) {						
+							document.getElementById("addjobid").value = jobid;
+							
+							$("#dialog-form").dialog("open");  
+							$( "#resizable" ).resizable();
+										
+						}
+						
+						$("#dialog-form").dialog(
+							{
+								autoOpen: false,
+								height: 215,
+								width: 600,
+								modal: true,
+								buttons: {
+									"Add": function() {
+										var xmlhttp = new XMLHttpRequest();
+								
+										// this part of code receives a response from addcase.php 
+										xmlhttp.onreadystatechange=function() {
+											if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+												if(xmlhttp.responseText == "Case added") {
+													location.reload();
+												} else {
+													alert("Unsuccessful add: " + xmlhttp.responseText);
+													location.reload();
+												}
+											}
+										}
+														  
+										// this sends the data request to addcase.php
+										xmlhttp.open("POST", "addcase.php", true);
+										xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+										
+										// get variables
+										var addjobid = document.getElementById("addjobid").value;
+										var addnotes = document.getElementById("addnotes").value;				
+																
+										// send data to addcase.php
+										xmlhttp.send("jobid=" + addjobid + "&notes=" + addnotes);
+									},
+									"Cancel": function() {
+										$(this).dialog("close");       
+									}
+								}
+							}
+												 
+											 )
+						
+						
+					</script>
 
-<!-- script for table rendering -->
-<script>
-
-$(document).ready(function() {
-    $('#employee').DataTable();
-} );
-
-
-
-</script>
+</html>

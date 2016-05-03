@@ -8,7 +8,7 @@ session_start();
         // if this variable is not set, then kick user back to login screen
         header("Location: " . $baseURL . "login.php");
     }
-	include_once('header3.php');
+	include_once('header2.php');
 	
 ?>
 <html lang="en">
@@ -40,19 +40,16 @@ session_start();
 
     <!-- Custom Fonts -->
     <link href="../startbootstrap-sb-admin-2-1.0.8/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-	
-	<!-- jQuery stuff -->
-	<script src="http://code.jquery.com/jquery.min.js"></script>
-    <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>   
-	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>	
-	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
 
-    
-	<!-- following 3 scripts for table rendering -->
-	<!-- <script src="//code.jquery.com/jquery-1.12.0.min.js"></script> -->
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
 	<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
 	<script src="https://cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"></script>
-
 
 </head>
 
@@ -69,7 +66,7 @@ session_start();
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="admindash.html">Employee Lookup</a>
+                <a class="navbar-brand" href="admindash.html">Company Lookups</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -286,27 +283,15 @@ session_start();
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-                
+                        
                         <li>
-                            <a href="admindash.php"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-                        </li>
-                        <li>
-                            <a href="companyoverview.php"><i class="fa fa-table fa-fw"></i> Company Overviews</a>
+							<a href="usersplash.php"><i class="fa fa-user fa-fw"></i> My Jobs</a>
                         </li>
 						<li>
-                            <a href="companylookup.php"><i class="fa fa-building fa-fw"></i> Company Lookup</a>
+                            <a href="companyoverview2.php"><i class="fa fa-bar-chart fa-fw"></i>Company Lookups</a>
                         </li>
 						<li>
-                            <a href="employeelookup.php"><i class="fa fa-male fa-fw"></i> Employee Lookup</a>
-                        </li>
-						<li>
-                            <a href="viewcaselog.php"><i class="fa fa-briefcase fa-fw"></i> Case Log</a>
-                        </li>
-						<li>
-                            <a href="addaccounts.php"><i class="fa fa-plus-circle fa-fw"></i> Manage Users</a>
-                        </li>
-						<li>
-                            <a href="managecompanies.php"><i class="fa fa-plus-circle fa-fw"></i> Manage Companies</a>
+                            <a href="caselog.php"><i class="fa fa-sign-out fa-fw"></i>My CaseLogs</a>
                         </li>
               
                     </ul>
@@ -320,22 +305,21 @@ session_start();
 		<div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Employee Lookup</h1>
+                    <h1 class="page-header">Company Lookup</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
 			<div class="row">
                 <div class="col-lg-12">
-                    <table id="employee" class="table table-striped" cellspacing="0" width="100%">
+                    <table id="company" class="table table-striped" cellspacing="0" width="100%">
 						<!-- Titles for table -->
 						<thead>
 						<tr>
-							<th>User ID</th> 
-							<th>First Name</th>
-							<th>Last Name</th>
-							<th>Email</th>
-							<th>Job</th>
-						
+							<th>Company ID</th> 
+							<th>Companies Name</th>
+							<th>Company Address</th>
+							<th>Company City </th>
+							<th>Company State </th>
 						</tr>
 						</thead>
 						<tbody>
@@ -348,30 +332,32 @@ session_start();
 						  $db = connect($dbHost, $dbUser, $dbPassword, $dbName);
 							
 							// prepare sql statement
-							$query = "SELECT Users.userid, Users.firstname, Users.lastname, Users.email, Jobinfo.jobtitle, Employer.employername, Jobinfo.userid, Jobinfo.employerid, Employer.employerid FROM Jobinfo, Users, Employer WHERE Users.userid=Jobinfo.userid AND Jobinfo.employerid=Employer.employerid ORDER BY Users.lastname";    
+							$query = "SELECT employerid, employername, employeraddress, employercity, employerstate FROM Employer ORDER BY employername";    
 							// execute sql statement
 							$result = $db->query($query);
 							
 							
-							// check if it u
+							// check if it worked
 							if ($result) {
 								$numberofrows = $result->num_rows;
 								
 								for($i=0; $i < $numberofrows; $i++) {
 									$row = $result->fetch_assoc();
 									echo "\n <tr>";
-									echo "\n <td>" . $row['userid'] . "</td>";
-									$userid = $row['userid'];
-									echo "\n <td>" . $row['firstname'] . "</td>";
-									$firstname = $row['firstname'];
-									echo "\n <td>" . $row['lastname'] . "</td>";
-									$lastname = $row['lastname'];
-									echo "\n <td>" . $row['email'] . "</td>";
-									$email = $row['email'];
-									echo "\n <td>" . $row['jobtitle']." at ".$row['employername'] . "</td>";
+									echo "\n <td>" . $row['employerid'] . "</td>";
+									$employerid = $row['employerid'];
+									echo "\n <td>" . $row['employername'] . "</td>";
 									$employername = $row['employername'];
+									echo "\n <td>" . $row['employeraddress'] . "</td>";
+									$employeraddress = $row['employeraddress'];
+									echo "\n <td>" . $row['employercity'] . "</td>";
+									$employercity = $row['employercity'];
+									echo "\n <td>" . $row['employerstate'] . "</td>";
+									$employerstate = $row['employerstate'];
 
-								
+									
+									/* echo " <td><form action='paycheck.php'  method='post'><input type='hidden' name='jobid' value={$jobid} />
+															<input type= 'submit' value= 'Other Info'/> </form></td>\n"; */
 									echo "\n </tr>";
 								}
 								
@@ -382,7 +368,7 @@ session_start();
 							
 							$db->close();
 							
-						?>
+						?>    
 						</tbody>
 					</table>
                 <!-- /.col-lg-12 -->
@@ -391,14 +377,15 @@ session_start();
 		</div><!-- page wrapper-->
 	</div><!--wrapper-->
 </body>
-
-<!-- script for table rendering -->
 <script>
-
+<!-- script for table rendering -->
 $(document).ready(function() {
-    $('#employee').DataTable();
+    $('#company').DataTable();
 } );
-
-
-
+$('#company').dataTable( {
+  "columnDefs": [ {
+      "targets": [],
+      "orderable": false
+    } ]
+} );
 </script>

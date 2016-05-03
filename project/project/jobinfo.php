@@ -2,16 +2,41 @@
 	include_once("config.php");
 	include_once("util.php");
 	$title ="AntiWageTheft.org";
-$menu=1;
-session_start();
- if (!isset($_SESSION['username'])) {
+	session_start();
+		
+	$menu=1;
+	include_once("header2.php");
+	
+    if (!isset($_SESSION['username'])) {
         // if this variable is not set, then kick user back to login screen
         header("Location: " . $baseURL . "login.php");
     }
-	include_once('header3.php');
+	$jobid = $_POST['jobid'];
+	if (!isset($_SESSION['jobid'])) {
+        // if this variable is not set, then set it
+        $_SESSION['jobid'] = $jobid;
+    }
 	
+	
+	// get a handle to the database
+	$db = connect($dbHost, $dbUser, $dbPassword, $dbName);
+	//get info for job specific report
+	$query = "SELECT jobTitle FROM Jobinfo WHERE jobid={$_SESSION['jobid']};";    
+							// execute sql statement
+		$result = $db->query($query);
+	if ($result) {
+	$numberofrows = $result->num_rows;
+								
+			for($i=0; $i < $numberofrows; $i++) {
+				$row = $result->fetch_assoc();
+				$job = $row['jobTitle'];
+				
+				}
+	}
+	$db->close();
+
 ?>
-<html lang="en">
+<html>
 
 <head>
 
@@ -56,6 +81,13 @@ session_start();
 
 </head>
 
+
+    
+<!-- <div class="container" style="width: 1024px">
+
+<div class="row">
+    <!--potential banner area or place to generate error notifications 
+</div> -->
 <body>
 
     <div id="wrapper">
@@ -69,7 +101,7 @@ session_start();
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="admindash.html">Employee Lookup</a>
+                <a class="navbar-brand" href="userpage.php">User Page</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -84,7 +116,7 @@ session_start();
                                 <div>
                                     <strong>John Smith</strong>
                                     <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
+                                        <em>Time</em>
                                     </span>
                                 </div>
                                 <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
@@ -274,7 +306,7 @@ session_start();
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="login.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -286,27 +318,16 @@ session_start();
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-                
+                        
+						
                         <li>
-                            <a href="admindash.php"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-                        </li>
-                        <li>
-                            <a href="companyoverview.php"><i class="fa fa-table fa-fw"></i> Company Overviews</a>
+							<a href="usersplash.php"><i class="fa fa-user fa-fw"></i> My Jobs</a>
                         </li>
 						<li>
-                            <a href="companylookup.php"><i class="fa fa-building fa-fw"></i> Company Lookup</a>
+                            <a href="companyoverview2.php"><i class="fa fa-bar-chart fa-fw"></i>Company Lookups</a>
                         </li>
 						<li>
-                            <a href="employeelookup.php"><i class="fa fa-male fa-fw"></i> Employee Lookup</a>
-                        </li>
-						<li>
-                            <a href="viewcaselog.php"><i class="fa fa-briefcase fa-fw"></i> Case Log</a>
-                        </li>
-						<li>
-                            <a href="addaccounts.php"><i class="fa fa-plus-circle fa-fw"></i> Manage Users</a>
-                        </li>
-						<li>
-                            <a href="managecompanies.php"><i class="fa fa-plus-circle fa-fw"></i> Manage Companies</a>
+                            <a href="caselog.php"><i class="fa fa-sign-out fa-fw"></i>My CaseLogs</a>
                         </li>
               
                     </ul>
@@ -315,27 +336,31 @@ session_start();
             </div>
             <!-- /.navbar-static-side -->
         </nav>
-		<!-- End of header -->
-		
+		<!-- jobs form -->
 		<div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Employee Lookup</h1>
-                </div>
+                    <div class="page-header">
+					<h1 class="text-primary">Info for: <?php echo $job ?></h1>
+					</div>
+				</div>
                 <!-- /.col-lg-12 -->
             </div>
-			<div class="row">
+            <!-- /.row -->
+            <div class="row">
                 <div class="col-lg-12">
-                    <table id="employee" class="table table-striped" cellspacing="0" width="100%">
+                    <table id="example" class="table table-striped" cellspacing="0" width="100%">
 						<!-- Titles for table -->
 						<thead>
-						<tr>
-							<th>User ID</th> 
-							<th>First Name</th>
-							<th>Last Name</th>
-							<th>Email</th>
-							<th>Job</th>
-						
+							<tr>
+							
+							<th>Hours Reported:</th>
+							<th>Hourly Wage</th> 
+							<th>Expected Wage</th>
+							<th>Date Reported</th>
+							<th> </th>
+							<th> </th>
+							
 						</tr>
 						</thead>
 						<tbody>
@@ -348,30 +373,30 @@ session_start();
 						  $db = connect($dbHost, $dbUser, $dbPassword, $dbName);
 							
 							// prepare sql statement
-							$query = "SELECT Users.userid, Users.firstname, Users.lastname, Users.email, Jobinfo.jobtitle, Employer.employername, Jobinfo.userid, Jobinfo.employerid, Employer.employerid FROM Jobinfo, Users, Employer WHERE Users.userid=Jobinfo.userid AND Jobinfo.employerid=Employer.employerid ORDER BY Users.lastname";    
+							$query = "SELECT Hoursreported.reportingid, Hoursreported.hoursworked, Hoursreported.datereportedfor, Jobinfo.hourlyrate FROM Hoursreported, Jobinfo WHERE Jobinfo.jobid={$_SESSION['jobid']} AND Hoursreported.jobid={$_SESSION['jobid']}";    
 							// execute sql statement
 							$result = $db->query($query);
 							
 							
-							// check if it u
+							// check if it worked
 							if ($result) {
 								$numberofrows = $result->num_rows;
 								
 								for($i=0; $i < $numberofrows; $i++) {
 									$row = $result->fetch_assoc();
 									echo "\n <tr>";
-									echo "\n <td>" . $row['userid'] . "</td>";
-									$userid = $row['userid'];
-									echo "\n <td>" . $row['firstname'] . "</td>";
-									$firstname = $row['firstname'];
-									echo "\n <td>" . $row['lastname'] . "</td>";
-									$lastname = $row['lastname'];
-									echo "\n <td>" . $row['email'] . "</td>";
-									$email = $row['email'];
-									echo "\n <td>" . $row['jobtitle']." at ".$row['employername'] . "</td>";
-									$employername = $row['employername'];
-
-								
+									echo "\n <td>" . $row['hoursworked'] . "hrs</td>";
+									echo "\n <td>$" . $row['hourlyrate'] . "</td>";
+									echo "\n <td>$" . $row['hoursworked']*$row['hourlyrate']. "</td>";
+									$date = $row['datereportedfor'];
+									$datereportedfor = date("m-d-Y", strtotime($date));
+									echo "\n <td>" . $datereportedfor . "</td>";
+									echo "\n <td><button type='button' onclick='deleteRecord(" . $row['reportingid'] . ");'>Delete</button></td>";
+									echo "\n <td><button type='button' onclick='editRecord(" . $row['reportingid'] . ', "' .
+									$row['hoursworked'] . '", "' . $row['datereportedfor'] . '"'. ");'>Edit</button></td>";
+									
+									
+						
 									echo "\n </tr>";
 								}
 								
@@ -382,23 +407,199 @@ session_start();
 							
 							$db->close();
 							
-						?>
+						?>    
 						</tbody>
 					</table>
                 <!-- /.col-lg-12 -->
 				</div>
+				<div class="col-lg-12">
+                    <table class="table table-striped">
+						<!-- Titles for table -->
+						<tr>
+							<!-- <td>jobid</td> -->
+							<td>Paycheck-Amount Earned</td>
+							<td>Paycheck-Hours Worked</td> 
+							<td>Paycheck-Start Date</td>
+							<td>Paycheck-End Date</td>
+							<td> </td>
+							<td> </td>
+							
+						</tr>
+						<!---------------->
+						<!-- List Jobs  -->
+						<!---------------->
+						<?php
+
+							// get a handle to the database
+						  $db = connect($dbHost, $dbUser, $dbPassword, $dbName);
+							
+							// prepare sql statement
+							$query = "SELECT * FROM Paycheck WHERE Paycheck.jobid={$_SESSION['jobid']}";    
+							// execute sql statement
+							$result = $db->query($query);
+							
+							
+							// check if it worked
+							if ($result) {
+								$numberofrows = $result->num_rows;
+								
+								for($i=0; $i < $numberofrows; $i++) {
+									$row = $result->fetch_assoc();
+									echo "\n <tr>";
+									echo "\n <td>$" . $row['amountearned'] . "</td>";
+									echo "\n <td>" . $row['hoursworked'] . "</td>";
+									$date = $row['payCheckPeriodStart'];
+									$payCheckPeriodStart = date("m-d-Y", strtotime($date));
+									echo "\n <td>" . $payCheckPeriodStart . "</td>";
+									$date = $row['payCheckPeriodEnd'];
+									$payCheckPeriodEnd = date("m-d-Y", strtotime($date));
+									echo "\n <td>" . $payCheckPeriodEnd . "</td>";
+									
+									
+							
+									echo "\n </tr>";
+								}
+								
+							} else {
+								reportErrorAndDie("Something went wrong when retrieving jobs from the database.<p>" .
+												  "This was the error: " . $db->error . "<p>", $query);
+							}
+							
+							$db->close();
+							
+						?>    
+  
+					</table>
+                <!-- /.col-lg-12 -->
+				</div>
+				
+				
+            <!-- /.row -->
 			</div>
-		</div><!-- page wrapper-->
-	</div><!--wrapper-->
+		</div>
+		<!-- enter hours form -->
+
+
+</div> <!-- Closing container div -->
+
 </body>
-
-<!-- script for table rendering -->
 <script>
-
+<!-- script for table rendering -->
 $(document).ready(function() {
-    $('#employee').DataTable();
+    $('#example').DataTable();
 } );
-
-
-
+$('#example').dataTable( {
+  "columnDefs": [ {
+      "targets": [ 0,1, 2,4,5 ],
+      "orderable": false
+    } ]
+} );
+$('#example').dataTable( {
+  "columnDefs": [
+    { "width": "15%", "targets": [0,1,2,4,5] }
+	{ "width": "25%", "targets": 3 }
+  ]
+} );
 </script>
+				<!-- Code for editing form -->
+					<div id="dialog-form" title="Edit hours" style="display: none">
+						<form>
+						  <fieldset>
+							<div class="form-group">
+								<label for="hours worked">Hours Worked</label>
+								<input type="int" name="edithoursworked" id="edithoursworked" class="form-control" />
+							</div>
+						
+							<div class="form-group">
+								<label for="date reported for">Date Reported</label>
+								<input type="text" name="editdatereportedfor" id="editdatereportedfor" value="" class="form-control" />
+							</div>
+							<input type="hidden" name="editreportingid" id="editreportingid"/>
+						  </fieldset>
+						</form>
+					</div>
+
+<script>						
+						// confirm that a user wants to delete, then call php script to do deletion
+						function deleteRecord(reportingid) {
+							// delete record from Hoursreported table identified by reportingid, if user agrees
+							var decision = confirm("Would you like to delete these hours?");
+							if (decision == true) {
+								var xmlhttp = new XMLHttpRequest();
+								
+								// this part of code receives a response from deleteaccounts.php 
+								xmlhttp.onreadystatechange=function() {
+									if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+										if(xmlhttp.responseText == "Hours deleted") {
+											location.reload();
+										} else {
+											alert("Unsuccessful delete: " + xmlhttp.responseText);
+										}
+									}
+								}
+								
+								// this sends the data request to deletehours.php
+								xmlhttp.open("POST", "deletehours.php", true);
+								xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+								xmlhttp.send("reportingid=" + reportingid);
+							}
+						}
+						
+						// pop up a form to edit a record that provides option to cancel or save changes
+						function editRecord(reportingid, hoursworked, datereportedfor) {
+							
+							document.getElementById("edithoursworked").value = hoursworked;
+							document.getElementById("editdatereportedfor").value = datereportedfor;
+							document.getElementById("editreportingid").value = reportingid;
+							$("#dialog-form").dialog("open");  
+							
+							
+						}
+						
+						$("#dialog-form").dialog(
+							{
+								autoOpen: false,
+								height: 400,
+								width: 400,
+								modal: true,
+								buttons: {
+									"Save": function() {
+										var xmlhttp = new XMLHttpRequest();
+								
+										// this part of code receives a response from edithours.php 
+										xmlhttp.onreadystatechange=function() {
+											if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+												if(xmlhttp.responseText == "Hours edited") {
+													location.reload();
+												} else {
+													alert("Unsuccessful save: " + xmlhttp.responseText);
+													location.reload();
+												}
+											}
+										}
+														  
+										// this sends the data request to edithours.php
+										xmlhttp.open("POST", "edithours.php", true);
+										xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+										
+										// get variables
+										var editreportingid = document.getElementById("editreportingid").value;
+										var edithoursworked = document.getElementById("edithoursworked").value;
+										var editdatereportedfor = document.getElementById("editdatereportedfor").value;
+										
+										
+										// send data to edithours.php
+										xmlhttp.send("reportingid=" + editreportingid + "&hoursworked=" + edithoursworked + "&datereportedfor=" + editdatereportedfor);
+									},
+									"Cancel": function() {
+										$(this).dialog("close");       
+									}
+								}
+							}
+												 
+											 )
+						
+						
+					</script>
+
+</html>

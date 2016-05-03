@@ -1,19 +1,14 @@
 <?php
 	include_once("config.php");
-	include_once("util.php");
 	$title ="AntiWageTheft.org";
-$menu=1;
-session_start();
- if (!isset($_SESSION['username'])) {
-        // if this variable is not set, then kick user back to login screen
-        header("Location: " . $baseURL . "login.php");
-    }
-	include_once('header3.php');
-	
+	session_start();
+	$menu=3;
+	include_once("header2.php");
 ?>
-<html lang="en">
+<html>
 
 <head>
+    <title>Splash</title>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,7 +16,6 @@ session_start();
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Bootstrap Admin Theme</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../startbootstrap-sb-admin-2-1.0.8/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -40,25 +34,32 @@ session_start();
 
     <!-- Custom Fonts -->
     <link href="../startbootstrap-sb-admin-2-1.0.8/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+	<!-- Calendar Jquery Plugin -->
+	<link href="../Responsive-Event-Calendar-Date-Picker-jQuery-Plugin-Monthly/css/monthly.css" rel="stylesheet">
+	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="../Responsive-Event-Calendar-Date-Picker-jQuery-Plugin-Monthly/js/monthly.js"></script>
 	
-	<!-- jQuery stuff -->
-	<script src="http://code.jquery.com/jquery.min.js"></script>
-    <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>   
-	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>	
-	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+	<!-- Bower Timepicker Plugin -->
+	<link type="text/css" href="../bootstrap-timepicker/css/bootstrap-timepicker.min.css" />
+	<script type="text/javascript" src="../bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
+	<link type="text/css" href="../bootstrap-timepicker/css/bootstrap-timepicker.css" />
+	
+	<script type="text/javascript" src="../bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
+   
 
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
     
-	<!-- following 3 scripts for table rendering -->
-	<!-- <script src="//code.jquery.com/jquery-1.12.0.min.js"></script> -->
-	<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
-	<script src="https://cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"></script>
-
-
 </head>
 
 <body>
-
-    <div id="wrapper">
+    
+ <div id="wrapper">
 
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
@@ -69,7 +70,7 @@ session_start();
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="admindash.html">Employee Lookup</a>
+                <a class="navbar-brand" href="userpage.php">User Page</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -84,7 +85,7 @@ session_start();
                                 <div>
                                     <strong>John Smith</strong>
                                     <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
+                                        <em>Time</em>
                                     </span>
                                 </div>
                                 <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
@@ -286,27 +287,40 @@ session_start();
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-                
-                        <li>
-                            <a href="admindash.php"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                        <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" placeholder="Search...">
+                                <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                            </div>
+                            <!-- /input-group -->
+                        </li>
+						<li class="active">
+                            <a href="#"><i class="fa fa-table fa-fw"></i> Enter Work Info<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li class="active">
+                                    <a href="userpage.php"><i class="fa fa-clock-o fa-fw"></i> Enter Hours</a>
+                                </li>
+                                <li>
+                                    <a href="paycheck.php"><i class="fa fa-dollar fa-fw"></i> Enter Paycheck</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="companyoverview.php"><i class="fa fa-table fa-fw"></i> Company Overviews</a>
+							<a href="usersplash.php"><i class="fa fa-user fa-fw"></i> My Jobs</a>
                         </li>
 						<li>
-                            <a href="companylookup.php"><i class="fa fa-building fa-fw"></i> Company Lookup</a>
+                            <a href="companylookup.html"><i class="fa fa-gear fa-fw"></i>My Employers</a>
                         </li>
 						<li>
-                            <a href="employeelookup.php"><i class="fa fa-male fa-fw"></i> Employee Lookup</a>
+                            <a href="companyoverview.html"><i class="fa fa-bar-chart fa-fw"></i>Company Lookups</a>
                         </li>
 						<li>
-                            <a href="viewcaselog.php"><i class="fa fa-briefcase fa-fw"></i> Case Log</a>
-                        </li>
-						<li>
-                            <a href="addaccounts.php"><i class="fa fa-plus-circle fa-fw"></i> Manage Users</a>
-                        </li>
-						<li>
-                            <a href="managecompanies.php"><i class="fa fa-plus-circle fa-fw"></i> Manage Companies</a>
+                            <a href="caselog.html"><i class="fa fa-sign-out fa-fw"></i>My CaseLogs</a>
                         </li>
               
                     </ul>
@@ -315,90 +329,115 @@ session_start();
             </div>
             <!-- /.navbar-static-side -->
         </nav>
-		<!-- End of header -->
-		
 		<div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Employee Lookup</h1>
-                </div>
+                    <div class="page-header">
+					<h1 class="text-primary">Add Employeer</h1>
+					</div>
+				</div>
+				<!-- span for form error messages -->
+				<span style="color:red; font-weight:bold">
+					<?php if(isset($_GET['msg']))
+					echo $_GET['msg'];
+					?>
+				</span>
+				
                 <!-- /.col-lg-12 -->
             </div>
 			<div class="row">
                 <div class="col-lg-12">
-                    <table id="employee" class="table table-striped" cellspacing="0" width="100%">
-						<!-- Titles for table -->
-						<thead>
-						<tr>
-							<th>User ID</th> 
-							<th>First Name</th>
-							<th>Last Name</th>
-							<th>Email</th>
-							<th>Job</th>
-						
-						</tr>
-						</thead>
-						<tbody>
-						<!---------------->
-						<!-- List Jobs  -->
-						<!---------------->
-						<?php
+					<form action="insertemployer.php" method="post" enctype="multipart/form-data">
+						<div class="form-group">
+							<label for="employername">Employer Name</label>
+							<input type="text" class="form-control" name="employername"/>
+						</div>
+						<div class="form-group">
+							<label for="employeraddress">Employer Address</label>
+							<input type="text" class="form-control" name="employeraddress"/>
+						</div>
 
-							// get a handle to the database
-						  $db = connect($dbHost, $dbUser, $dbPassword, $dbName);
-							
-							// prepare sql statement
-							$query = "SELECT Users.userid, Users.firstname, Users.lastname, Users.email, Jobinfo.jobtitle, Employer.employername, Jobinfo.userid, Jobinfo.employerid, Employer.employerid FROM Jobinfo, Users, Employer WHERE Users.userid=Jobinfo.userid AND Jobinfo.employerid=Employer.employerid ORDER BY Users.lastname";    
-							// execute sql statement
-							$result = $db->query($query);
-							
-							
-							// check if it u
-							if ($result) {
-								$numberofrows = $result->num_rows;
-								
-								for($i=0; $i < $numberofrows; $i++) {
-									$row = $result->fetch_assoc();
-									echo "\n <tr>";
-									echo "\n <td>" . $row['userid'] . "</td>";
-									$userid = $row['userid'];
-									echo "\n <td>" . $row['firstname'] . "</td>";
-									$firstname = $row['firstname'];
-									echo "\n <td>" . $row['lastname'] . "</td>";
-									$lastname = $row['lastname'];
-									echo "\n <td>" . $row['email'] . "</td>";
-									$email = $row['email'];
-									echo "\n <td>" . $row['jobtitle']." at ".$row['employername'] . "</td>";
-									$employername = $row['employername'];
-
-								
-									echo "\n </tr>";
-								}
-								
-							} else {
-								reportErrorAndDie("Something went wrong when retrieving jobs from the database.<p>" .
-												  "This was the error: " . $db->error . "<p>", $query);
-							}
-							
-							$db->close();
-							
-						?>
-						</tbody>
-					</table>
-                <!-- /.col-lg-12 -->
+						<div class="form-group">
+							<label for="employercity">Employer City</label>
+							<input type="text" class="form-control" name="employercity"/>
+						</div>
+						<div class="form-group">
+							<label for="employerstate">Employer State</label>
+							<select name="employerstate">
+								<option value="AL">Alabama</option>
+								<option value="AK">Alaska</option>
+								<option value="AZ">Arizona</option>
+								<option value="AR">Arkansas</option>
+								<option value="CA">California</option>
+								<option value="CO">Colorado</option>
+								<option value="CT">Connecticut</option>
+								<option value="DE">Delaware</option>
+								<option value="DC">District Of Columbia</option>
+								<option value="FL">Florida</option>
+								<option value="GA">Georgia</option>
+								<option value="HI">Hawaii</option>
+								<option value="ID">Idaho</option>
+								<option value="IL">Illinois</option>
+								<option value="IN">Indiana</option>
+								<option value="IA">Iowa</option>
+								<option value="KS">Kansas</option>
+								<option value="KY">Kentucky</option>
+								<option value="LA">Louisiana</option>
+								<option value="ME">Maine</option>
+								<option value="MD">Maryland</option>
+								<option value="MA">Massachusetts</option>
+								<option value="MI">Michigan</option>
+								<option value="MN">Minnesota</option>
+								<option value="MS">Mississippi</option>
+								<option value="MO">Missouri</option>
+								<option value="MT">Montana</option>
+								<option value="NE">Nebraska</option>
+								<option value="NV">Nevada</option>
+								<option value="NH">New Hampshire</option>
+								<option value="NJ">New Jersey</option>
+								<option value="NM">New Mexico</option>
+								<option value="NY">New York</option>
+								<option value="NC">North Carolina</option>
+								<option value="ND">North Dakota</option>
+								<option value="OH">Ohio</option>
+								<option value="OK">Oklahoma</option>
+								<option value="OR">Oregon</option>
+								<option value="PA">Pennsylvania</option>
+								<option value="RI">Rhode Island</option>
+								<option value="SC">South Carolina</option>
+								<option value="SD">South Dakota</option>
+								<option value="TN">Tennessee</option>
+								<option value="TX">Texas</option>
+								<option value="UT">Utah</option>
+								<option value="VT">Vermont</option>
+								<option value="VA">Virginia</option>
+								<option value="WA">Washington</option>
+								<option value="WV">West Virginia</option>
+								<option value="WI">Wisconsin</option>
+								<option value="WY">Wyoming</option>
+							</select>
+						</div>	
+						<button type="submit" class="btn btn-default">Add Employer</button>
+					</form>
 				</div>
 			</div>
-		</div><!-- page wrapper-->
-	</div><!--wrapper-->
+
+
+</div> <!-- Closing container div -->
+
+
+<p>
+  
+
+
+</div> 
+
+
+
 </body>
 
-<!-- script for table rendering -->
-<script>
-
-$(document).ready(function() {
-    $('#employee').DataTable();
-} );
 
 
 
-</script>
+
+</html>
