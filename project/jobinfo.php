@@ -575,7 +575,7 @@ $('#example').dataTable( {
 										
 										
 										// send data to edithours.php
-										xmlhttp.send("&reportingid=" + editreportingid + "&hoursworked=" + edithoursworked + "&datereportedfor=" + editdatereportedfor);
+										xmlhttp.send("reportingid=" + editreportingid + "&hoursworked=" + edithoursworked + "&datereportedfor=" + editdatereportedfor);
 									},
 									"Cancel": function() {
 										$(this).dialog("close");       

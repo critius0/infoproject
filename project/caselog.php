@@ -339,7 +339,7 @@
 						  $db = connect($dbHost, $dbUser, $dbPassword, $dbName);
 							
 							// prepare sql statement
-							$query = "SELECT jobTitle, Jobinfo.hourlyrate, Paycheck.payCheckPeriodStart, Paycheck.payCheckPeriodEnd, Paycheck.amountearned, Paycheck.hoursworked FROM Jobinfo, Users, Paycheck WHERE Paycheck.hoursworked*Jobinfo.hourlyrate>Paycheck.amountearned AND Jobinfo.userid = Users.userid AND Paycheck.jobid=Jobinfo.jobid AND Users.userid = {$_SESSION[userid]};";    
+							$query = "SELECT jobTitle, Jobinfo.jobid, Jobinfo.hourlyrate, Paycheck.payCheckPeriodStart, Paycheck.payCheckPeriodEnd, Paycheck.amountearned, Paycheck.hoursworked FROM Jobinfo, Users, Paycheck WHERE Paycheck.hoursworked*Jobinfo.hourlyrate>Paycheck.amountearned AND Jobinfo.userid = Users.userid AND Paycheck.jobid=Jobinfo.jobid AND Users.userid = {$_SESSION[userid]};";    
 							// execute sql statement
 							$result = $db->query($query);
 							
@@ -398,6 +398,7 @@
 						// pop up a form to edit a record that provides option to cancel or save changes
 						function addRecord(jobid, notes) {						
 							document.getElementById("addjobid").value = jobid;
+							
 							$("#dialog-form").dialog("open");  
 							$( "#resizable" ).resizable();
 										
@@ -416,7 +417,7 @@
 										// this part of code receives a response from addcase.php 
 										xmlhttp.onreadystatechange=function() {
 											if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-												if(xmlhttp.responseText == "Case Added") {
+												if(xmlhttp.responseText == "Case added") {
 													location.reload();
 												} else {
 													alert("Unsuccessful add: " + xmlhttp.responseText);
@@ -434,10 +435,9 @@
 										var addnotes = document.getElementById("addnotes").value;				
 																
 										// send data to addcase.php
-										xmlhttp.send("&jobid=" + addjobid + "&notes=" + addnotes);
+										xmlhttp.send("jobid=" + addjobid + "&notes=" + addnotes);
 									},
 									"Cancel": function() {
-										alert("Unsuccessful add: " + "%jobid);
 										$(this).dialog("close");       
 									}
 								}

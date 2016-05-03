@@ -9,7 +9,7 @@
     
 
     // check that we have an hours
-    if ($hoursworked) {
+    if (!$hoursworked) {
         echo "No hours received";
 		exit;
     }
@@ -22,7 +22,7 @@
 
     // check that we have an id
     if (!$reportingid) {
-      , echo "No id received";
+        echo "No id received";
 		exit;
     }
     
