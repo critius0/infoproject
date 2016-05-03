@@ -35,20 +35,7 @@
     // get a handle to the database
     $DB = connect($dbHost, $dbUser, $dbPassword, $dbName);
 	
-    // check if email is already in the table
-    $emailCheckQuery = "select * from Users where email='" . $email . "' AND userid!=". $userid;
-    $result = $DB->query($emailCheckQuery);
-    if ($result) {
-        $numberofrows = $result->num_rows;
-        if ($numberofrows > 0) {
-            reportErrorAndDie("The email address " . $email . " already exists in the database." .
-                              "<p>Please <a href='input.php'>try again</a>");
-			exit;
-        }
-    } else {
-        reportErrorAndDie("Could not check if email was already in table.<p>" . $DB->error, $emailCheckQuery);
-		exit;
-    }	
+  
     
     $updateQuery = "UPDATE Users SET firstname='" . $firstname . "', lastname='" . $lastname
         . "', email='" . $email . "' WHERE userid = " . $userid . ";";

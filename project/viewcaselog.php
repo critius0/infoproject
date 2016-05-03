@@ -40,16 +40,19 @@ session_start();
 
     <!-- Custom Fonts -->
     <link href="../startbootstrap-sb-admin-2-1.0.8/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	
+	<!-- jQuery stuff -->
+	<script src="http://code.jquery.com/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>   
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>	
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-	<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    
+	<!-- following 3 scripts for table rendering -->
+	<!-- <script src="//code.jquery.com/jquery-1.12.0.min.js"></script> -->
 	<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
 	<script src="https://cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"></script>
+
 
 </head>
 
@@ -66,7 +69,7 @@ session_start();
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="admindash.html">SB Admin v2.0</a>
+                <a class="navbar-brand" href="admindash.html">Caselog</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -314,7 +317,7 @@ session_start();
 		<div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Company Lookup</h1>
+                    <h1 class="page-header">Caselog Lookup</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -329,7 +332,7 @@ session_start();
 							<th>User ID</th>
 							<th>Employer ID</th>
 							<th>Case Notes</th>
-							<th> </th>
+						
 						</tr>
 						</thead>
 						<tbody>

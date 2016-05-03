@@ -59,12 +59,7 @@ session_start();
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>	
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    
 	<!-- following 3 scripts for table rendering -->
 	<!-- <script src="//code.jquery.com/jquery-1.12.0.min.js"></script> -->
 	<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
@@ -86,7 +81,7 @@ session_start();
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="admindash.html">SB Admin v2.0</a>
+                <a class="navbar-brand" href="admindash.html">Control Users</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -461,6 +456,7 @@ session_start();
 			
 				</div>
 			</div><!-- page wrapper-->
+	</div>
 	</div><!--wrapper-->
 	
 				<!-- Code for editing form -->
@@ -490,7 +486,7 @@ session_start();
 						// confirm that a user wants to delete, then call php script to do deletion
 						function deleteRecord(userid, lastname) {
 							// delete record from people table identified by id, if user agrees
-							var decision = confirm("Would you like to delete " + lastname + "?");
+							var decision = confirm("Are you sure you want to delete " + lastname + "? this will delete all information in the database related to this user.");
 							if (decision == true) {
 								var xmlhttp = new XMLHttpRequest();
 								
