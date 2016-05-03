@@ -39,7 +39,16 @@
 <html>
 
 <head>
- <!-- Bootstrap Core CSS -->
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+
+    <!-- Bootstrap Core CSS -->
     <link href="../startbootstrap-sb-admin-2-1.0.8/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
@@ -62,9 +71,14 @@
     <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>   
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>	
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+
+    
+	<!-- following 3 scripts for table rendering -->
 	<!-- <script src="//code.jquery.com/jquery-1.12.0.min.js"></script> -->
 	<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
 	<script src="https://cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"></script>
+
+
 </head>
 
 
