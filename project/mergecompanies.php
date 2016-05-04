@@ -130,9 +130,10 @@ if (($_SESSION['usertype']) == 0){
             
             <!-- /.navbar-static-side -->
         </nav>
+		</div>
 		<div id="page-wrapper">
             <div class="row">
-                <div class="col-lg-6">
+                <div class="row"
                     <div class="page-header">
 					<h1 class="text-primary">Merge Companies</h1>
 					</div>
