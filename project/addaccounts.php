@@ -9,6 +9,12 @@ session_start();
         // if this variable is not set, then kick user back to login screen
         header("Location: " . $baseURL . "login.php");
     }
+	//block non admins from this page	
+if (($_SESSION['usertype']) == 0){
+	$msg = "<p>Page attempted to access requires an admin login.</p>";
+				header("Location:login.php?msg=$msg");
+	 
+	}
 	include_once('header3.php');
 	
 	 
@@ -395,7 +401,7 @@ session_start();
 							</select>
 						</div><!-- close row for choosing user type-->
 						
-					<button type="submit" class="btn btn-default">Create Account</button>
+					<button type="submit" class="btn btn-primary">Create Account</button>
 					</form>
 				</div>
 				

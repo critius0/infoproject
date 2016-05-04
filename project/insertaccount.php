@@ -81,7 +81,7 @@
         $numberofrows = $result->num_rows;
         if ($numberofrows > 0) {
             $msg = "<p>The  username " . $username . " is already taken.</p>";
-				header("Location:register.php?msg=$msg");
+				header("Location:addaccounts.php?msg=$msg");
 				exit;
         }
     } else {
@@ -103,19 +103,20 @@
     
     // check if it worked
     if ($result) {
-        echo $username . " with type " . $usertype . " Created";
-        echo "<p>";
-        echo "<a href='addaccounts.php'>Return to Manage Users</a>";
+        
+		
         
         // inform new user that an account has been created for them
-        $subject = "You have successfully created an account for the my antiwagetheft.org";
+        $subject = "An account has successfully been created for you at antiwagetheft.org";
         $mailcontent = "Please login at http://webdev.divms.uiowa.edu/~cmcgillin/infoproject/project/login.php";
         mail($email, $subject, $mailcontent, "From: " . $adminEmail);
+		$msg = "<p>Successfully created an acount with username: " . $username . " .</p>";
+				header("Location:addaccounts.php?msg=$msg");
     } else {
         echo "Something went horribly wrong when adding " . $firstname . " " . $lastname . ".";
         echo "<p>This was the error: " . $db->error;
         echo "<p>This was the sql statement: " . $query;
-        echo "<p>Please <a href='register.php'>try again</a>";
+        echo "<p>Please <a href='addacount.php'>try again</a>";
     }
     
     $db->close();

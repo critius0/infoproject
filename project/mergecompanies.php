@@ -2,12 +2,18 @@
 	include_once("config.php");
 	include_once("util.php");
 	$title ="AntiWageTheft.org";
-	$menu=3;
+	$menu=1;
 	    session_start();
     if (!isset($_SESSION['username'])) {
         // if this variable is not set, then kick user back to login screen
         header("Location: " . $baseURL . "login.php");
     }
+	//block non admins from this page	
+if (($_SESSION['usertype']) == 0){
+	$msg = "<p>Page attempted to access requires an admin login.</p>";
+				header("Location:login.php?msg=$msg");
+	 
+	}
 	
 	include_once("header3.php");
 	    // get a handle to the database
@@ -126,7 +132,7 @@
         </nav>
 		<div id="page-wrapper">
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-6">
                     <div class="page-header">
 					<h1 class="text-primary">Merge Companies</h1>
 					</div>
@@ -138,9 +144,8 @@
 					?>
 			</span>
                 <!-- /.col-lg-12 -->
-            </div>
-			<div class="row">
-                <div class="col-lg-12">
+            
+                <div class="col-sm-6">
 					<form action="companyinsertmerge.php" method="post" enctype="multipart/form-data">
 						<!-- employer options from above -->
 						<div class="form-group">

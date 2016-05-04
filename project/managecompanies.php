@@ -9,6 +9,12 @@ session_start();
         // if this variable is not set, then kick user back to login screen
         header("Location: " . $baseURL . "login.php");
     }
+	//block non admins from this page	
+if (($_SESSION['usertype']) == 0){
+	$msg = "<p>Page attempted to access requires an admin login.</p>";
+				header("Location:login.php?msg=$msg");
+	 
+	}
 	include_once('header3.php');
 	
 	 
@@ -333,7 +339,7 @@ session_start();
             <div class="row">
                 <div class="col-lg-12">
                     <div class="page-header">
-					<h1 class="text-primary">Add Employer</h1>
+					<h2 class="text-primary">Add a Company</h2>
 					</div>
 				</div>
 				<!-- span for form error messages -->
@@ -417,14 +423,17 @@ session_start();
 								<option value="WY">Wyoming</option>
 							</select>
 						</div>	
-						<button type="submit" class="btn btn-default">Add Employer</button>
+						<button type="submit" class="btn btn-primary">Add Employer</button>
 					</form>
 				</div>
+			<br>
 			
 			
-               
-            </div>
-			
+				<div class="row">
+					<a href="mergecompanies.php" class="btn btn-info" role="button">Go to Merge Companies</a>
+				</div>
+				 <br>
+				 <br>
 				<div class="row">
                 <div class="col-lg-12">
                     <table id="company" class="table table-striped" cellspacing="0" width="100%">
@@ -438,7 +447,7 @@ session_start();
 							<th>Company State </th>
 							<th> </th>
 							<th> </th>
-							<th> </th>
+							
 						</tr>
 						</thead>
 						<tbody>
@@ -477,13 +486,7 @@ session_start();
 									echo "\n <td><button type='button' onclick='editRecord(" . $row['employerid'] . ', "' .
 									$row['firstname'] . '", "' . $row['lastname'] . '", "' . $row['email'] . '"' . ");'>Edit</button></td>";
 									$employerid = $row['employerid'];
-									echo " <td><form action='mergecompanies.php'  method='post'><input type='hidden' name='employerid' value={$employerid} />
-															<input type= 'submit' value= 'Merge Companies'/> </form></td>\n";
-									//echo "\n <td><button type='button' onclick='mergeRecord(" . $row['employerid'] . ");'>Merge</button></td>";
-
 									
-									//echo " <td><form action='editcompany.php'  method='post'><input type='hidden' name='employerid' value={$employerid} />
-														//	<input type= 'submit' value= 'Other Info'/> </form></td>\n"; */
 									echo "\n </tr>";
 								}
 								
@@ -613,7 +616,7 @@ $(document).ready(function() {
 } );
 $('#company').dataTable( {
   "columnDefs": [ {
-      "targets": [5,6,7],
+      "targets": [5,6],
       "orderable": false
     } ]
 } );

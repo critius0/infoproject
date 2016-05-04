@@ -8,6 +8,12 @@ session_start();
         // if this variable is not set, then kick user back to login screen
         header("Location: " . $baseURL . "login.php");
     }
+//block non admins from this page	
+if (($_SESSION['usertype']) == 0){
+	$msg = "<p>Page attempted to access requires an admin login.</p>";
+				header("Location:login.php?msg=$msg");
+	 
+	}	
 	include_once('header3.php');
 	
 ?>
