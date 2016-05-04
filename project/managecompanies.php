@@ -473,6 +473,10 @@ session_start();
 									$employercity = $row['employercity'];
 									echo "\n <td>" . $row['employerstate'] . "</td>";
 									$employerstate = $row['employerstate'];
+									echo "\n <td><button type='button' onclick='deleteRecord(" . $row['employerid'] . ");'>Delete</button></td>";
+									echo "\n <td><button type='button' onclick='editRecord(" . $row['employerid'] . ', "' .
+									$row['firstname'] . '", "' . $row['lastname'] . '", "' . $row['email'] . '"' . ");'>Edit</button></td>";
+									echo "\n <td><button type='button' onclick='mergeRecord(" . $row['employerid'] . ");'>Merge</button></td>";
 
 									
 									//echo " <td><form action='editcompany.php'  method='post'><input type='hidden' name='employerid' value={$employerid} />
@@ -521,16 +525,16 @@ session_start();
 </body>
 					<script>						
 						// confirm that a user wants to delete, then call php script to do deletion
-						function deleteRecord(userid, lastname) {
+						function deleteRecord(employerid) {
 							// delete record from people table identified by id, if user agrees
-							var decision = confirm("Are you sure you want to delete " + lastname + "? this will delete all information in the database related to this user.");
+							var decision = confirm("Are you sure you want to delete " + employerid + "? this will remove the company from the database.");
 							if (decision == true) {
 								var xmlhttp = new XMLHttpRequest();
 								
-								// this part of code receives a response from deleteaccounts.php 
+								// this part of code receives a response from deletecompany.php 
 								xmlhttp.onreadystatechange=function() {
 									if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-										if(xmlhttp.responseText == "Person deleted") {
+										if(xmlhttp.responseText == "company deleted") {
 											location.reload();
 										} else {
 											alert("Unsuccessful delete: " + xmlhttp.responseText);
@@ -539,9 +543,9 @@ session_start();
 								}
 								
 								// this sends the data request to deleteaccounts.php
-								xmlhttp.open("POST", "deleteaccounts.php", true);
+								xmlhttp.open("POST", "deletecompany.php", true);
 								xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-								xmlhttp.send("userid=" + userid);
+								xmlhttp.send("employerid=" + employerid);
 							}
 						}
 						
@@ -606,7 +610,7 @@ $(document).ready(function() {
 } );
 $('#company').dataTable( {
   "columnDefs": [ {
-      "targets": [],
+      "targets": [5,6,7],
       "orderable": false
     } ]
 } );
