@@ -473,10 +473,13 @@ session_start();
 									$employercity = $row['employercity'];
 									echo "\n <td>" . $row['employerstate'] . "</td>";
 									$employerstate = $row['employerstate'];
-									echo "\n <td><button type='button' onclick='deleteRecord(" . $row['employerid'] . ");'>Delete</button></td>";
+									echo "\n <td><button type='button' onclick='deleteRecord(" . $row['employerid'] . ', "' . $row['employername'] . '"' .");'>Delete</button></td>";
 									echo "\n <td><button type='button' onclick='editRecord(" . $row['employerid'] . ', "' .
 									$row['firstname'] . '", "' . $row['lastname'] . '", "' . $row['email'] . '"' . ");'>Edit</button></td>";
-									echo "\n <td><button type='button' onclick='mergeRecord(" . $row['employerid'] . ");'>Merge</button></td>";
+									$employerid = $row['employerid'];
+									echo " <td><form action='mergecompanies.php'  method='post'><input type='hidden' name='employerid' value={$employerid} />
+															<input type= 'submit' value= 'Merge Companies'/> </form></td>\n";
+									//echo "\n <td><button type='button' onclick='mergeRecord(" . $row['employerid'] . ");'>Merge</button></td>";
 
 									
 									//echo " <td><form action='editcompany.php'  method='post'><input type='hidden' name='employerid' value={$employerid} />
@@ -525,9 +528,9 @@ session_start();
 </body>
 					<script>						
 						// confirm that a user wants to delete, then call php script to do deletion
-						function deleteRecord(employerid) {
-							// delete record from people table identified by id, if user agrees
-							var decision = confirm("Are you sure you want to delete " + employerid + "? this will remove the company from the database.");
+						function deleteRecord(employerid, employername) {
+							// delete record from company table identified by id, if user agrees
+							var decision = confirm("Are you sure you want to delete " + employername + "?  This will remove the company from the database.");
 							if (decision == true) {
 								var xmlhttp = new XMLHttpRequest();
 								
@@ -542,7 +545,7 @@ session_start();
 									}
 								}
 								
-								// this sends the data request to deleteaccounts.php
+								// this sends the data request to deletecompany.php
 								xmlhttp.open("POST", "deletecompany.php", true);
 								xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 								xmlhttp.send("employerid=" + employerid);
@@ -550,7 +553,7 @@ session_start();
 						}
 						
 						// pop up a form to edit a record that provides option to cancel or save changes
-						function editRecord(userid, firstname, lastname, email) {
+						function editRecord(employerid, employername, employeraddress, employerstate) {
 							document.getElementById("editfirstname").value = firstname;
 							document.getElementById("editlastname").value = lastname;
 							document.getElementById("editemail").value = email;

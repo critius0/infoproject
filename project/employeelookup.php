@@ -334,7 +334,9 @@ session_start();
 							<th>First Name</th>
 							<th>Last Name</th>
 							<th>Email</th>
+							<th>Jobid</th>
 							<th>Job</th>
+							<th>Employer</th>
 						
 						</tr>
 						</thead>
@@ -348,7 +350,7 @@ session_start();
 						  $db = connect($dbHost, $dbUser, $dbPassword, $dbName);
 							
 							// prepare sql statement
-							$query = "SELECT Users.userid, Users.firstname, Users.lastname, Users.email, Jobinfo.jobtitle, Employer.employername, Jobinfo.userid, Jobinfo.employerid, Employer.employerid FROM Jobinfo, Users, Employer WHERE Users.userid=Jobinfo.userid AND Jobinfo.employerid=Employer.employerid ORDER BY Users.lastname";    
+							$query = "SELECT Users.userid, Users.firstname, Users.lastname, Users.email, Jobinfo.jobtitle, Jobinfo.jobid, Employer.employername, Jobinfo.userid, Jobinfo.employerid, Employer.employerid FROM Jobinfo, Users, Employer WHERE Users.userid=Jobinfo.userid AND Jobinfo.employerid=Employer.employerid ORDER BY Users.lastname";    
 							// execute sql statement
 							$result = $db->query($query);
 							
@@ -368,8 +370,10 @@ session_start();
 									$lastname = $row['lastname'];
 									echo "\n <td>" . $row['email'] . "</td>";
 									$email = $row['email'];
+									echo "\n <td>" . $row['jobid'] . "</td>";
 									echo "\n <td>" . $row['jobtitle']." at ".$row['employername'] . "</td>";
 									$employername = $row['employername'];
+									echo "\n <td>" . $row['employername'] . "</td>";
 
 								
 									echo "\n </tr>";

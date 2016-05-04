@@ -314,7 +314,7 @@
 						<tr>
 							<!-- <td>jobid</td> -->
 							<th>Job Title:</th>
-							<!-- <td>userid</td> -->
+							<td>Company</td> 
 							<td> </td>
 							<td> </td>
 						</tr>

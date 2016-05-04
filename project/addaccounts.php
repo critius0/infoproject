@@ -405,6 +405,7 @@ session_start();
 					<!-- Titles for table -->
 					<thead>
 					<tr>
+						<th>Userid</th>
 						<th>Username</th>
 						<th>First Name</th>
 						<th>Last Name</th>
@@ -434,6 +435,8 @@ session_start();
 							for($i=0; $i < $numberofrows; $i++) {
 								$row = $result->fetch_assoc();
 								echo "\n <tr>";
+								
+								echo "\n <td>" . $row['userid'] . "</td>";
 								echo "\n <td>" . $row['username'] . "</td>";
 								echo "\n <td>" . $row['firstname'] . "</td>";
 								echo "\n <td>" . $row['lastname'] . "</td>";
@@ -572,7 +575,7 @@ $(document).ready(function() {
 } );
 $('#addacountstable').dataTable( {
   "columnDefs": [ {
-      "targets": [5,6 ],
+      "targets": [6,7 ],
       "orderable": false
     } ]
 } );
