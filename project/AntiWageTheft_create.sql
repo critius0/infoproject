@@ -35,7 +35,7 @@ CREATE TABLE Hoursreported (
     CONSTRAINT Hoursreported_pk PRIMARY KEY (reportingid)
 );
 
--- Table Jobinfo
+-- Table Jobinfo This is the main table, all roadmaps lead to here
 DROP TABLE IF EXISTS Jobinfo;
 CREATE TABLE Jobinfo (
     jobid int  NOT NULL  AUTO_INCREMENT,
@@ -59,7 +59,7 @@ CREATE TABLE Paycheck (
     CONSTRAINT Paycheck_pk PRIMARY KEY (paycheckId)
 );
 
--- Table Users
+-- Table Users, Usertype determines admin access.  usertype of 2 is the highest level admin
 DROP TABLE IF EXISTS Users;
 CREATE TABLE Users (
     userid int  NOT NULL  AUTO_INCREMENT,
@@ -71,6 +71,7 @@ CREATE TABLE Users (
     usertype int  NOT NULL  DEFAULT 0,
     CONSTRAINT userId PRIMARY KEY (userid)
 );
+--Insert the main admin into table at creation
 INSERT INTO Users (username, firstname, lastname, password, email, usertype) VALUES ('admin', 'Godadmin', 'PrimaryAdmin', '$2a$12$dxzp05dpWfZPDiochojF6e5KVDYkEPVRfhFY05kF2Tw.yG.3muCuq ', 'colin-mcgillin@uiowa.edu' , '2');
 
 

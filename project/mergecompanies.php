@@ -138,6 +138,8 @@ if (($_SESSION['usertype']) == 0){
 					<h1 class="text-primary">Merge Companies</h1>
 					</div>
 				</div>
+				<div class="row">
+				<p style="color:red; font-weight:bold"> WARNING: This merge feature will merge all employees and their data from the first selected company into the second selected company.  It will then delete the first company.</p>
 			<!-- Span for error messages -->	
 				<span style="color:red; font-weight:bold">
 					<?php if(isset($_GET['msg']))
@@ -164,7 +166,7 @@ if (($_SESSION['usertype']) == 0){
 						
 						
 						
-						<button type="submit" class="btn btn-default">Merge</button>
+						<button type="submit" class="btn btn-danger">Merge</button>
 					</form>
 				</div>
 			</div>
