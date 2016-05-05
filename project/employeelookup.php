@@ -384,7 +384,7 @@ if (($_SESSION['usertype']) == 0){
 									echo "\n <td>" . $row['email'] . "</td>";
 									$email = $row['email'];
 									echo "\n <td>" . $row['jobid'] . "</td>";
-									echo "\n <td>" . $row['jobtitle']." at ".$row['employername'] . "</td>";
+									echo "\n <td>" . $row['jobtitle']. "</td>";
 									$employername = $row['employername'];
 									echo "\n <td>" . $row['employername'] . "</td>";
 

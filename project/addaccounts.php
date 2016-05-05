@@ -454,8 +454,15 @@ elseif ($_SESSION['usertype'] ==3){
 								echo "\n <td>" . $row['lastname'] . "</td>";
 								echo "\n <td>" . $row['email'] . "</td>";
 								echo "\n <td>" . $row['usertype'] . "</td>";
-								echo "\n <td><button type='button' onclick='deleteRecord(" . $row['userid'] . ', "' .
-									$row['firstname'] . " " . $row['lastname'] . '"' . ");'>Delete</button></td>";
+								if (($row['usertype']) == 3){
+									echo "\n <td><button type='button' onclick='reactivateRecord(" . $row['userid'] . ', "' .
+									$row['firstname'] . " " . $row['lastname'] . '"' . ");'>Reactivate</button></td>";
+									}
+								elseif (($row['usertype']) <3){
+									echo "\n <td><button type='button' onclick='deactivateRecord(" . $row['userid'] . ', "' .
+									$row['firstname'] . " " . $row['lastname'] . '"' . ");'>Deactivate</button></td>";
+								}
+				
 								echo "\n <td><button type='button' onclick='editRecord(" . $row['userid'] . ', "' .
 									$row['firstname'] . '", "' . $row['lastname'] . '", "' . $row['email'] . '"' . ");'>Edit</button></td>";
 								echo "\n </tr>";
@@ -499,30 +506,58 @@ elseif ($_SESSION['usertype'] ==3){
 						  </fieldset>
 						</form>
 					</div>
+				
 </body>
 					<script>						
 						// confirm that a user wants to delete, then call php script to do deletion
-						function deleteRecord(userid, lastname) {
+						function deactivateRecord(userid, lastname) {
 							// delete record from people table identified by id, if user agrees
-							var decision = confirm("Are you sure you want to delete " + lastname + "? this will delete all information in the database related to this user.");
+							var decision = confirm("Are you sure you want to deactivate " + lastname + "? This will prevent this user from accessing their data.");
 							if (decision == true) {
 								var xmlhttp = new XMLHttpRequest();
 								
 								// this part of code receives a response from deleteaccounts.php 
 								xmlhttp.onreadystatechange=function() {
 									if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-										if(xmlhttp.responseText == "Person deleted") {
+										if(xmlhttp.responseText == "Person deactivated") {
 											location.reload();
 										} else {
-											alert("Unsuccessful delete: " + xmlhttp.responseText);
+											alert("Unsuccessful deactivation: " + xmlhttp.responseText);
+										}
+									}
+								}
+								
+								// this sends the data request to deactivateaccounts.php
+								xmlhttp.open("POST", "deactivateaccounts.php", true);
+								xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+								xmlhttp.send("userid=" + userid);
+								
+							}
+						}
+						
+						// confirm that a user wants to delete, then call php script to do deletion
+						function reactivateRecord(userid, lastname) {
+							// delete record from people table identified by id, if user agrees
+							var decision = confirm("Are you sure you want to reactivate " + lastname + "? This will allow this user to access their data.");
+							if (decision == true) {
+								var xmlhttp = new XMLHttpRequest();
+								
+								// this part of code receives a response from reactivateaccounts.php 
+								xmlhttp.onreadystatechange=function() {
+									if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+										if(xmlhttp.responseText == "Person reactivated") {
+											location.reload();
+										} else {
+											alert("Unsuccessful reactivation: " + xmlhttp.responseText);
 										}
 									}
 								}
 								
 								// this sends the data request to deleteaccounts.php
-								xmlhttp.open("POST", "deleteaccounts.php", true);
+								xmlhttp.open("POST", "reactivateaccounts.php", true);
 								xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 								xmlhttp.send("userid=" + userid);
+				
 							}
 						}
 						
