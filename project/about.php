@@ -51,6 +51,14 @@
                     Eliminate wage theft through the collection and anylization of real world wage data.
                 </p>
             </div>
+			<div>
+                <p>
+                    contact us:
+                    cmcgillin@uiowa.edu
+					rtran@uiowa.edu
+					(for quickest response please provide us as many details as possible with any questions)
+                </p>
+            </div>
          
 <?php
 	include_once("footer.php");

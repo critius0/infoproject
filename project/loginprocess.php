@@ -50,6 +50,12 @@
 					header("Location: " . $baseURL . "usersplash.php");
 					
 				}
+				elseif ($usertype ==3){
+					
+					$msg = "<p>This account has been deactivated. To seek reactivation please contact an administrator. <a href="about.php">Contact Information</a> .</p>";
+				header("Location:login.php?msg=$msg");
+				exit;
+				}
 				else {
 					header("Location: " . $baseURL . "admindash.php");
 				}
