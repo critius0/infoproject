@@ -15,6 +15,14 @@
         // if this variable is not set, then kick user back to login screen
         header("Location: " . $baseURL . "login.php");
     }
+		
+	//block deactivated accounts from viewing anything
+	if ($_SESSION['usertype'] ==3){
+					
+					$msg = "<p>This account has been deactivated. To seek reactivation please contact an administrator. Via the AboutUs page.</p>";
+				header("Location:login.php?msg=$msg");
+				
+				}
     // get data from from paycheck.php entry form
 	$hoursworked = $_POST['hoursworked'];
     $paycheckstartdate = $_POST['paycheckstartdate'];

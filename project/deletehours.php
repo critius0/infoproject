@@ -1,6 +1,15 @@
 <?php
     include_once("util.php");
     include_once("config.php");
+	session_start();
+	
+	//block deactivated accounts from viewing anything
+	if ($_SESSION['usertype'] ==3){
+					
+					$msg = "<p>This account has been deactivated. To seek reactivation please contact an administrator. Via the AboutUs page.</p>";
+				header("Location:login.php?msg=$msg");
+				
+				}
 
     // get data from fields
     $reportingid = $_POST['reportingid'];

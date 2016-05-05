@@ -27,6 +27,14 @@
 				header("Location:register.php?msg=$msg");
 				exit;
     }
+	
+	//block deactivated accounts from viewing anything
+	if ($_SESSION['usertype'] ==3){
+					
+					$msg = "<p>This account has been deactivated. To seek reactivation please contact an administrator. Via the AboutUs page.</p>";
+				header("Location:login.php?msg=$msg");
+				
+				}
     // check that we have a first name
     if (!$firstname) {
         $msg = "<p>You didn't enter your first name.</p>";

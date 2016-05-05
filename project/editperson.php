@@ -1,6 +1,7 @@
 <?php
     include_once("util.php");
     include_once("config.php");
+	session_start();
 
     // get data from fields
     $userid = $_POST['userid'];
@@ -13,6 +14,19 @@
         echo "No id received";
 		exit;
     }
+	//block non admins from this page	
+	if (($_SESSION['usertype']) == 0){
+		$msg = "<p>Page attempted to access requires an admin login.</p>";
+				header("Location:login.php?msg=$msg");
+	 
+	}	
+	//block deactivated accounts from viewing anything
+	elseif ($_SESSION['usertype'] ==3){
+					
+					$msg = "<p>This account has been deactivated. To seek reactivation please contact an administrator. Via the AboutUs page.</p>";
+				header("Location:login.php?msg=$msg");
+				
+				}
     
     // check that we have a first name
     if (!$firstname) {

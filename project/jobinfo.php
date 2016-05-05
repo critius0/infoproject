@@ -11,11 +11,19 @@
         // if this variable is not set, then kick user back to login screen
         header("Location: " . $baseURL . "login.php");
     }
+	//block deactivated accounts from viewing anything
+	elseif ($_SESSION['usertype'] ==3){
+					
+					$msg = "<p>This account has been deactivated. To seek reactivation please contact an administrator. Via the AboutUs page.</p>";
+				header("Location:login.php?msg=$msg");
+				exit;
+				}
 	$jobid = $_POST['jobid'];
 	if (!isset($_SESSION['jobid'])) {
         // if this variable is not set, then set it
         $_SESSION['jobid'] = $jobid;
     }
+	
 	
 	
 	// get a handle to the database

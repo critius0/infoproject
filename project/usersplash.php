@@ -11,6 +11,12 @@
         // if this variable is not set, then kick user back to login screen
         header("Location: " . $baseURL . "login.php");
     }
+	elseif ($_SESSION['usertype'] ==3){
+					
+					$msg = "<p>This account has been deactivated. To seek reactivation please contact an administrator. Via the AboutUs page.</p>";
+				header("Location:login.php?msg=$msg");
+				exit;
+				}
 	if (isset($_SESSION['jobid'])) {
         unset($_SESSION['jobid']);
     }

@@ -13,6 +13,12 @@ if (($_SESSION['usertype']) == 0){
 				header("Location:login.php?msg=$msg");
 	 
 	}
+	elseif ($_SESSION['usertype'] ==3){
+					
+					$msg = "<p>This account has been deactivated. To seek reactivation please contact an administrator. Via the AboutUs page.</p>";
+				header("Location:login.php?msg=$msg");
+				exit;
+				}
 	include_once('header3.php');
 	include_once('config.php');
 

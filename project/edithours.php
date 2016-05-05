@@ -1,13 +1,20 @@
 <?php
     include_once("util.php");
     include_once("config.php");
-
+	session_start();
     // get data from fields
     $hoursworked = $_POST['hoursworked'];
     $datereportedfor = $_POST['datereportedfor'];
 	$reportingid = $_POST['reportingid'];
     
-
+	
+	//block deactivated accounts from viewing anything
+	if ($_SESSION['usertype'] ==3){
+					
+					$msg = "<p>This account has been deactivated. To seek reactivation please contact an administrator. Via the AboutUs page.</p>";
+				header("Location:login.php?msg=$msg");
+				
+				}
     // check that we have an hours
     if (!$hoursworked) {
         echo "No hours received";
